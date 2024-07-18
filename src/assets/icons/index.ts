@@ -1,0 +1,8 @@
+export { Bookmark } from './bookmark'
+export { Home } from './home'
+export { LogOut } from './log-out'
+export { Message } from './message'
+export { Person } from './person'
+export { PlusSquare } from './plus-square'
+export { Search } from './search'
+export { TrendingUp } from './trending-up'
