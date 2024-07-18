@@ -15,7 +15,7 @@
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "ui-kit": "node_modules/ui-kit"
+    "ui-kit": "0.0.1"
   },
   "devDependencies": {
     "@it-incubator/eslint-config": "^1.0.3",
