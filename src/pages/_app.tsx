@@ -1,8 +1,26 @@
 import type { AppProps } from 'next/app'
 
-import '@/styles/_typography.scss'
-import '@/styles/globals.css'
+import { ReactElement, ReactNode } from 'react'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import { NextPage } from 'next'
+
+import '@/styles/globals.css'
+// eslint-disable-next-line import/extensions
+import '@chrizzo/ui-kit/css'
+import '../styles/_colors.scss'
+import '../styles/_typography.scss'
+import '../styles/index.scss'
+
+export type NextPageWithLayout<P = {}> = {
+  getLayout?: (page: ReactElement) => ReactNode
+} & NextPage<P>
+
+type AppPropsWithLayout = {
+  Component: NextPageWithLayout
+} & AppProps
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? (page => page)
+
+  return getLayout(<Component {...pageProps} />)
 }
