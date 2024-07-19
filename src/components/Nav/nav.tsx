@@ -9,9 +9,9 @@ import {
   TrendingUp,
 } from '@/assets/icons'
 import { PropsLink } from '@/components/Nav/types'
+import { Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { Typography } from 'ui-kit'
 
 import s from './nav.module.scss'
 
