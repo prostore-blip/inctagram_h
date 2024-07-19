@@ -12,8 +12,8 @@ RUN npm run build:production
 FROM node:20.11-alpine as runner
 WORKDIR /app
 ENV NODE_ENV production
- If you are using a custom next.config.mjs file, uncomment this line.
-COPY --from=builder /app/next.config.js ./
+# If you are using a custom next.config.mjs file, uncomment this line.
+COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
