@@ -35,13 +35,13 @@
         gap: 12px;
         align-items: center;
 
-        color: #fff;
+        color: var(--color-light-100);
         white-space: nowrap;
 
         &:hover,
         &:focus,
         &:active {
-          color: blue;
+          color: var(--color-accent-500);
         }
 
         svg {

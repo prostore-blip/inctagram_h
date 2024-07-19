@@ -1,11 +1,16 @@
 import Head from 'next/head'
 
-export const HeadMeta = () => {
+type HeadMetaProps = {
+  description?: string
+  title: string
+}
+
+export const HeadMeta = ({ title }: HeadMetaProps) => {
   return (
     <Head>
-      <title>{'InstaSamkaGram'}</title>
+      <title>{title}</title>
       <meta content={'CloneInstaForBigMoney'} name={'description'} />
-      <link href={'../../public/favicon.ico'} rel={'icon'} />
+      <link href={'../../../public/favicon.ico'} rel={'icon'} />
     </Head>
   )
 }
