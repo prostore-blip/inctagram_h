@@ -4,12 +4,11 @@ import { ReactElement, ReactNode } from 'react'
 
 import { NextPage } from 'next'
 
-import '@/styles/globals.css'
+import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/css'
 import '../styles/_colors.scss'
 import '../styles/_typography.scss'
-import '../styles/index.scss'
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
