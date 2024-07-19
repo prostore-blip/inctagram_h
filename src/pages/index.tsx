@@ -1,14 +1,10 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { Nav } from '@/components/Nav'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { GetNavLayout, PageWrapper } from '@/components'
 
 export default function Home() {
   return (
     <>
-      <main></main>
+      <PageWrapper>Home Page</PageWrapper>
     </>
   )
 }
-Home.getLayout = getNavLayout
+Home.getLayout = GetNavLayout

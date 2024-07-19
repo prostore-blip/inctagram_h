@@ -1,6 +1,4 @@
-import { HeadMeta } from '@/components/HeadMeta/headMeta'
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { PageWrapper } from '@/components/PageWrapper/pageWrapper'
+import { GetNavLayout, HeadMeta, PageWrapper } from '@/components'
 
 export function Home() {
   return (
@@ -10,5 +8,5 @@ export function Home() {
     </PageWrapper>
   )
 }
-Home.getLayout = getNavLayout
+Home.getLayout = GetNavLayout
 export default Home

@@ -1,9 +1,8 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { PageWrapper } from '@/components/PageWrapper/pageWrapper'
+import { GetNavLayout, PageWrapper } from '@/components'
 
 export function MyProfile() {
   return <PageWrapper>MyProfile</PageWrapper>
 }
 
-MyProfile.getLayout = getNavLayout
+MyProfile.getLayout = GetNavLayout
 export default MyProfile

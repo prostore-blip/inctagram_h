@@ -1,9 +1,8 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { PageWrapper } from '@/components/PageWrapper/pageWrapper'
+import { GetNavLayout, PageWrapper } from '@/components'
 
 export function Search() {
   return <PageWrapper>Search</PageWrapper>
 }
 
-Search.getLayout = getNavLayout
+Search.getLayout = GetNavLayout
 export default Search
