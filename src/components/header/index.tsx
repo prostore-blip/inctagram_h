@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import Notief from '@/assets/icons/svg/Fill bell.svg'
-import NotiefWithCount from '@/assets/icons/svg/Mask.svg'
+import Notief from '@/assets/icons/svg/fillBell.svg'
+import NotiefWithCount from '@/assets/icons/svg/mask.svg'
+import { Typography } from '@chrizzo/ui-kit'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -13,7 +14,7 @@ export const Header = () => {
   const [windowWidth, setWindowWidth] = useState(0)
 
   const router = useRouter()
-  const isAuthMe = false
+  const isAuthMe = true
   const goToLogIn = () => {
     router.push('/signIn')
   }
@@ -42,7 +43,9 @@ export const Header = () => {
   return (
     <div className={s.header}>
       <div className={s.wrapper}>
-        <Link href={'/'}>Inctagram</Link>
+        <Typography variant={'large'}>
+          <Link href={'/'}>Inctagram</Link>
+        </Typography>
         <div className={s.buttonsBlock}>
           {windowWidth > 450 ? (
             <div className={`${s.noties} ${isNotiefShowStyle}`} onClick={toShowNotifiesHandler}>
