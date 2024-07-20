@@ -2,5 +2,77 @@
   border-bottom: 1px gray solid;
   grid-column-start: 1;
   grid-column-end: 3;
-  height: 60px;
+
+  .wrapper {
+    margin: 0 auto;
+    max-width: 1280px;
+    height: 60px;
+    display: flex;
+    padding: 0 64px 0 60px;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 550px) {
+      padding: 0 15px 0 15px;
+    }
+
+    .buttonsBlock {
+      display: flex;
+
+      .dropDown {
+        margin-left: 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .noties {
+        display: flex;
+        align-items: center;
+        margin-right: 48px;
+        position: relative;
+
+        &.displaynone {
+          display: none;
+        }
+
+        .countNotifies {
+          position: absolute;
+          width: 13px;
+          height: 13px;
+          border-radius: 50%;
+          background: #cc1439;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 10px;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      .selectBlock {
+        width: 163px;
+        height: 36px;
+        border: 5px solid white;
+
+        @media (max-width: 550px) {
+          width: 42px;
+        }
+      }
+
+      .buttonsContainer {
+        margin-left: 36px;
+      }
+
+      .login,
+      .signIn {
+        height: 36px;
+        width: 100px;
+      }
+
+      .login {
+        margin-right: 24px;
+      }
+    }
+  }
 }
