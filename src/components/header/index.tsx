@@ -14,7 +14,7 @@ export const Header = () => {
   const [windowWidth, setWindowWidth] = useState(0)
 
   const router = useRouter()
-  const isAuthMe = true
+  const isAuthMe = false
   const goToLogIn = () => {
     router.push('/signIn')
   }
@@ -64,10 +64,10 @@ export const Header = () => {
           {!isAuthMe && windowWidth > 680 && (
             <div className={s.buttonsContainer}>
               <button className={s.login} onClick={goToLogIn} type={'button'}>
-                LogIn
+                <Typography variant={'h3'}> LogIn </Typography>
               </button>
               <button className={s.signIn} onClick={goToSignUp} type={'button'}>
-                SignUp
+                <Typography variant={'h3'}> SignUp </Typography>
               </button>
             </div>
           )}
