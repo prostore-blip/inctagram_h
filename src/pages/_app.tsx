@@ -7,6 +7,8 @@ import { NextPage } from 'next'
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/css'
+// Supports weights 100-900
+import '@fontsource-variable/inter/slnt.css'
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
