@@ -6,7 +6,7 @@ import { NextPage } from 'next'
 
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
-import '@chrizzo/ui-kit/css'
+import '@chrizzo/ui-kit/dist/style.css'
 // Supports weights 100-900
 import '@fontsource-variable/inter/slnt.css'
 
