@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Notief from '@/assets/icons/svg/fillBell.svg'
 import NotiefWithCount from '@/assets/icons/svg/mask.svg'
 import { Button, Select, Typography } from '@chrizzo/ui-kit'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -12,7 +13,7 @@ import FlagRu from '../../assets/icons/svg/flagRu.svg'
 import FlagUa from '../../assets/icons/svg/flagUk.svg'
 
 //заглушка. Эти данные должны приходить с сервера через RTKQ
-const countNotifies = 1
+const countNotifies = 0
 
 //заглушка. Эти данные должны приходить с сервера
 const flags = [
@@ -79,7 +80,10 @@ export const Header = () => {
    * мемоизированный массив с именами языка для селекта
    */
   const itemsForSelect = useMemo(() => {
-    return flags.map(f => f.lang)
+    return flags.map(f => ({
+      icon: f.flag,
+      item: f.lang,
+    }))
   }, [])
 
   /**
@@ -98,7 +102,14 @@ export const Header = () => {
         </Typography>
         <div className={s.buttonsBlock}>
           {windowWidth > 450 ? (
-            <div className={`${s.noties} ${isNotiefShowStyle}`} onClick={toShowNotifiesHandler}>
+            <button
+              aria-label={'Notification'}
+              className={clsx(s.noties, isNotiefShowStyle)}
+              onClick={toShowNotifiesHandler}
+              role={'button'}
+              tabIndex={!countNotifies ? -1 : undefined}
+              type={'button'}
+            >
               {countNotifies ? (
                 <>
                   <span className={s.countNotifies}>{countNotifies}</span> <NotiefWithCount />{' '}
@@ -106,7 +117,7 @@ export const Header = () => {
               ) : (
                 <Notief />
               )}
-            </div>
+            </button>
           ) : (
             <></>
           )}
