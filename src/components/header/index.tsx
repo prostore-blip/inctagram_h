@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import Notief from '@/assets/icons/svg/fillBell.svg'
 import NotiefWithCount from '@/assets/icons/svg/mask.svg'
+import { DropDownHeader } from '@/components/dropDownHeader'
 import { Button, Select, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -137,7 +138,11 @@ export const Header = () => {
               </Button>
             </div>
           )}
-          {isAuthMe && windowWidth < 769 && <div className={s.dropDown}>***</div>}
+          {isAuthMe && windowWidth < 769 && (
+            <div className={s.dropDown}>
+              <DropDownHeader />
+            </div>
+          )}
         </div>
       </div>
     </div>
