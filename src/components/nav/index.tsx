@@ -1,6 +1,6 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
 import { PropsLink } from '@/components/nav/types'
-import { Typography } from '@chrizzo/ui-kit'
+import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -14,6 +14,7 @@ const links: PropsLink[] = [
   },
   {
     icon: <Create />,
+    isButton: true,
     name: 'Create',
     path: '/create',
   },
@@ -44,6 +45,7 @@ const links: PropsLink[] = [
   },
   {
     icon: <LogOut />,
+    isButton: true,
     name: 'Log Out',
     path: '/logout',
   },
@@ -54,6 +56,12 @@ type Props = {
 }
 
 export const Nav = ({ isSpecialAccount }: Props) => {
+  const handleClick = (isButton?: boolean) => {
+    if (isButton) {
+      alert(9)
+    }
+  }
+
   return (
     <nav className={s.navWrapper}>
       <ul className={s.navList}>
@@ -66,12 +74,18 @@ export const Nav = ({ isSpecialAccount }: Props) => {
               className={clsx(s.navItem, s[`navItem${index + 1}`], shouldHide && s.hidden)}
               key={index}
             >
-              <Link className={s.wrapper} href={link.path}>
+              <Button
+                as={link.isButton ? 'button' : Link}
+                className={s.wrapper}
+                href={link.path}
+                onClick={() => handleClick(link.isButton)}
+                variant={'text'}
+              >
                 {link.icon}
-                <Typography as={'span'} variant={'medium_text_14'}>
+                <Typography as={'span'} variant={'regularMedium14'}>
                   {link.name}
                 </Typography>
-              </Link>
+              </Button>
             </li>
           )
         })}

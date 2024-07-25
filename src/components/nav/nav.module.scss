@@ -2,7 +2,6 @@
   box-sizing: border-box;
   width: 220px;
   padding: 72px 84px 0 60px;
-
   border-right: 1px gray solid;
 
   .navList {
@@ -13,7 +12,7 @@
     margin: 0;
     padding: 0;
 
-    list-style: none; 
+    list-style: none;
 
     .navItem {
       display: flex;
@@ -24,8 +23,6 @@
         margin-top: 60px;
       }
 
-
-
       &:nth-child(8) {
         margin-top: 156px;
       }
@@ -34,7 +31,7 @@
         display: flex;
         gap: 12px;
         align-items: center;
-
+        padding: 0;
         color: var(--color-light-100);
         white-space: nowrap;
 
@@ -50,7 +47,6 @@
         span {
           color: inherit;
         }
-
       }
     }
 
@@ -61,7 +57,7 @@
 }
 
 @media (width <= 768px) {
-.navWrapper{
-  display: none;
-}
+  .navWrapper {
+    display: none;
+  }
 }
