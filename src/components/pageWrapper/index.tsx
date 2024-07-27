@@ -5,7 +5,7 @@ export const PageWrapper = (props: PropsWithChildren) => {
 
   return (
     <>
-      <main>{children}</main>
+      <div style={{ height: '100%' }}>{children}</div>
     </>
   )
 }
