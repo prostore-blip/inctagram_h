@@ -4,25 +4,53 @@ import { GetLayout, PageWrapper, SocialAuthButtons } from '@/components'
 import { FormInput } from '@/components/controll/formTextField'
 import { signInSchema } from '@/pages/signIn/signIn-schema'
 import { FormValues } from '@/pages/signIn/types'
+import { ErrorData } from '@/pages/types'
+import { useLoginMutation } from '@/services/inctagram.auth.service'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './signIn.module.scss'
-const errorFromRTKQ = 'The email or password are incorrect. Try again please'
 
 export function SignIn() {
   const googleLoginAndRegister = () => {}
+
   const { control, handleSubmit, setError } = useForm<FormValues>({
     resolver: zodResolver(signInSchema),
   })
+
+  const [login, { error }] = useLoginMutation()
+
+  const router = useRouter()
+
   const onSubmit = (data: FormValues) => {
     const { email, password } = data
 
-    if (password.trim() && email.trim()) {
-      // здесь логика отправки запрсоа на сервер с данными из формы
+    if (password?.trim() && email?.trim()) {
+      login(data)
+        .unwrap()
+        .then(({ accessToken }) => {
+          localStorage.setItem('token', accessToken)
+          /* const { data } = await getProfile()
+          if (!data) {
+            return
+          }*/
+          void router.push(`/home`)
+        })
     } else {
       setError('password', { message: 'Поля не должны быть пустыми' })
+    }
+  }
+
+  //определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError, иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message появляется ошибка
+  if (error) {
+    if ('status' in error) {
+      const errorDate = error.data as ErrorData
+
+      setError('password', { message: errorDate.messages[0].message })
+    } else {
+      setError('password', { message: error.message })
     }
   }
 
