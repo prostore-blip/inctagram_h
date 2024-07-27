@@ -9,28 +9,32 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 
 import s from './signIn.module.scss'
+const errorFromRTKQ = 'The email or password are incorrect. Try again please'
 
 export function SignIn() {
   const googleLoginAndRegister = () => {}
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<FormValues>({
+  const { control, handleSubmit, setError } = useForm<FormValues>({
     resolver: zodResolver(signInSchema),
   })
   const onSubmit = (data: FormValues) => {
-    console.log('onSubmit')
+    const { email, password } = data
+
+    if (password.trim() && email.trim()) {
+      // здесь логика отправки запрсоа на сервер с данными из формы
+    } else {
+      setError('password', { message: 'Поля не должны быть пустыми' })
+    }
   }
 
   return (
     <PageWrapper>
       <div className={s.wrapper}>
         <Card className={s.card}>
-          <Typography variant={'h1'}>SignIn</Typography>
+          <Typography className={s.title} variant={'h1'}>
+            SignIn
+          </Typography>
           <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
             <FormInput
               control={control}
               label={'Email'}
@@ -44,18 +48,17 @@ export function SignIn() {
               placeholder={'******'}
               type={'password'}
             />
-          </form>
-          <Link href={'/forgotPassword'}>
             <Typography className={s.forgot} variant={'regular14'}>
-              Forgot Password
+              <Link href={'/forgotPassword'}>Forgot Password</Link>
             </Typography>
-          </Link>
-          <Button>
-            <Typography variant={'h3'}>Sign In</Typography>
-          </Button>
-          <span>Don&apos;t have an account?</span>
-          <Button as={'a'} href={'/signUp'} variant={'text'}>
-            <Typography variant={'h3'}>Sign In</Typography>
+
+            <Button fullWidth type={'submit'}>
+              <Typography variant={'h3'}>Sign In</Typography>
+            </Button>
+          </form>
+          <span className={s.dontHaveAccout}>Don&apos;t have an account?</span>
+          <Button as={Link} href={'/signUp'} variant={'text'}>
+            <Typography variant={'h3'}>Sign Up</Typography>
           </Button>
         </Card>
       </div>

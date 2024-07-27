@@ -4,11 +4,42 @@
   align-items: center;
   height: 100%;
 }
+
 .card {
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
+  max-width: 378px;
+  min-width: 360px;
+  width: 100%;
+  border: none;
 }
+
 .forgot {
   color: var(--color-light-900);
+  display: flex;
+  justify-content: flex-end;
+  a {
+    color: inherit;
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 13px;
+}
+
+.form {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  & > :nth-last-child(3) {
+    margin-bottom: 12px;
+  }
+}
+
+.dontHaveAccout {
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: center;
 }
