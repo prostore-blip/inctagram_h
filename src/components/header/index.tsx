@@ -1,15 +1,13 @@
 import { ChangeEvent } from 'react'
 
 import { useTranslation } from '@/hooks/useTranslation'
+import { useRouter } from 'next/router'
 
 import s from '@/components/header/header.module.scss'
 
 export const Header = () => {
-  const {
-    router: { asPath, locale, locales, pathname, push, query },
-    t,
-  } = useTranslation()
-
+  const { t } = useTranslation()
+  const { asPath, locale, locales, pathname, push, query } = useRouter()
   const changeLangHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     const locale = event.currentTarget.value
 

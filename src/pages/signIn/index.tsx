@@ -11,11 +11,8 @@ import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Simulate } from 'react-dom/test-utils'
 
 import s from './signIn.module.scss'
-
-import reset = Simulate.reset
 
 export function SignIn() {
   const googleLoginAndRegister = () => {}
@@ -24,9 +21,7 @@ export function SignIn() {
     control,
     formState: {},
     handleSubmit,
-    resetField,
     setError,
-    trigger,
   } = useForm<FormValues>({
     mode: 'onTouched',
     resolver: zodResolver(signInSchema),
@@ -34,24 +29,19 @@ export function SignIn() {
 
   const [login, { error }] = useLoginMutation()
 
-  const {
-    router: { push },
-    t,
-  } = useTranslation()
-
+  const { t } = useTranslation()
+  const router = useRouter()
   const onSubmit = (data: FormValues) => {
     login(data)
       .unwrap()
       .then(({ accessToken }) => {
         localStorage.setItem('token', accessToken)
         /* const { data } = await getProfile()
-                                                      if (!data) {
-                                                        return
-                                                      }*/
-        void push(`/home`)
+                if (!data) {return}*/
+        void router.push(`/home`)
       })
       .catch(() => {
-        void push('/signUp')
+        void router.push('/signUp')
       })
   }
 

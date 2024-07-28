@@ -1,5 +1,3 @@
-import { ChangeEvent } from 'react'
-
 import { en } from '@/locales/en'
 import { ru } from '@/locales/ru'
 import { useRouter } from 'next/router'
