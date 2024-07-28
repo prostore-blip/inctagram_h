@@ -10,13 +10,24 @@ import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Simulate } from 'react-dom/test-utils'
 
 import s from './signIn.module.scss'
+
+import reset = Simulate.reset
 
 export function SignIn() {
   const googleLoginAndRegister = () => {}
 
-  const { control, handleSubmit, setError } = useForm<FormValues>({
+  const {
+    control,
+    formState: {},
+    handleSubmit,
+    resetField,
+    setError,
+    trigger,
+  } = useForm<FormValues>({
+    mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   })
 
@@ -25,22 +36,19 @@ export function SignIn() {
   const router = useRouter()
 
   const onSubmit = (data: FormValues) => {
-    const { email, password } = data
-
-    if (password?.trim() && email?.trim()) {
-      login(data)
-        .unwrap()
-        .then(({ accessToken }) => {
-          localStorage.setItem('token', accessToken)
-          /* const { data } = await getProfile()
-          if (!data) {
-            return
-          }*/
-          void router.push(`/home`)
-        })
-    } else {
-      setError('password', { message: 'Поля не должны быть пустыми' })
-    }
+    login(data)
+      .unwrap()
+      .then(({ accessToken }) => {
+        localStorage.setItem('token', accessToken)
+        /* const { data } = await getProfile()
+                                              if (!data) {
+                                                return
+                                              }*/
+        void router.push(`/home`)
+      })
+      .catch(() => {
+        void router.push('/signUp')
+      })
   }
 
   //определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError, иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message появляется ошибка
@@ -48,7 +56,12 @@ export function SignIn() {
     if ('status' in error) {
       const errorDate = error.data as ErrorData
 
-      setError('password', { message: errorDate.messages[0].message })
+      setError('password', {
+        message:
+          typeof errorDate.messages === 'object'
+            ? errorDate.messages[0].message
+            : errorDate.messages,
+      })
     } else {
       setError('password', { message: error.message })
     }
