@@ -1,18 +1,18 @@
-import { GetLayout, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { GetLayout, HeadMeta, PageWrapper } from '@/components'
+import { useTranslation } from '@/hooks/useTranslation'
+import { en } from '@/locales/en'
+import { ru } from '@/locales/ru'
+import { useRouter } from 'next/router'
 
-// export default function Home1() {
-//   return (
-//     <>
-//       <LoginNavigate>
-//         <PageWrapper>Home Page</PageWrapper>
-//       </LoginNavigate>
-//     </>
-//   )
-// }
-// Home1.getLayout = GetLayout
 export function PublicPage() {
-  return <PageWrapper>PublicPage</PageWrapper>
+  const { t } = useTranslation()
+
+  return (
+    <PageWrapper>
+      <HeadMeta title={'Inctagram'} />
+      {t.publicPage.title}
+    </PageWrapper>
+  )
 }
 
 PublicPage.getLayout = GetLayout

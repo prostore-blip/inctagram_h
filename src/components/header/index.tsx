@@ -1,18 +1,39 @@
-import { useRouter } from 'next/router'
+import { ChangeEvent } from 'react'
+
+import { useTranslation } from '@/hooks/useTranslation'
 
 import s from '@/components/header/header.module.scss'
+
 export const Header = () => {
-  const router = useRouter()
+  const {
+    router: { asPath, locale, locales, pathname, push, query },
+    t,
+  } = useTranslation()
+
+  const changeLangHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    const locale = event.currentTarget.value
+
+    void push({ pathname, query }, asPath, { locale })
+  }
 
   return (
     <header className={s.header}>
       header
-      <button onClick={() => router.push('/signIn')} type={'button'}>
-        LogIn
+      <button onClick={() => push('/signIn')} type={'button'}>
+        {t.header.signInButton}
       </button>
-      <button onClick={() => router.push('/signUp')} type={'button'}>
-        SignUp
+      <button onClick={() => push('/signUp')} type={'button'}>
+        {t.header.signUpButton}
       </button>
+      <select defaultValue={locale} onChange={changeLangHandler}>
+        {locales?.map(l => {
+          return (
+            <option key={l} value={l}>
+              {l}
+            </option>
+          )
+        })}
+      </select>
     </header>
   )
 }
