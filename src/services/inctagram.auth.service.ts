@@ -4,6 +4,11 @@ import { inctagramService } from '@/services/inctagram.service'
 export const inctagramAuthService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
+      authMe: builder.query<any, void>({
+        query: () => {
+          return { url: '/v1/auth/me' }
+        },
+      }),
       login: builder.mutation<any, any>({
         query: body => {
           return {
@@ -17,4 +22,4 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
   },
 })
 
-export const { useLoginMutation } = inctagramAuthService
+export const { useAuthMeQuery, useLoginMutation } = inctagramAuthService
