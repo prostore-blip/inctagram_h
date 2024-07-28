@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 
 import { GetLayout, PageWrapper, SocialAuthButtons } from '@/components'
 import { FormInput } from '@/components/controll/formTextField'
+import { useTranslation } from '@/hooks/useTranslation'
 import { signInSchema } from '@/pages/signIn/signIn-schema'
 import { FormValues } from '@/pages/signIn/types'
 import { ErrorData } from '@/pages/types'
@@ -33,7 +34,10 @@ export function SignIn() {
 
   const [login, { error }] = useLoginMutation()
 
-  const router = useRouter()
+  const {
+    router: { push },
+    t,
+  } = useTranslation()
 
   const onSubmit = (data: FormValues) => {
     login(data)
@@ -41,13 +45,13 @@ export function SignIn() {
       .then(({ accessToken }) => {
         localStorage.setItem('token', accessToken)
         /* const { data } = await getProfile()
-                                              if (!data) {
-                                                return
-                                              }*/
-        void router.push(`/home`)
+                                                      if (!data) {
+                                                        return
+                                                      }*/
+        void push(`/home`)
       })
       .catch(() => {
-        void router.push('/signUp')
+        void push('/signUp')
       })
   }
 
@@ -72,34 +76,34 @@ export function SignIn() {
       <div className={s.wrapper}>
         <Card className={s.card}>
           <Typography className={s.title} variant={'h1'}>
-            SignIn
+            {t.signIn.title}
           </Typography>
           <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
           <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
             <FormInput
               control={control}
-              label={'Email'}
+              label={t.signIn.emailTitle}
               name={'email'}
               placeholder={'Inctagram@gmail.com'}
             />
             <FormInput
               control={control}
-              label={'Password'}
+              label={t.signIn.passTitle}
               name={'password'}
               placeholder={'******'}
               type={'password'}
             />
             <Typography className={s.forgot} variant={'regular14'}>
-              <Link href={'/forgotPassword'}>Forgot Password</Link>
+              <Link href={'/forgotPassword'}>{t.signIn.forgotPass}</Link>
             </Typography>
 
             <Button fullWidth type={'submit'}>
-              <Typography variant={'h3'}>Sign In</Typography>
+              <Typography variant={'h3'}>{t.signIn.signInButton}</Typography>
             </Button>
           </form>
-          <span className={s.dontHaveAccout}>Don&apos;t have an account?</span>
+          <span className={s.dontHaveAccout}>{t.signIn.dontHaveAcc}</span>
           <Button as={Link} href={'/signUp'} variant={'text'}>
-            <Typography variant={'h3'}>Sign Up</Typography>
+            <Typography variant={'h3'}>{t.signIn.signUp}</Typography>
           </Button>
         </Card>
       </div>
