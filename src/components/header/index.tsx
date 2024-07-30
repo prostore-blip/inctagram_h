@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import Notief from '@/assets/icons/svg/fillBell.svg'
-import NotiefWithCount from '@/assets/icons/svg/mask.svg'
+import { EnFlag } from '@/assets/icons/enFlag'
+import { NotiefWithCount } from '@/assets/icons/notiefWithCount'
+import { NotiefWithOutCount } from '@/assets/icons/notiefWithOutCount'
+import { RuFlag } from '@/assets/icons/ruFlag'
 import { DropDownHeader } from '@/components/dropDownHeader'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { Button, Select, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -12,20 +13,18 @@ import { useRouter } from 'next/router'
 
 import s from '@/components/header/header.module.scss'
 
-import FlagRu from '../../assets/icons/svg/flagRu.svg'
-import FlagUa from '../../assets/icons/svg/flagUk.svg'
 //заглушка. Эти данные должны приходить с сервера через RTKQ
 const countNotifies = 0
 
 //Данные для селекта
 const flags = [
   {
-    flag: <FlagRu />,
+    flag: <RuFlag />,
     language: 'Русский',
     locale: 'ru',
   },
   {
-    flag: <FlagUa />,
+    flag: <EnFlag />,
     language: 'English',
     locale: 'en',
   },
@@ -132,7 +131,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
                   <span className={s.countNotifies}>{countNotifies}</span> <NotiefWithCount />{' '}
                 </>
               ) : (
-                <Notief />
+                <NotiefWithOutCount />
               )}
             </button>
           ) : (
@@ -167,7 +166,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
 
 // <header className={s.header}>
 //     header
-//     <button onClick={() => push('/signIn')} type={'button'}>
+//     <button onClick={() => push('/logIn')} type={'button'}>
 //         {t.header.signInButton}
 //     </button>
 //     <button onClick={() => push('/signUp')} type={'button'}>

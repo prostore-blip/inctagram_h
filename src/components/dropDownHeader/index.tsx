@@ -1,6 +1,8 @@
-import { memo, useCallback, useState } from 'react'
+import React, { memo, useCallback, useState } from 'react'
 
+import { Bookmark, Create, Home, LogOut, Message, Person, TrendingUp } from '@/assets/icons'
 import { DropDownTriggerIcon } from '@/assets/icons/dropDownTriggerIcon'
+import { Settings } from '@/assets/icons/settings'
 import {
   DropDown,
   DropDownContent,
@@ -13,11 +15,6 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 
 import s from './dropDownHeader.module.scss'
-
-import FavoritesIcon from '../../assets/icons/svg/mobileApp/bookmark.svg'
-import LogOutIcon from '../../assets/icons/svg/mobileApp/log-out.svg'
-import SettingIcon from '../../assets/icons/svg/mobileApp/settings.svg'
-import StatisticsIcon from '../../assets/icons/svg/mobileApp/trending-up.svg'
 
 export const DropDownHeader = memo(() => {
   const router = useRouter()
@@ -71,19 +68,19 @@ export const DropDownHeader = memo(() => {
           <div>
             <DropDownGroup className={s.group}>
               <DropDownItem className={s.item} onclick={getToProfileSettingsHandler}>
-                <SettingIcon />
+                <Settings />
                 <Typography variant={'regular14'}>Profile Setting</Typography>
               </DropDownItem>
               <DropDownItem className={s.item} onclick={getToStatisticsHandler}>
-                <StatisticsIcon />
+                <TrendingUp />
                 <Typography variant={'regular14'}>Statistics</Typography>
               </DropDownItem>
               <DropDownItem className={s.item} onclick={getToFavoritesHandler}>
-                <FavoritesIcon />
+                <Bookmark />
                 <Typography variant={'regular14'}>Favorites</Typography>
               </DropDownItem>
               <DropDownItem className={s.item} onclick={logOutHandler}>
-                <LogOutIcon />
+                <LogOut />
                 <Typography variant={'regular14'}>Log Out</Typography>
               </DropDownItem>
             </DropDownGroup>

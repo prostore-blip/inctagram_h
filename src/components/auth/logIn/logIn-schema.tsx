@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const signInSchema = z.object({
+export const logInSchema = z.object({
   email: z.string({ message: 'Поля не должны быть пустыми' }).email({
     message:
       'Password must contain 0-9, a-z, A-Z, ! " # $ % &\n' +
