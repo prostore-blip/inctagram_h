@@ -17,7 +17,7 @@ import FlagUa from '../../assets/icons/svg/flagUk.svg'
 //заглушка. Эти данные должны приходить с сервера через RTKQ
 const countNotifies = 0
 
-//заглушка
+//Данные для селекта
 const flags = [
   {
     flag: <FlagRu />,
@@ -30,18 +30,21 @@ const flags = [
     locale: 'en',
   },
 ]
-//заглушка. Эти данные должны приходить с сервера
-const isAuthMe = false
 
-export const Header = ({ data1 }: { data1?: boolean }) => {
-  //стейт контроля ширины окна
+export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
+  /**
+   * стейт контроля ширины окна
+   */
   const [windowWidth, setWindowWidth] = useState(0)
+  /**
+   * кастомный хук интернационализации
+   */
   const { t } = useTranslation()
+  /**
+   * хук обработки URL
+   */
   const { asPath, locale, pathname, push, query } = useRouter()
 
-  // const { data } = useAuthMeQuery()
-
-  const isAuthMe = data1
   /**
    *Навигация на страницу логина
    */
@@ -55,7 +58,7 @@ export const Header = ({ data1 }: { data1?: boolean }) => {
     void push('/signUp')
   }
   /**
-   * стили нотификации: если есть, то показываем кружок
+   * стили нотификации: если залогинен, то показываем кнопку нотификации
    */
   const isNotiefShowStyle = isAuthMe ? '' : s.displaynone
   /**
@@ -97,14 +100,15 @@ export const Header = ({ data1 }: { data1?: boolean }) => {
    * @param e - value из селекта
    */
   const onChangeLanguageHandler = (e: string) => {
-    // setSelectValue(e)
     if (e === 'Русский') {
       void push({ pathname, query }, asPath, { locale: 'ru' })
     } else {
       void push({ pathname, query }, asPath, { locale: 'en' })
     }
   }
-
+  /**
+   * дефолтный язык для селекта
+   */
   const defaultLocale = flags.find(l => locale === l.locale)?.language
 
   return (

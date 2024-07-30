@@ -16,7 +16,9 @@ import s from './signIn.module.scss'
 
 export function SignIn() {
   const googleLoginAndRegister = () => {}
-
+  /**
+   * Переменные для обработки форм из react-hook-form
+   */
   const {
     control,
     formState: {},
@@ -26,18 +28,26 @@ export function SignIn() {
     mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   })
-
+  /**
+   * хук RTKQ логинизации
+   */
   const [login, { error }] = useLoginMutation()
-
+  /**
+   * кастомный хук интенационализации
+   */
   const { t } = useTranslation()
+  /**
+   * хук обработки URL
+   */
   const router = useRouter()
+  /**
+   * Обработчик формы
+   * @param data - данные из формы
+   */
   const onSubmit = (data: FormValues) => {
     login(data)
       .unwrap()
-      .then(({ accessToken }) => {
-        localStorage.setItem('token', accessToken)
-        /* const { data } = await getProfile()
-                if (!data) {return}*/
+      .then(() => {
         void router.push(`/home`)
       })
       .catch(() => {
@@ -45,7 +55,12 @@ export function SignIn() {
       })
   }
 
-  //определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError, иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message появляется ошибка
+  /**
+   * определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError,
+   * иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message
+   * появляется ошибка. Ошибку set'аем в поле password
+   */
+
   if (error) {
     if ('status' in error) {
       const errorDate = error.data as ErrorData

@@ -1,6 +1,5 @@
 import { inctagramService } from '@/services/inctagram.service'
 
-//todo изменить эндпоинт, если нужно
 export const inctagramAuthService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
@@ -11,7 +10,12 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
         },
       }),
       login: builder.mutation<any, any>({
-        invalidatesTags: ['login'],
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          const res = await queryFulfilled
+
+          localStorage.setItem('token', res.data.accessToken)
+          dispatch(inctagramAuthService.util.invalidateTags(['login']))
+        },
         query: body => {
           return {
             body,

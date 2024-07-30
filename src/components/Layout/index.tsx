@@ -21,7 +21,7 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
 
   return (
     <div className={s.container + ' ' + style}>
-      <Header data1={data} />
+      <Header isAuthMe={data} />
       {showNav && <Nav isSpecialAccount />}
       <Main>{children}</Main>
     </div>
