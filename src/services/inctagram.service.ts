@@ -14,5 +14,5 @@ export const inctagramService = createApi({
   }),
   endpoints: builder => ({}),
   reducerPath: 'inctagramService',
-  tagTypes: ['', ''],
+  tagTypes: ['login'],
 })

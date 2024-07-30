@@ -2,14 +2,14 @@ import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
   header: {
-    signInButton: 'Sign In',
-    signUpButton: 'Sign Up',
+    signInButton: 'Log In',
+    signUpButton: 'Sign up',
   },
   publicPage: {
     title: 'Public Page',
   },
   signIn: {
-    dontHaveAcc: 'Don&apos;t have an account?',
+    dontHaveAcc: `Don't have an account?`,
     emailTitle: 'Email',
     forgotPass: 'Forgot Password',
     passTitle: 'Password',

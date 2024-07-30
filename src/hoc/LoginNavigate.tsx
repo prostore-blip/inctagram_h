@@ -5,9 +5,9 @@ import { useRouter } from 'next/router'
 
 export const LoginNavigate: FC<PropsWithChildren<{}>> = ({ children }) => {
   const router = useRouter()
-  const { data, isLoading } = useAuthMeQuery()
+  const { data, isFetching } = useAuthMeQuery()
 
-  if (isLoading) {
+  if (isFetching) {
     return <div style={{ fontSize: '50px' }}>...Loading</div>
   }
   if (!data) {
