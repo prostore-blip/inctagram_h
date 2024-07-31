@@ -79,7 +79,7 @@ export function LogIn() {
   return (
     <PageWrapper>
       <div className={s.wrapper}>
-        <Card className={s.card}>
+        <Card className={s.card} variant={'dark500'}>
           <Typography className={s.title} variant={'h1'}>
             {t.signIn.title}
           </Typography>

@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -6,6 +12,7 @@
   width: 100%;
   max-width: 378px;
   padding: 23px 24px 24px;
+  border: 1px solid var(--color-dark-300);
 }
 
 .title {
@@ -29,10 +36,10 @@
   padding-bottom: 12px;
 }
 
-.SingUpButton{
-margin-bottom: 18px;
+.SingUpButton {
+  margin-bottom: 18px;
 }
 
-.SingInButton{
+.SingInButton {
   width: 100%;
 }

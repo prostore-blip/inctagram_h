@@ -1,7 +1,11 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { GetLayout, PageWrapper, SingUp } from '@/components'
 
 export function SignUp() {
-  return <PageWrapper>SignUp</PageWrapper>
+  return (
+    <PageWrapper>
+      <SingUp onSubmit={() => {}} />
+    </PageWrapper>
+  )
 }
 
 SignUp.getLayout = GetLayout
