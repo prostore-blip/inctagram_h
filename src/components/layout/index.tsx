@@ -5,7 +5,7 @@ import { Main } from '@/components/main'
 import { Nav } from '@/components/nav'
 import { NextPage } from 'next'
 
-import s from '@/components/Layout/layout.module.scss'
+import s from '@/components/layout/layout.module.scss'
 
 type Props = {
   showNav?: boolean

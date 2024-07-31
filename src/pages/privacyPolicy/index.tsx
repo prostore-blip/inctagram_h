@@ -5,4 +5,5 @@ export function PrivacyPolicy() {
 }
 
 PrivacyPolicy.getLayout = GetLayout
+
 export default PrivacyPolicy

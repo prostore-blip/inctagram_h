@@ -1,6 +1,6 @@
 import { GetLayout, PageWrapper } from '@/components'
 
-export function TermsOfService() {
+function TermsOfService() {
   return <PageWrapper>TermsOfService</PageWrapper>
 }
 
