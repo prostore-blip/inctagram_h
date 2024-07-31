@@ -17,4 +17,15 @@ export const en: LocaleType = {
     signUp: 'SignUp',
     title: 'SignIn',
   },
+  signUp: {
+    confirmPass: 'Confirm Password',
+    emailTitle: 'Email',
+    haveAcc: `Do you have an account?`,
+    passTitle: 'Password',
+    rules: ['I agree to the', 'Terms of Service', 'and', 'Privacy Policy'],
+    signInButton: 'SignIn',
+    signUp: 'SignUp',
+    title: 'SignUp',
+    userName: 'Username',
+  },
 }
