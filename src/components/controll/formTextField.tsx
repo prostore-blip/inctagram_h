@@ -1,12 +1,10 @@
-
-import { TextField, TextFieldProps } from '@chrizzo/ui-kit'
 import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
 
-
+import { TextField, TextFieldProps } from '@chrizzo/ui-kit'
 
 type Props<T extends FieldValues> = Omit<
-TextFieldProps,
+  TextFieldProps,
   'disabled' | 'name' | 'onBlur' | 'onChange' | 'ref' | 'value'
 > &
   UseControllerProps<T>
