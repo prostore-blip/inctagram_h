@@ -1,10 +1,16 @@
-import { GetNavLayout, PageWrapper } from '@/components'
+import { GetLayout, HeadMeta, PageWrapper } from '@/components'
+import { useTranslation } from '@/hooks/useTranslation'
 
-export default function Home() {
+export function PublicPage() {
+  const { t } = useTranslation()
+
   return (
-    <>
-      <PageWrapper>Home Page</PageWrapper>
-    </>
+    <PageWrapper>
+      <HeadMeta title={'Inctagram'} />
+      {t.publicPage.title}
+    </PageWrapper>
   )
 }
-Home.getLayout = GetNavLayout
+
+PublicPage.getLayout = GetLayout
+export default PublicPage

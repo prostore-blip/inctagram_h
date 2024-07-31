@@ -1,7 +1,7 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { GetLayout, LogIn } from '@/components'
 
 export function SignIn() {
-  return <PageWrapper>SignIn</PageWrapper>
+  return <LogIn />
 }
 
 SignIn.getLayout = GetLayout

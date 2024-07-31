@@ -1,7 +1,12 @@
 import { GetNavLayout, PageWrapper } from '@/components'
+import { LoginNavigate } from '@/hoc/LoginNavigate'
 
 export function MyProfile() {
-  return <PageWrapper>MyProfile</PageWrapper>
+  return (
+    <LoginNavigate>
+      <PageWrapper>MyProfile</PageWrapper>
+    </LoginNavigate>
+  )
 }
 
 MyProfile.getLayout = GetNavLayout
