@@ -1,0 +1,38 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.h1 {
+  padding-top: 50px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.backSign {
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+  width: 142px;
+  height: 24px;
+  margin-left: -100px;
+}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -50px;
+  width: 958px;
+  height: 936px;
+}
+.arrow {
+  padding-top: 15px;
+}
+.text {
+  padding: 5px;
+  color: var(--color-light-100);
+}

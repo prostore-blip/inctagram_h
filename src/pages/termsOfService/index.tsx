@@ -1,8 +1,9 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { GetLayout, PageWrapper, TermsOfService } from '@/components'
 
-function TermsOfService() {
-  return <PageWrapper>TermsOfService</PageWrapper>
-}
+// function TermsOfService() {
+//   return <PageWrapper>TermsOfService</PageWrapper>
+// }
 
-TermsOfService.getLayout = GetLayout
+//TermsOfService.getLayout = GetLayout
+
 export default TermsOfService

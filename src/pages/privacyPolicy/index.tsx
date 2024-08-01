@@ -1,9 +1,9 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { GetLayout, PageWrapper, PrivacyPolicy } from '@/components'
 
-export function PrivacyPolicy() {
-  return <PageWrapper>PrivacyPolicy</PageWrapper>
-}
+// function PrivacyPolicy() {
+//   return <PageWrapper>PrivacyPolicy</PageWrapper>
+// }
 
-PrivacyPolicy.getLayout = GetLayout
+// PrivacyPolicy.getLayout = GetLayout
 
 export default PrivacyPolicy

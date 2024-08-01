@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export type PropsLink = {
-  icon: ReactNode
+  icon?: ReactNode
   isButton?: boolean
   name: string
   path: string

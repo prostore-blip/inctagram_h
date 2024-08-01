@@ -1,7 +1,5 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
 import { PropsLink } from '@/components/nav/types'
-import PrivacyPolicy from '@/pages/privacyPolicy'
-import TermsOfService from '@/pages/termsOfService'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -34,16 +32,6 @@ const links: PropsLink[] = [
     icon: <Search />,
     name: 'Search',
     path: '/search',
-  },
-  {
-    icon: <TermsOfService />,
-    name: 'TermsOfService',
-    path: '/termsOfService',
-  },
-  {
-    icon: <PrivacyPolicy />,
-    name: 'PrivacyPolicy',
-    path: '/privacyPolicy',
   },
   {
     icon: <TrendingUp />,

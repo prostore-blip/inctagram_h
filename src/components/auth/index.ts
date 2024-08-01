@@ -1,2 +1,2 @@
 export * from './socialAuthButtons'
-export * from './socialPravicy'
+export * from './socialPrivacy'
