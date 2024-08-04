@@ -1,14 +1,18 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { Nav } from '@/components/Nav'
-import { Inter } from 'next/font/google'
+import { GetLayout, HeadMeta, PageWrapper } from '@/components'
+import { MailVerificationError } from '@/components/auth/mailVerificationError'
+import { PolicyDocuments } from '@/components/auth/policyDocuments'
+import { useTranslation } from '@/hooks/useTranslation'
 
-const inter = Inter({ subsets: ['latin'] })
+export function PublicPage() {
+  const { t } = useTranslation()
 
-export default function Home() {
   return (
-    <>
-      <main></main>
-    </>
+    <PageWrapper>
+      <HeadMeta title={'Inctagram'} />
+      {t.publicPage.title}
+    </PageWrapper>
   )
 }
-Home.getLayout = getNavLayout
+
+PublicPage.getLayout = GetLayout
+export default PublicPage

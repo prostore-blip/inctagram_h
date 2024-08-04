@@ -1,9 +1,13 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { PageWrapper } from '@/components/PageWrapper/pageWrapper'
+import { GetNavLayout, PageWrapper } from '@/components'
+import { LoginNavigate } from '@/hoc/LoginNavigate'
 
 export function Statistics() {
-  return <PageWrapper>Statistics</PageWrapper>
+  return (
+    <LoginNavigate>
+      <PageWrapper>Statistics</PageWrapper>
+    </LoginNavigate>
+  )
 }
 
-Statistics.getLayout = getNavLayout
+Statistics.getLayout = GetNavLayout
 export default Statistics
