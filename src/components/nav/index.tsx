@@ -1,4 +1,5 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
+import { SocialPrivacy } from '@/components'
 import { PropsLink } from '@/components/nav/types'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
