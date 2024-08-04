@@ -113,7 +113,7 @@ export const SingUp = (props: Props) => {
         <Typography className={s.title} textAlign={'center'} variant={'regular16'}>
           {t.signUp.haveAcc}
         </Typography>
-        <Button as={Link} className={s.SingInButton} href={'/signIn'} variant={'text'}>
+        <Button as={Link} className={s.SingInButton} href={'/login'} variant={'text'}>
           {t.signUp.signInButton}
         </Button>
       </Card>

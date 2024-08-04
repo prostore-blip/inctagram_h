@@ -1,0 +1,1 @@
+export { MailVerificationSuccess } from './mailVerificationSuccess'
