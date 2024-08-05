@@ -1,6 +1,5 @@
 import { GetLayout, HeadMeta, PageWrapper } from '@/components'
-import { MailVerificationError } from '@/components/auth/mailVerificationError'
-import { PolicyDocuments } from '@/components/auth/policyDocuments'
+
 import { useTranslation } from '@/hooks/useTranslation'
 
 export function PublicPage() {

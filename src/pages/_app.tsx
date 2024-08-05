@@ -9,7 +9,7 @@ import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/dist/style.css'
 
-import { wrapper } from '../../store'
+import { wrapper } from '../services/store'
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode

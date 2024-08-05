@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import { Header } from '@/components/header'
 import { Main } from '@/components/main'
 import { Nav } from '@/components/nav'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useAuthMeQuery } from '@/services'
 import { NextPage } from 'next'
 
 import s from '@/components/Layout/layout.module.scss'

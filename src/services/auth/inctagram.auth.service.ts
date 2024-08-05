@@ -16,9 +16,9 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           localStorage.setItem('token', res.data.accessToken)
           dispatch(inctagramAuthService.util.invalidateTags(['login']))
         },
-        query: body => {
+        query: params => {
           return {
-            body,
+            body: params,
             method: 'POST',
             url: '/v1/auth/login',
           }

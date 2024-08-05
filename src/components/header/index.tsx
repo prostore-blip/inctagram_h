@@ -48,7 +48,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
    *Навигация на страницу логина
    */
   const goToLogIn = () => {
-    void push('/signIn')
+    void push('/login')
   }
   /**
    * Навигация на страницу регистрации
@@ -141,7 +141,11 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
             defaultValue={defaultLocale}
             items={itemsForSelect}
             onValueChange={onChangeLanguageHandler}
-            variant={`${(!isAuthMe && windowWidth < 420) || (isAuthMe && windowWidth < 661) ? 'small' : 'large'}`}
+            variant={`${
+              (!isAuthMe && windowWidth < 420) || (isAuthMe && windowWidth < 661)
+                ? 'small'
+                : 'large'
+            }`}
           />
           {!isAuthMe && windowWidth > 780 && (
             <div className={s.buttonsContainer}>
