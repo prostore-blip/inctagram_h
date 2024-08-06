@@ -1,9 +1,27 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  forgotPassword: {
+    backToSignIn: 'Back to Sign-in page',
+    emailNotFound: "User with this email doesn't exist",
+    hint: 'Enter your email address and we will send you further instructions',
+    linkSent: 'The link has been sent by email.\n If you don’t receive an email send link again',
+    sendLink: 'Send link',
+    sendLinkAgain: 'Send link again',
+    somethingWrong: 'Something went wrong',
+    success: 'We have sent a link to confirm your email to',
+    title: 'Forgot password',
+  },
   header: {
     signInButton: 'Log In',
     signUpButton: 'Sign up',
+  },
+  newPassword: {
+    confirmPassword: 'Confirm password',
+    createNewPassword: 'Create new password',
+    hint: 'Your password must be between 6 and 20 characters',
+    passwordsMustMatch: 'The passwords must match',
+    title: 'Create new password',
   },
   publicPage: {
     title: 'Public Page',
