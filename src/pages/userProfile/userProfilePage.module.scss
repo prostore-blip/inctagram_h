@@ -1,0 +1,8 @@
+.overflowedContainer {
+  height: calc(100vh - 61px);
+  overflow: hidden;
+}
+.mainCntainer {
+  height: 100%;
+  overflow: auto;
+}
