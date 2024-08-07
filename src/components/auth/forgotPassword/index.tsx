@@ -94,7 +94,7 @@ export const ForgotPasswordForm = () => {
       >
         <Typography variant={'h1'}>Email sent</Typography>
         <Typography variant={'regular16'}>
-          {t.forgotPassword.success}
+          {t.forgotPassword.startPage.success}
           {` ${getValues('email') || 'test@undefined.com'}`}
         </Typography>
         <div className={s.flexFiller} />
@@ -110,7 +110,7 @@ export const ForgotPasswordForm = () => {
         role={'alertdialog'}
       >
         <Typography variant={'h1'}>Error</Typography>
-        <Typography variant={'regular16'}>{t.forgotPassword.somethingWrong}</Typography>
+        <Typography variant={'regular16'}>{t.forgotPassword.startPage.somethingWrong}</Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
           <Button onClick={() => setShowErrorDialog(false)} variant={'primary'}>
@@ -120,7 +120,7 @@ export const ForgotPasswordForm = () => {
       </dialog>
       <Card className={s.card} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
-          {t.forgotPassword.title}
+          {t.forgotPassword.startPage.title}
         </Typography>
         <form className={s.form} onSubmit={makeRequest}>
           <div className={s.flexColumn}>
@@ -139,22 +139,22 @@ export const ForgotPasswordForm = () => {
               name={'recaptcha'}
             />
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
-              {t.forgotPassword.hint}
+              {t.forgotPassword.startPage.hint}
             </Typography>
             {isSuccess && (
               <Typography textAlign={'start'} variant={'regular14'}>
-                {t.forgotPassword.linkSent}
+                {t.forgotPassword.startPage.linkSent}
               </Typography>
             )}
             <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
-              {isSuccess && !isLoading && t.forgotPassword.sendLinkAgain}
-              {!isSuccess && !isLoading && t.forgotPassword.sendLink}
+              {isSuccess && !isLoading && t.forgotPassword.startPage.sendLinkAgain}
+              {!isSuccess && !isLoading && t.forgotPassword.startPage.sendLink}
               {isLoading && 'loading...'}
             </Button>
           </div>
         </form>
         <Button as={Link} className={s.linkButton} href={'/login'} variant={'text'}>
-          {t.forgotPassword.backToSignIn}
+          {t.forgotPassword.startPage.backToSignIn}
         </Button>
         <div className={clsx(s.captchaWrapper)}>
           <ReCAPTCHA
