@@ -1,8 +1,20 @@
-import { GetNavLayout, PageWrapper } from '@/components'
+import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
+import { useRouter } from 'next/router'
 
-export function UserProfile() {
-  return <PageWrapper>UserProfile</PageWrapper>
+export default function UserProfileWrapper() {
+  const router = useRouter()
+  /**
+   * запрос на сервер за профилем юзера
+   */
+  const { data, isLoading } = useGetUserProfileQuery()
+
+  if (isLoading) {
+    return <h1>!!!!!!!!!!loading!!!!!!!!!</h1>
+  }
+  void router.push(`/userProfile/${data?.id ?? 1}`)
+
+  return null
 }
 
-UserProfile.getLayout = GetNavLayout
-export default UserProfile
+// UserProfileWrapper.getLayout = GetNavLayout
+// export default UserProfileWrapper
