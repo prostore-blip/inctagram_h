@@ -1,5 +1,5 @@
 import { GetLayout, PageWrapper } from '@/components'
-import { ForgotPasswordForm } from '@/components/auth/forgotPassword'
+import { ForgotPasswordForm } from '@/components/auth'
 
 export function ForgotPassword() {
   return (

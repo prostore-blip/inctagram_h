@@ -12,8 +12,13 @@ export const ru = {
     newPassword: {
       confirmPassword: 'Повторите пароль',
       createNewPassword: 'Создать новый пароль',
+      errorDialogText: 'Не удалось изменить Ваш пароль',
+      errorDialogTitle: 'Ошибка',
       hint: 'Пароль должен быть длиной минимум 6 и максимум 20 символов',
       passwordsMustMatch: 'Пароли не совпадают',
+      successDialogText:
+        'Пароль был изменен, нажмите "ОК" и Вы будете перенаправленына страницу входа',
+      successDialogTitle: 'Пароль изменен',
       title: 'Создать новый пароль',
       tooSmallError: 'Пароль должен быть не менее 6 символов',
     },
@@ -21,6 +26,8 @@ export const ru = {
     startPage: {
       backToSignIn: 'Вернуться на страницу логина',
       emailNotFound: 'Пользователь с таким адресом не найден',
+      errorDialogText: 'Письмо не было отправлено, попробуйте снова',
+      errorDialogTitle: 'Что-то пошло не так',
       hint: 'Введите Ваш email и мы отправим дальнейшие инструкции',
       linkSent:
         'Ссылка отправлена на Ваш адрес. Если Вы не получили email, нажмите "Отправить еще раз"',
@@ -28,6 +35,8 @@ export const ru = {
       sendLinkAgain: 'Отправить еще раз',
       somethingWrong: 'Что-то пошло не так',
       success: 'Мы отправили ссылку на Вашу почту',
+      successDialogText: 'Мы отправили письмо на Вашу почту',
+      successDialogTitle: 'Письмо отправлено',
       title: 'Сброс пароля',
     },
   },

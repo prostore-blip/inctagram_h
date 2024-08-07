@@ -92,9 +92,9 @@ export const ForgotPasswordForm = () => {
         open={showSuccessDialog}
         role={'alertdialog'}
       >
-        <Typography variant={'h1'}>Email sent</Typography>
+        <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
         <Typography variant={'regular16'}>
-          {t.forgotPassword.startPage.success}
+          {t.forgotPassword.startPage.successDialogText}
           {` ${getValues('email') || 'test@undefined.com'}`}
         </Typography>
         <div className={s.flexFiller} />
@@ -109,8 +109,8 @@ export const ForgotPasswordForm = () => {
         open={showErrorDialog}
         role={'alertdialog'}
       >
-        <Typography variant={'h1'}>Error</Typography>
-        <Typography variant={'regular16'}>{t.forgotPassword.startPage.somethingWrong}</Typography>
+        <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
+        <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
           <Button onClick={() => setShowErrorDialog(false)} variant={'primary'}>
