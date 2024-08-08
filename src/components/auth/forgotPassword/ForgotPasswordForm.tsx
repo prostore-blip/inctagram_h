@@ -39,6 +39,7 @@ export const ForgotPasswordForm = () => {
       email: '',
       recaptcha: '',
     },
+    mode: 'onBlur',
     resolver: zodResolver(forgotPasswordFormSchema),
   })
   const makeRequest = handleSubmit(async data => {
