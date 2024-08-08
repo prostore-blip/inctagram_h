@@ -1,4 +1,3 @@
-import { ResponseDataUserProfile } from '@/pages/userProfile/types'
 import { inctagramService } from '@/services/inctagram.service'
 
 export const inctagramUsersFollowingsService = inctagramService.injectEndpoints({

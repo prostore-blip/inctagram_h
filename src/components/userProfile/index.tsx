@@ -1,5 +1,7 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
+import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
+import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -21,6 +23,16 @@ export function UserProfile({ userName }: Props) {
   const { data } = useGetUserProfileByUserIdQuery(userName ?? '')
 
   /**
+   * запрос за проверкой подписки (для отображения вкладки статистики)
+   */
+  const { data: subscriptionData } = useGetMySubscriptionsQuery()
+
+  /**
+   * проверка залогинен или нет
+   */
+  const { data: authMeData } = useAuthMeQuery()
+
+  /**
    * открыть настройки
    */
   const openSettings = () => {
@@ -28,12 +40,24 @@ export function UserProfile({ userName }: Props) {
   }
 
   const openFollowers = () => {
+    if (!authMeData) {
+      return null
+    }
+    alert('openFolowwers')
     //открыть модалку фоловеров
   }
   const openFollowings = () => {
+    if (!authMeData) {
+      return null
+    }
+    alert('openFollowings')
     //открыть модалку подписок
   }
   const openPublications = () => {
+    if (!authMeData) {
+      return null
+    }
+    alert('openPublications')
     //открыть модалку публикаций
   }
 
@@ -43,26 +67,28 @@ export function UserProfile({ userName }: Props) {
         <Image
           alt={'avatar'}
           className={s.image}
-          height={data?.avatars[0].height ?? 204}
-          src={data?.avatars[0].url ?? defaultAva}
-          width={data?.avatars[0].width ?? 204}
+          height={data?.avatars[0]?.height ?? 204}
+          src={data?.avatars[0]?.url ?? defaultAva}
+          width={data?.avatars[0]?.width ?? 204}
         />
         <section className={s.aboutUserBlock}>
           <div className={s.userNameSettingsButtonBlock}>
             <Typography className={s.userName} variant={'h1'}>
               {data?.userName ?? 'UserName'}
-              <PaidAccount />
+              {subscriptionData?.length ? <PaidAccount /> : null}
             </Typography>
-            <Button onClick={openSettings} variant={'secondary'}>
-              <Typography variant={'h3'}>Profile Settings</Typography>
-            </Button>
+            {authMeData && (
+              <Button onClick={openSettings} variant={'secondary'}>
+                <Typography variant={'h3'}>Profile Settings</Typography>
+              </Button>
+            )}
           </div>
-          <div className={s.countsFolowwers} onClick={openFollowers}>
-            <div className={s.following}>
+          <div className={s.countsFolowwers}>
+            <div className={s.following} onClick={openFollowings}>
               <Typography variant={'regularBold14'}>{data?.followingCount ?? 2218}</Typography>
               <Typography variant={'regular14'}>Following</Typography>
             </div>
-            <div className={s.followers} onClick={openFollowings}>
+            <div className={s.followers} onClick={openFollowers}>
               <Typography variant={'regularBold14'}>{data?.followersCount ?? 2358}</Typography>
               <Typography variant={'regular14'}>Followers</Typography>
             </div>
