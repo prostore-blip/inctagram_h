@@ -16,7 +16,7 @@ export const en: LocaleType = {
       createNewPassword: 'Create new password',
       errorDialogText: 'Error changing your password',
       errorDialogTitle: 'Что-то пошло не так',
-      hint: 'Your password must be between 6 and 20 characters',
+      hint: 'Your password must be between 6 and 20 characters and contain at least one capital letter and at least one special character',
       passwordsMustMatch: 'The passwords must match',
       successDialogText:
         'Your password has been successfully changed, press "OK", to close the dialog and proceed to login',
