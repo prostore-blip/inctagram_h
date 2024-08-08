@@ -35,6 +35,7 @@ export const NewPasswordForm = () => {
       newPassword: '',
       recoveryCode: recoveryCode,
     },
+    mode: 'onBlur',
     resolver: zodResolver(newPasswordSchema),
   })
 
