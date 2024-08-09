@@ -1,9 +1,9 @@
 import { GetLayout, PageWrapper, SingUp } from '@/components'
-import { useLoginMutation } from '@/services'
+import { useSingUpMutation } from '@/services'
 import { useRouter } from 'next/router'
 
 export function SignUp() {
-  const [singUp, { data, isLoading }] = useLoginMutation()
+  const [singUp, { data, isLoading }] = useSingUpMutation()
 
   const router = useRouter()
 
@@ -15,7 +15,7 @@ export function SignUp() {
     singUp(data)
   }
 
-  if(data?.id) {
+  if(data?.success) {
     
   router.push('/profile')
   }

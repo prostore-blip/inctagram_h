@@ -5,7 +5,7 @@ import { logInSchema } from '@/components/auth/logIn/logIn-schema'
 import { FormValues } from '@/components/auth/logIn/types'
 import { FormInput } from '@/components/controll/formTextField'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useLoginMutation } from '@/services'
+import { useSingInMutation, useSingUpMutation } from '@/services'
 import { ErrorData } from '@/types'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,7 +31,7 @@ export function LogIn() {
   /**
    * хук RTKQ логинизации
    */
-  const [login, { error }] = useLoginMutation()
+  const [login, { error }] = useSingInMutation()
   /**
    * кастомный хук интенационализации
    */

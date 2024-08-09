@@ -9,14 +9,13 @@ const mutex = new Mutex()
 //todo нужно править URL и endpoints
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://inctagram.work/api',
+  baseUrl: 'https://gateway.incta.team/api',
   prepareHeaders: headers => {
-    const token = localStorage.getItem('token')
-
-    headers.set('Authorization', `Bearer ${token}`)
+    headers.set('Content-type', `application/json`)
 
     return headers
   },
+  credentials: 'include',
 })
 
 export const baseQueryWithReauth: BaseQueryFn<
