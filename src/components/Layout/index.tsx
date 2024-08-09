@@ -12,18 +12,28 @@ type Props = {
   showNav?: boolean
 }
 export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav = false }) => {
-  const style = showNav ? '' : s.gridHaveOneCol
-  const { data, isFetching } = useAuthMeQuery()
+  const { data, isFetching, isLoading } = useAuthMeQuery()
 
-  if (isFetching) {
-    return <div>!!!!!!!!Loading!!!!!!</div>
-  }
+  // if (isFetching) {
+  //   return <div>!!!!!!!!Loading!!!!!!</div>
+  // }
+  const style = data || isLoading ? '' : s.gridHaveOneCol
 
   return (
     <div className={s.container + ' ' + style}>
-      <Header isAuthMe={data} />
-      {showNav && <Nav isSpecialAccount />}
-      <Main>{children}</Main>
+      {isLoading ? (
+        <>
+          <header className={s.headerSkelet}></header>
+          <nav className={s.navSkelet}></nav>
+          <div className={s.mainSkelet}>LOADING</div>
+        </>
+      ) : (
+        <>
+          <Header isAuthMe={data} />
+          {data && <Nav isSpecialAccount />}
+          <Main>{children}</Main>
+        </>
+      )}
     </div>
   )
 }
