@@ -48,7 +48,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
    *Навигация на страницу логина
    */
   const goToLogIn = () => {
-    void push('/signIn')
+    void push('/login')
   }
   /**
    * Навигация на страницу регистрации

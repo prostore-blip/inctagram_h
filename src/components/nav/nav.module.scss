@@ -19,6 +19,10 @@
       margin-bottom: 24px;
       white-space: nowrap;
 
+      &.hidden {
+        display: none;
+      }
+
       &:nth-child(6) {
         margin-top: 60px;
       }
@@ -37,7 +41,8 @@
 
         &:hover,
         &:focus,
-        &:active {
+        &:active,
+        &.activeLink {
           color: var(--color-accent-500);
         }
 
