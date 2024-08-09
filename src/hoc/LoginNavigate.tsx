@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react'
 
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useAuthMeQuery } from '@/services'
 import { useRouter } from 'next/router'
 
 export const LoginNavigate: FC<PropsWithChildren<{}>> = ({ children }) => {
