@@ -8,13 +8,14 @@ import s from './userProfilePage.module.scss'
 function UserProfileDinamicPage() {
   const router = useRouter()
 
-  const { data } = useGetUserProfileQuery()
+  console.log('profile[id]')
+  const { data, isFetching } = useGetUserProfileQuery()
 
   return (
     <PageWrapper>
       <div className={s.overflowedContainer}>
         <div className={s.mainCntainer}>
-          <UserProfile userName={data?.userName} />
+          {!isFetching && <UserProfile userName={data?.userName} />}
         </div>
       </div>
     </PageWrapper>
