@@ -1,7 +1,12 @@
-import { GetNavLayout, HeadMeta, PageWrapper } from '@/components'
+import { GetLayout, GetNavLayout, HeadMeta, PageWrapper } from '@/components'
 import { LoginNavigate } from '@/hoc/LoginNavigate'
-import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
+import {
+  useGetUserProfileByUserIdQuery,
+  useGetUserProfileQuery,
+} from '@/services/inctagram.profile.service'
 import { useRouter } from 'next/router'
+
+import s from './userProfilePage.module.scss'
 
 function UserProfileWrapper() {
   const router = useRouter()
@@ -11,13 +16,18 @@ function UserProfileWrapper() {
    */
   const { data, isFetching } = useGetUserProfileQuery()
 
+  /**
+   * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
+   */
+  const {} = useGetUserProfileByUserIdQuery(data?.userName ?? '', { skip: !data || isFetching })
+
   console.log('UserprofileWrapper ', data, isFetching)
   if (isFetching) {
     console.log('UserprofileWrapper is Fetching')
 
     return (
       <PageWrapper>
-        <h1>!!!!!!!!!!loading!!!!!!!!!</h1>
+        <h1 className={s.loader}>!!!!!!!!!!loading!!!!!!!!!</h1>
       </PageWrapper>
     )
   }
@@ -30,5 +40,6 @@ function UserProfileWrapper() {
   return null
 }
 
-UserProfileWrapper.getLayout = GetNavLayout
+// UserProfileWrapper.getLayout = GetNavLayout
+UserProfileWrapper.getLayout = GetLayout
 export default UserProfileWrapper

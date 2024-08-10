@@ -1,8 +1,9 @@
 import type { AppProps } from 'next/app'
 
-import { ReactElement, ReactNode } from 'react'
+import React, { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
 
+import { LayoutNew } from '@/components/Layout/layoutNew'
 import { NextPage } from 'next'
 
 import '../styles/index.scss'
@@ -24,5 +25,9 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
   const { props, store } = wrapper.useWrappedStore(rest)
   const getLayout = Component.getLayout ?? (page => page)
 
-  return <Provider store={store}>{getLayout(<Component {...props} />)}</Provider>
+  return (
+    <Provider store={store}>
+      <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
+    </Provider>
+  )
 }

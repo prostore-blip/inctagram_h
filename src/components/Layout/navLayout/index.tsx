@@ -1,6 +1,7 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
 import { Layout } from '@/components/Layout'
+import { LoginNavigate } from '@/hoc/LoginNavigate'
 import { NextPage } from 'next'
 
 export const NavLayout: NextPage<PropsWithChildren> = ({ children }) => {

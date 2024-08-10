@@ -1,4 +1,4 @@
-import { GetNavLayout, PageWrapper } from '@/components'
+import { GetLayout, PageWrapper } from '@/components'
 import { UserProfile } from '@/components/userProfile'
 import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
 import { useRouter } from 'next/router'
@@ -22,5 +22,6 @@ function UserProfileDinamicPage() {
   )
 }
 
-UserProfileDinamicPage.getLayout = GetNavLayout
+// UserProfileDinamicPage.getLayout = GetNavLayout
+UserProfileDinamicPage.getLayout = GetLayout
 export default UserProfileDinamicPage
