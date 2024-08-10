@@ -1,4 +1,5 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
+import { ModalFollowers } from '@/components/ModalFollowers'
 import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -17,20 +18,22 @@ type Props = {
 export function UserProfile({ userName }: Props) {
   const router = useRouter()
 
+  console.log('userProfile')
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
-  const { data } = useGetUserProfileByUserIdQuery(userName ?? '')
+  const { data, isFetching } = useGetUserProfileByUserIdQuery(userName ?? '')
 
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
-  const { data: subscriptionData } = useGetMySubscriptionsQuery()
+  const { data: subscriptionData, isFetching: isFetchingGetMySubscriptions } =
+    useGetMySubscriptionsQuery()
 
   /**
    * проверка залогинен или нет
    */
-  const { data: authMeData } = useAuthMeQuery()
+  const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthMeQuery()
 
   /**
    * открыть настройки
@@ -75,9 +78,9 @@ export function UserProfile({ userName }: Props) {
           <div className={s.userNameSettingsButtonBlock}>
             <Typography className={s.userName} variant={'h1'}>
               {data?.userName ?? 'UserName'}
-              {subscriptionData?.length ? <PaidAccount /> : null}
+              {subscriptionData?.length && !isFetchingGetMySubscriptions ? <PaidAccount /> : null}
             </Typography>
-            {authMeData && (
+            {authMeData && !isFetchingAuthMe && (
               <Button onClick={openSettings} variant={'secondary'}>
                 <Typography variant={'h3'}>Profile Settings</Typography>
               </Button>
@@ -85,15 +88,12 @@ export function UserProfile({ userName }: Props) {
           </div>
           <div className={s.countsFolowwers}>
             <div className={s.following} onClick={openFollowings}>
-              <Typography variant={'regularBold14'}>{data?.followingCount ?? 2218}</Typography>
+              <Typography variant={'regularBold14'}>{data?.followingCount ?? 'X'}</Typography>
               <Typography variant={'regular14'}>Following</Typography>
             </div>
-            <div className={s.followers} onClick={openFollowers}>
-              <Typography variant={'regularBold14'}>{data?.followersCount ?? 2358}</Typography>
-              <Typography variant={'regular14'}>Followers</Typography>
-            </div>
+            <ModalFollowers followersCount={data?.followersCount ?? 'X'} />
             <div className={s.publications} onClick={openPublications}>
-              <Typography variant={'regularBold14'}>{data?.publicationsCount ?? 2764}</Typography>
+              <Typography variant={'regularBold14'}>{data?.publicationsCount ?? 'X'}</Typography>
               <Typography variant={'regular14'}>Publications</Typography>
             </div>
           </div>

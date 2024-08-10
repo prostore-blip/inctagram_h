@@ -11,7 +11,7 @@ export const LoginNavigate: FC<PropsWithChildren<{}>> = ({ children }) => {
     return <div style={{ fontSize: '50px' }}>...Loading</div>
   }
   if (!data) {
-    void router.push('/signIn')
+    void router.push('/login')
   }
 
   return <>{children}</>

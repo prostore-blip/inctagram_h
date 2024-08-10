@@ -11,13 +11,19 @@ import s from '@/components/Layout/layout.module.scss'
 type Props = {
   showNav?: boolean
 }
+
 export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav = false }) => {
   const { data, isFetching, isLoading } = useAuthMeQuery()
 
+  console.log('Layout ', data, isLoading, isFetching)
   // if (isFetching) {
   //   return <div>!!!!!!!!Loading!!!!!!</div>
   // }
   const style = data || isLoading ? '' : s.gridHaveOneCol
+
+  // if (data) {
+  //   localStorage.setItem('userName', data?.userName)
+  // }
 
   return (
     <div className={s.container + ' ' + style}>
@@ -29,7 +35,7 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
         </>
       ) : (
         <>
-          <Header isAuthMe={data} />
+          <Header isAuthMe={!!data} />
           {data && <Nav isSpecialAccount />}
           <Main>{children}</Main>
         </>

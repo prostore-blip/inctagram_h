@@ -1,0 +1,14 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #00000060;
+}
+
+.content {
+  position: fixed;
+  top: 97px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  box-sizing: border-box;
+}
