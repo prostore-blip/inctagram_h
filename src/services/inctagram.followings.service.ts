@@ -48,9 +48,9 @@ export const inctagramUsersFollowingsService = inctagramService.injectEndpoints(
           }
         },
       }),
-      getProfileUsers: builder.query<RequestType<UsersType>, UsersQueryParamsType>({
-        query: args => {
-          return { params: args ? args : undefined, url: `/v1/users` }
+      getProfileUsers: builder.query<RequestType<UsersType>, void>({
+        query: () => {
+          return { url: `/v1/users` }
         },
       }),
     }

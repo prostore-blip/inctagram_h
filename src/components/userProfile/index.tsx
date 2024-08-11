@@ -1,5 +1,6 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
 import { ModalFollowing } from '@/components/modalFollowing'
+import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
 import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -94,29 +95,30 @@ export function UserProfile({ userName }: Props) {
           </article>
         </section>
       </div>
-      <section className={s.cardsBlock}>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-      </section>
+      {/*<section className={s.cardsBlock}>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*</section>*/}
+      <GetProfileUsers />
     </>
   )
 }
