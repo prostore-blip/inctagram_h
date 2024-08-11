@@ -14,7 +14,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
-import s from './forgotPassword.module.scss'
+import s from './forgotPasswordForm.module.scss'
 
 import { ForgotPasswordRequestData, forgotPasswordFormSchema } from './schema'
 
