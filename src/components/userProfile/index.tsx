@@ -1,5 +1,5 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
-import { ModalFollowers } from '@/components/ModalFollowers'
+import { ModalFollowing } from '@/components/modalFollowing'
 import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import s from './userProfile.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
+import { ModalFollowers } from '../modalFollowers'
 
 type Props = {
   userName: string | undefined
@@ -87,10 +88,7 @@ export function UserProfile({ userName }: Props) {
             )}
           </div>
           <div className={s.countsFolowwers}>
-            <div className={s.following} onClick={openFollowings}>
-              <Typography variant={'regularBold14'}>{data?.followingCount ?? 'X'}</Typography>
-              <Typography variant={'regular14'}>Following</Typography>
-            </div>
+            <ModalFollowing followingCount={data?.followingCount ?? 'X'} />
             <ModalFollowers followersCount={data?.followersCount ?? 'X'} />
             <div className={s.publications} onClick={openPublications}>
               <Typography variant={'regularBold14'}>{data?.publicationsCount ?? 'X'}</Typography>
