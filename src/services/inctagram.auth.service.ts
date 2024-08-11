@@ -1,5 +1,7 @@
-import { RecoveryLinkRequestData } from '@/components/auth/forgotPassword/schema'
+import { ResetPasswordRequestData } from '@/components'
+import { ForgotPasswordRequestData } from '@/components/auth/forgotPassword/schema'
 import { inctagramService } from '@/services/inctagram.service'
+import { SuccessfulRequestResult } from '@/types'
 
 export const inctagramAuthService = inctagramService.injectEndpoints({
   endpoints: builder => {
@@ -10,12 +12,17 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           return { url: '/v1/auth/me' }
         },
       }),
-      checkRecoveryCode: builder.mutation<void, { recoveryCode: string }>({
-        query: body => {
+      forgotPassword: builder.mutation<SuccessfulRequestResult, ForgotPasswordRequestData>({
+        query: ({ email, recaptcha }) => {
+          const body = {
+            'email-or-login': email,
+            'recaptcha-token': recaptcha,
+          }
+
           return {
             body,
             method: 'POST',
-            url: '/v1/auth/check-recovery-code',
+            url: '/v1/users/forgot-password',
           }
         },
       }),
@@ -34,30 +41,19 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           }
         },
       }),
-      recoverPassword: builder.mutation<void, RecoveryLinkRequestData>({
-        query: ({ email, recaptcha }) => {
+      resetPassword: builder.mutation<void, ResetPasswordRequestData>({
+        query: ({ password, recaptcha, repeatPassword, token }) => {
           const body = {
-            baseUrl:
-              process.env.NODE_ENV === 'development'
-                ? 'http://localhost:3000'
-                : 'https://incta.team',
-            email,
-            recaptcha,
+            password,
+            'recaptcha-token': recaptcha,
+            'repeat-password': repeatPassword,
+            token,
           }
 
           return {
             body,
             method: 'POST',
-            url: '/v1/auth/password-recovery',
-          }
-        },
-      }),
-      setNewPassword: builder.mutation<void, { newPassword: string; recoveryCode: string }>({
-        query: body => {
-          return {
-            body,
-            method: 'POST',
-            url: '/v1/auth/new-password',
+            url: '/v1/users/reset-password',
           }
         },
       }),
@@ -67,8 +63,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
 
 export const {
   useAuthMeQuery,
-  useCheckRecoveryCodeMutation,
+  useForgotPasswordMutation,
   useLoginMutation,
-  useRecoverPasswordMutation,
-  useSetNewPasswordMutation,
+  useResetPasswordMutation,
 } = inctagramAuthService

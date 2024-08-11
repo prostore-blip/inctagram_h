@@ -1,90 +1,106 @@
-import { useEffect, useRef, useState } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { FieldName, useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
+import { RecaptchaLogo } from '@/assets/image/recaptchaLogo'
 import { FormInput } from '@/components/controll/formTextField'
+import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useRecoverPasswordMutation } from '@/services/inctagram.auth.service'
-import { isFormError } from '@/types'
-import { Button, Card, Typography } from '@chrizzo/ui-kit'
+import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
+import { isUnsuccessfulRequestResult } from '@/types'
+import { Button, Card, Checkbox, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './forgotPassword.module.scss'
 
-import { RecoveryLinkRequestData, forgotPasswordFormSchema } from './schema'
+import { ForgotPasswordRequestData, forgotPasswordFormSchema } from './schema'
 
 export const ForgotPasswordForm = () => {
-  const [recoverPassword, { isLoading, isSuccess }] = useRecoverPasswordMutation()
+  const [forgotPassword, { error, isLoading, isSuccess }] = useForgotPasswordMutation()
+  //there is no field in RTKQ or useForm hooks which is not changing after a new request
+  const [emailSent, setEmailSent] = useState(false)
 
-  const { router, t } = useTranslation()
+  const { t } = useTranslation()
+
+  const { executeRecaptcha, grecaptcha, loaded: recaptchaReady, reCaptchaKey } = useReCaptcha()
+  const [recaptchaTokenLoading, setRecaptchaTokenLoading] = useState(false)
 
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
   const [showErrorDialog, setShowErrorDialog] = useState(false)
 
-  const recaptchaRef = useRef<ReCAPTCHA | null>(null)
-
   const {
     control,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isSubmitSuccessful, isSubmitting, isValid, isValidating },
     getValues,
     handleSubmit,
     setError,
     setValue,
     trigger,
-  } = useForm<RecoveryLinkRequestData>({
+  } = useForm<ForgotPasswordRequestData>({
     defaultValues: {
       email: '',
       recaptcha: '',
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
     resolver: zodResolver(forgotPasswordFormSchema),
   })
+
+  const handleCloseSuccessDialog = () => {
+    setShowSuccessDialog(false)
+  }
+
+  const handleCloseErrorDialog = () => {
+    setShowErrorDialog(false)
+  }
+
+  const getRecaptchaToken = async () => {
+    if (!grecaptcha || !reCaptchaKey) {
+      return
+    }
+    try {
+      setRecaptchaTokenLoading(true)
+      const token = await executeRecaptcha('submit')
+
+      setValue('recaptcha', token)
+      await trigger('recaptcha')
+    } catch (err) {
+      setValue('recaptcha', '')
+    } finally {
+      setRecaptchaTokenLoading(false)
+    }
+  }
+
   const makeRequest = handleSubmit(async data => {
     try {
-      await recoverPassword(data).unwrap()
+      if (isSuccess) {
+        //without checkbox
+        await getRecaptchaToken()
+      }
+      await forgotPassword(data).unwrap()
 
       setShowSuccessDialog(true)
+      setEmailSent(true)
+      //there is no email data in the link
+      //todo decide: store or localStorage, or maybe the link in the end
+      localStorage.setItem(EMAIL_KEY_FOR_PASSWORD_RESET, data.email)
     } catch (error) {
-      console.error('Failed to recover password:', error)
-      if (isFormError(error)) {
-        const field = error.data.messages[0].field
-        const message = error.data.messages[0].message
+      if (isUnsuccessfulRequestResult(error) && error.data.statusCode === 404) {
+        const message = t.forgotPassword.startPage.emailNotFound
 
-        //todo get rid of type assertion
-        setError(field as FieldName<RecoveryLinkRequestData>, { message, type: 'manual' })
+        setError('email', { message, type: 'manual' })
       } else {
         setShowErrorDialog(true)
       }
     }
   })
 
-  //inctagram.work/api won't accept the same token and responses with 403 if no code posted - hence reset
-  //reset method won't trigger ReCaptcha onChange
-
-  useEffect(() => {
-    if (isSuccess && recaptchaRef.current) {
-      recaptchaRef.current.reset()
-    }
-  }, [isSuccess])
-
-  const onCaptchaChange = async (recaptchaValue: null | string) => {
-    setValue('recaptcha', recaptchaValue || '')
-    await trigger('recaptcha')
-  }
-
-  const handleCloseSuccessDialog = () => {
-    setShowSuccessDialog(false)
-    setValue('recaptcha', '')
-    //revalidate the form and disable submit button
-    trigger('recaptcha')
-  }
-
-  const submitDisabled = !isDirty || !isValid || isLoading
+  const submitDisabled = !isDirty || !isValid || isLoading || isValidating || isSubmitting
 
   //todo replace native dialog with component
+  //todo translation with dynamic values
   return (
     <div className={s.wrapper}>
       <DevTool control={control} />
@@ -96,7 +112,7 @@ export const ForgotPasswordForm = () => {
         <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
         <Typography variant={'regular16'}>
           {t.forgotPassword.startPage.successDialogText}
-          {` ${getValues('email') || 'test@undefined.com'}`}
+          {` ${getValues('email') || 'undefined@undefined'}`}
         </Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
@@ -112,9 +128,11 @@ export const ForgotPasswordForm = () => {
       >
         <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
         <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
+        {/*todo remove*/}
+        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
-          <Button onClick={() => setShowErrorDialog(false)} variant={'primary'}>
+          <Button onClick={handleCloseErrorDialog} variant={'primary'}>
             OK
           </Button>
         </div>
@@ -142,33 +160,67 @@ export const ForgotPasswordForm = () => {
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.startPage.hint}
             </Typography>
-            {isSuccess && (
+            {emailSent && (
               <Typography textAlign={'start'} variant={'regular14'}>
                 {t.forgotPassword.startPage.linkSent}
               </Typography>
             )}
             <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
-              {isSuccess && !isLoading && t.forgotPassword.startPage.sendLinkAgain}
-              {!isSuccess && !isLoading && t.forgotPassword.startPage.sendLink}
-              {isLoading && 'loading...'}
+              {emailSent && t.forgotPassword.startPage.sendLinkAgain}
+              {!emailSent && t.forgotPassword.startPage.sendLink}
+              {isSubmitting && <span className={clsx(s.loader)} />}
             </Button>
           </div>
         </form>
         <Button as={Link} className={s.linkButton} href={'/login'} variant={'text'}>
           {t.forgotPassword.startPage.backToSignIn}
         </Button>
-        <div className={clsx(s.captchaWrapper)}>
-          <ReCAPTCHA
-            hl={router.locale}
-            onChange={onCaptchaChange}
-            ref={recaptchaRef}
-            sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY || ''}
-            size={'normal'}
-            theme={'dark'}
-            type={'image'}
-          />
-        </div>
+        {/*todo discuss necessity - the checkbox was somewhat necessary for v2 but not for v3*/}
+        <RecaptchaBox
+          checked={Boolean(getValues('recaptcha'))}
+          hidden={emailSent}
+          isLoading={recaptchaTokenLoading}
+          isReady={recaptchaReady}
+          onClick={getRecaptchaToken}
+        />
       </Card>
+    </div>
+  )
+}
+
+type Props = {
+  checked: boolean
+  hidden?: boolean
+  isLoading: boolean
+  isReady?: boolean
+  onClick: () => void
+}
+
+function RecaptchaBox({ checked, hidden, isLoading, isReady, onClick }: Props) {
+  const handleRecaptchaClick = () => {
+    onClick && onClick()
+  }
+
+  return (
+    <div className={clsx(s.recaptchaBox, hidden && s.noDisplay)}>
+      <div className={clsx(isLoading && s.noDisplay)}>
+        <Checkbox
+          checked={checked}
+          disabled={checked || !isReady}
+          label={<Typography variant={'small'}>I&apos;m not a robot</Typography>}
+          onClick={handleRecaptchaClick}
+        />
+      </div>
+
+      <div className={clsx(s.flexRow, !isLoading && s.noDisplay)}>
+        <span className={clsx(s.loader)}></span>
+        <Typography className={s.textNoWrap} variant={'small'}>
+          I&apos;m not a robot
+        </Typography>
+      </div>
+      <div>
+        <RecaptchaLogo />
+      </div>
     </div>
   )
 }

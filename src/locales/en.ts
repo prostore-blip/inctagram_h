@@ -2,6 +2,9 @@ import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
   forgotPassword: {
+    common: {
+      inProgress: 'Sending the request...',
+    },
     expiredLink: {
       expiredErrorHint:
         'Looks like the verification link has expired. Not to worry, we can send the link again',
@@ -15,7 +18,7 @@ export const en: LocaleType = {
       confirmPassword: 'Confirm password',
       createNewPassword: 'Create new password',
       errorDialogText: 'Error changing your password',
-      errorDialogTitle: 'Что-то пошло не так',
+      errorDialogTitle: 'Something went wrong',
       hint: 'Your password must be between 6 and 20 characters and contain at least one capital letter and at least one special character',
       passwordsMustMatch: 'The passwords must match',
       successDialogText:
@@ -27,16 +30,17 @@ export const en: LocaleType = {
     startPage: {
       backToSignIn: 'Back to Sign-in page',
       emailNotFound: "User with this email doesn't exist",
-      errorDialogText: 'Письмо не было отправлено, попробуйте снова',
-      errorDialogTitle: 'Что-то пошло не так',
+      errorDialogText: 'Error sending an email, try later',
+      errorDialogTitle: 'Something went wrong',
       hint: 'Enter your email address and we will send you further instructions',
+      inProgress: 'Sending the request...',
       linkSent: 'The link has been sent by email.\n If you don’t receive an email send link again',
       sendLink: 'Send link',
       sendLinkAgain: 'Send link again',
       somethingWrong: 'Something went wrong',
       success: 'We have sent a link to confirm your email to',
-      successDialogText: 'Мы отправили письмо на Вашу почту',
-      successDialogTitle: 'Письмо отправлено',
+      successDialogText: 'We have sent an email to your address',
+      successDialogTitle: 'Email sent',
       title: 'Forgot password',
     },
   },
