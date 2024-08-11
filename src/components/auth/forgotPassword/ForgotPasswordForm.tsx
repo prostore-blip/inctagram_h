@@ -25,7 +25,7 @@ export const ForgotPasswordForm = () => {
 
   const { t } = useTranslation()
 
-  const { executeRecaptcha, grecaptcha, loaded: recaptchaReady, reCaptchaKey } = useReCaptcha()
+  const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
   const [recaptchaTokenLoading, setRecaptchaTokenLoading] = useState(false)
 
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
@@ -57,7 +57,7 @@ export const ForgotPasswordForm = () => {
   }
 
   const getRecaptchaToken = async () => {
-    if (!grecaptcha || !reCaptchaKey) {
+    if (!recaptchaReady) {
       return
     }
     try {
