@@ -16,11 +16,6 @@ function UserProfileWrapper() {
    */
   const { data, isFetching } = useGetUserProfileQuery()
 
-  /**
-   * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
-   */
-  const {} = useGetUserProfileByUserIdQuery(data?.userName ?? '', { skip: !data || isFetching })
-
   console.log('UserprofileWrapper ', data, isFetching)
   if (isFetching) {
     console.log('UserprofileWrapper is Fetching')

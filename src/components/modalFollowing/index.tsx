@@ -8,6 +8,7 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
+import { ModalConfirm } from '@/components/modalConfirm'
 import { SearchInputValueType } from '@/components/modalFollowers/types'
 import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import {
@@ -51,10 +52,6 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
     { skip: !open }
   )
   /**
-   * хук RTKQ. Убрать юзера из подписчиков
-   */
-  const [unfollow] = useDeleteFolowerFromFolowersMutation()
-  /**
    * номер таймера из функции задержки посыла текста из инпута на сервер
    */
 
@@ -76,10 +73,6 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
     [timerId]
   )
 
-  const unfollowUser = (selectedUserId: number) => {
-    unfollow(selectedUserId)
-  }
-
   const following = data?.items?.map(f => {
     return (
       <li className={s.li} key={f.id}>
@@ -94,15 +87,7 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
           <Typography variant={'regular16'}> {f.userName}</Typography>
         </div>
         <div className={s.followButtonsBlock}>
-          <Button
-            className={s.unfollowButton}
-            onClick={() => {
-              unfollowUser(f.userId)
-            }}
-            variant={'outline'}
-          >
-            <Typography variant={'h3'}></Typography> Unfollow
-          </Button>
+          <ModalConfirm user={f} />
         </div>
       </li>
     )

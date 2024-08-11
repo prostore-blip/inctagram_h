@@ -11,6 +11,11 @@ export const inctagramUsersFollowingsService = inctagramService.injectEndpoints(
   endpoints: builder => {
     return {
       deleteFolowerFromFolowers: builder.mutation<void, number>({
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          await queryFulfilled
+
+          dispatch(inctagramUsersFollowingsService.util.invalidateTags(['getFollowing']))
+        },
         query: userId => {
           return { method: 'DELETE', url: `/v1/users/follower/${userId}` }
         },
@@ -29,6 +34,7 @@ export const inctagramUsersFollowingsService = inctagramService.injectEndpoints(
         },
       }),
       getFollowingUsers: builder.query<RequestType<FollowersUsersType>, RequestForFollowersUsers>({
+        providesTags: ['getFollowing'],
         query: args => {
           return {
             params: args.params ? args.params : undefined,
