@@ -79,7 +79,9 @@ export const ForgotPasswordForm = () => {
         //without checkbox
         await getRecaptchaToken()
       }
-      await forgotPassword(data).unwrap()
+      //data contains old token here
+      //todo refactor the flow related to recaptcha - data should contain a fresh recaptcha token
+      await forgotPassword({ ...data, recaptcha: getValues('recaptcha') }).unwrap()
 
       setShowSuccessDialog(true)
       setEmailSent(true)
