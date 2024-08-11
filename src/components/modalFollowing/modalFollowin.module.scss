@@ -23,9 +23,11 @@
       flex-direction: column;
       gap: 24px;
       padding-top: 24px;
+
       & > .li {
         display: flex;
         justify-content: space-between;
+
         .avaAndUserNameBlock {
           display: flex;
           align-items: center;
@@ -42,4 +44,8 @@
   .close {
     padding: 0;
   }
+}
+
+.userName {
+  white-space: nowrap;
 }

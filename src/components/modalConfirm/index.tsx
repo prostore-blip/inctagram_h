@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
 import {
@@ -9,18 +9,29 @@ import {
   ModalkaTrigger,
 } from '@/components/modal'
 import { FollowersUsersType } from '@/components/modalFollowers/types'
-import { useDeleteFolowerFromFolowersMutation } from '@/services/inctagram.followings.service'
-import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
+import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
 import s from './modalConfirm.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
-type Props = {
-  user: FollowersUsersType
-}
 
-export const ModalConfirm = ({ user }: Props) => {
+type Props = {
+  callback: (userId: number, setFn: any) => void
+  children: ReactNode
+  title: string
+  titleButtonTrigger: string
+  user: FollowersUsersType
+  variantTriggerButton: 'outline' | 'primary' | 'secondary' | 'text'
+}
+export const ModalConfirm = ({
+  callback,
+  children,
+  title,
+  titleButtonTrigger,
+  user,
+  variantTriggerButton,
+}: Props) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -28,25 +39,23 @@ export const ModalConfirm = ({ user }: Props) => {
    */
   const [open, setOpen] = useState(false)
   /**
-   * хук RTKQ. Убрать юзера из подписчиков
+   * функция вызова коллбэка из пропсов по клику на кнопку Yes. Коллбэк передаёт в родителя id юзера и set-функцию для
+   * закрытия данной модалки, если запрос в родителе успешен
    */
-  const [unfollow] = useDeleteFolowerFromFolowersMutation()
-  const unfollowUser = (selectedUserId: number) => {
-    unfollow(selectedUserId)
-      .unwrap()
-      .then(() => setOpen(false))
+  const unfollowUser = () => {
+    callback(user.userId, setOpen)
   }
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <Button className={s.unfollowButton} variant={'outline'}>
-          <Typography variant={'h3'}>Unfollow</Typography>
+        <Button className={s.unfollowButton} variant={variantTriggerButton}>
+          <Typography variant={'h3'}>{titleButtonTrigger}</Typography>
         </Button>
       </ModalkaTrigger>
       <ModalkaContent aria-describedby={'open viewport followers'} className={s.content}>
         <ModalkaTitle className={s.title}>
-          <Typography variant={'h1'}>Unfollow</Typography>
+          <Typography variant={'h1'}>{title}</Typography>
           <ModalkaButtonCancel asChild>
             <Button className={s.close} variant={'text'}>
               <Close />
@@ -62,20 +71,10 @@ export const ModalConfirm = ({ user }: Props) => {
               src={user.avatars[0]?.url ?? defaultAva}
               width={36}
             />
-            <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
-              Do you really want to Unfollow from this user "
-              <Typography as={'span'} className={s.userName} variant={'h3'}>
-                {user.userName}
-              </Typography>
-              "?
-            </Typography>
+            {children}
           </div>
           <div className={s.buttonBlock}>
-            <Button
-              className={s.yesButton}
-              onClick={() => unfollowUser(user.userId)}
-              variant={'outline'}
-            >
+            <Button className={s.yesButton} onClick={unfollowUser} variant={'outline'}>
               <Typography variant={'h3'}>Yes</Typography>
             </Button>
             <ModalkaButtonCancel asChild>

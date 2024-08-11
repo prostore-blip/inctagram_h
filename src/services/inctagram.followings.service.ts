@@ -21,11 +21,17 @@ export const inctagramUsersFollowingsService = inctagramService.injectEndpoints(
         },
       }),
       followToUser: builder.mutation<void, { selectedUserId: number }>({
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          await queryFulfilled
+
+          dispatch(inctagramUsersFollowingsService.util.invalidateTags(['getFollowing']))
+        },
         query: body => {
           return { body, method: 'POST', url: `/v1/users/following` }
         },
       }),
       getFollowersUsers: builder.query<RequestType<FollowersUsersType>, RequestForFollowersUsers>({
+        providesTags: ['getFollowing'],
         query: args => {
           return {
             params: args.params ? args.params : undefined,

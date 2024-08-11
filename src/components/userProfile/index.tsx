@@ -42,21 +42,9 @@ export function UserProfile({ userName }: Props) {
   const openSettings = () => {
     //открыть настройки
   }
-
-  const openFollowers = () => {
-    if (!authMeData) {
-      return null
-    }
-    alert('openFolowwers')
-    //открыть модалку фоловеров
-  }
-  const openFollowings = () => {
-    if (!authMeData) {
-      return null
-    }
-    alert('openFollowings')
-    //открыть модалку подписок
-  }
+  /**
+   * открыть публикации
+   */
   const openPublications = () => {
     if (!authMeData) {
       return null

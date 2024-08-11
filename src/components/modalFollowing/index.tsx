@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useMemo, useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
 import {
@@ -34,6 +34,11 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
    * иначе она просто закрывается и данные не передаются
    */
   const [open, setOpen] = useState(false)
+  /**
+   * стэйт поиска юзеров, на которых подписан. seach - передаём в value инпута. textFromDebounceInput - текст поиска
+   * для отправки с запросом на сервер (отображается с выдеркой времени, чтобы не отправлять на сервер каждый
+   * вводимый символ)
+   */
   const [inputValue, setInputValue] = useState<SearchInputValueType>({
     search: '',
     textFromDebounceInput: '',
@@ -43,7 +48,10 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
    * хук RTKQ. проверка залогинен или нет
    */
   const { data: authMeData } = useAuthMeQuery()
-
+  /**
+   * хук RTKQ. запрос за юзерами, на которых подписан. params - это query-параметры, username используется, как uri.
+   * skip - пока модальное окно юзеров, на которых подписан, не открыто, не делаем запрос
+   */
   const { data, isFetching: isFetchingGetFollowing } = useGetFollowingUsersQuery(
     {
       params: { search: inputValue.textFromDebounceInput },
@@ -51,10 +59,25 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
     },
     { skip: !open }
   )
+
+  /**
+   * хук RTKQ. Отписаться от юзера
+   */
+  const [unfollow] = useDeleteFolowerFromFolowersMutation()
+  /**
+   * коллбэк для отподписки на юзера
+   * @param selectedUserId - id юзера, на которого хотим подпсаться
+   * @param setFn - set-функция из модалки подтверждения отписки. Когда запрос отписки на сервер успешен,
+   * то закрываем модалку подтверждения
+   */
+  const unfollowUser = (selectedUserId: number, setFn: any) => {
+    unfollow(selectedUserId)
+      .unwrap()
+      .then(() => setFn(false))
+  }
   /**
    * номер таймера из функции задержки посыла текста из инпута на сервер
    */
-
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
   /**
    * функция задержки посыла текста из инпута на сервер (debounce)
@@ -72,26 +95,44 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) =>
     },
     [timerId]
   )
-
-  const following = data?.items?.map(f => {
-    return (
-      <li className={s.li} key={f.id}>
-        <div className={s.avaAndUserNameBlock}>
-          <Image
-            alt={'small-avatar'}
-            className={s.image}
-            height={36}
-            src={f.avatars[0]?.url ?? defaultAva}
-            width={36}
-          />
-          <Typography variant={'regular16'}> {f.userName}</Typography>
-        </div>
-        <div className={s.followButtonsBlock}>
-          <ModalConfirm user={f} />
-        </div>
-      </li>
-    )
-  })
+  /**
+   * формируем массив юзеров, на которых подписан с данных с сервера
+   */
+  const following = useMemo(() => {
+    return data?.items?.map(f => {
+      return (
+        <li className={s.li} key={f.id}>
+          <div className={s.avaAndUserNameBlock}>
+            <Image
+              alt={'small-avatar'}
+              className={s.image}
+              height={36}
+              src={f.avatars[0]?.url ?? defaultAva}
+              width={36}
+            />
+            <Typography variant={'regular16'}> {f.userName}</Typography>
+          </div>
+          <div className={s.modalConfirm}>
+            <ModalConfirm
+              callback={unfollowUser}
+              title={'Unfollow'}
+              titleButtonTrigger={'Unfollow'}
+              user={f}
+              variantTriggerButton={'outline'}
+            >
+              <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
+                Do you really want to Unfollow from this user &quot;
+                <Typography as={'span'} className={s.userName} variant={'h3'}>
+                  {f.userName}
+                </Typography>
+                &quot;?
+              </Typography>
+            </ModalConfirm>
+          </div>
+        </li>
+      )
+    })
+  }, [data])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
