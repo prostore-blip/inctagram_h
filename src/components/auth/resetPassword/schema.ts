@@ -2,10 +2,9 @@ import { z } from 'zod'
 
 //todo apply the same regexp as for sign-up
 //todo translate validation errors somehow
-export const newPasswordSchema = z
+export const resetPasswordFormSchema = z
   .object({
-    confirmPassword: z.string().min(6, 'Passwords do not match'),
-    newPassword: z
+    password: z
       .string()
       .min(6, 'Password has to be at least 6 characters long')
       .regex(/[0-9]/, 'Password must contain at least one digit')
@@ -15,11 +14,13 @@ export const newPasswordSchema = z
         /[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/,
         'Password must contain at least one special character'
       ),
-    recoveryCode: z.string(),
+    recaptcha: z.string(),
+    repeatPassword: z.string().min(6, 'Passwords do not match'),
+    token: z.string(),
   })
-  .refine(data => data.newPassword === data.confirmPassword, {
+  .refine(data => data.password === data.repeatPassword, {
     message: 'Passwords do not match',
-    path: ['confirmPassword'],
+    path: ['repeatPassword'],
   })
 
-export type NewPasswordFormData = z.infer<typeof newPasswordSchema>
+export type ResetPasswordRequestData = z.infer<typeof resetPasswordFormSchema>
