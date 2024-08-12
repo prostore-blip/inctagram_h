@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -38,11 +38,11 @@ export const ResetPasswordForm = () => {
     control,
     formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
-    setError,
+    setValue,
   } = useForm<ResetPasswordRequestData>({
     defaultValues: {
       password: '',
-      // recaptcha: '',
+      recaptcha: '',
       repeatPassword: '',
       token,
     },
@@ -51,22 +51,12 @@ export const ResetPasswordForm = () => {
   })
 
   const sendResetRequest = handleSubmit(async data => {
-    if (!token || !recaptchaLoaded) {
+    if (!token) {
       return
     }
 
     try {
-      const recaptcha = await executeRecaptcha('submit')
-
-      if (!recaptcha) {
-        return
-      }
-      //todo refactor form data flow - data should already contain the right recaptcha token.
-      // Another wrapper function?
-
-      // setValue('recaptcha', recaptcha)
-
-      await resetPassword({ ...data, recaptcha }).unwrap()
+      await resetPassword(data).unwrap()
 
       setShowSuccessDialog(true)
       localStorage.removeItem(EMAIL_KEY_FOR_PASSWORD_RESET)
@@ -82,6 +72,23 @@ export const ResetPasswordForm = () => {
       }
     }
   })
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    if (!token || !recaptchaLoaded) {
+      return
+    }
+    try {
+      const recaptcha = await executeRecaptcha('submit')
+
+      setValue('recaptcha', recaptcha)
+      // await trigger('recaptcha')
+
+      await sendResetRequest()
+    } catch (error) {
+      setShowErrorDialog(true)
+    }
+  }
 
   const handleCloseSuccessDialog = async () => {
     setShowSuccessDialog(false)
@@ -133,7 +140,7 @@ export const ResetPasswordForm = () => {
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.newPassword.title}
         </Typography>
-        <form className={s.form} onSubmit={sendResetRequest}>
+        <form className={s.form} onSubmit={onSubmit}>
           <div className={s.wrap}>
             <FormInput
               control={control}
@@ -148,6 +155,13 @@ export const ResetPasswordForm = () => {
               label={t.signUp.confirmPass}
               name={'repeatPassword'}
               type={'password'}
+            />
+            <FormInput
+              className={s.hidden}
+              control={control}
+              error={errors.recaptcha?.message}
+              label={'Recaptcha'}
+              name={'recaptcha'}
             />
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.newPassword.hint}

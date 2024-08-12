@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { RecaptchaLogo } from '@/assets/image/recaptchaLogo'
@@ -75,14 +75,7 @@ export const ForgotPasswordForm = () => {
 
   const makeRequest = handleSubmit(async data => {
     try {
-      if (isSuccess) {
-        //without checkbox
-        await getRecaptchaToken()
-      }
-      //data contains old token here
-      //todo refactor the flow related to recaptcha - data should contain a fresh recaptcha token
-      await forgotPassword({ ...data, recaptcha: getValues('recaptcha') }).unwrap()
-
+      await forgotPassword(data).unwrap()
       setShowSuccessDialog(true)
       setEmailSent(true)
       //there is no email data in the link
@@ -98,6 +91,15 @@ export const ForgotPasswordForm = () => {
       }
     }
   })
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    if (isSuccess) {
+      //'send again' frame doesn't have recaptcha checkbox
+      await getRecaptchaToken()
+    }
+    await makeRequest()
+  }
 
   const submitDisabled = !isDirty || !isValid || isLoading || isValidating || isSubmitting
 
@@ -143,7 +145,7 @@ export const ForgotPasswordForm = () => {
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.startPage.title}
         </Typography>
-        <form className={s.form} onSubmit={makeRequest}>
+        <form className={s.form} onSubmit={onSubmit}>
           <div className={s.flexColumn}>
             <FormInput
               control={control}
@@ -151,6 +153,7 @@ export const ForgotPasswordForm = () => {
               label={t.signUp.emailTitle}
               name={'email'}
               placeholder={'example@example.com'}
+              readOnly={emailSent}
             />
             <FormInput
               className={s.hidden}
