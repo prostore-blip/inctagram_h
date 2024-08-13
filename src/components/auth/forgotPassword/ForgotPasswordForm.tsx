@@ -148,6 +148,7 @@ export const ForgotPasswordForm = () => {
         <form className={s.form} onSubmit={onSubmit}>
           <div className={s.flexColumn}>
             <FormInput
+              className={clsx(emailSent && s.noPointer)}
               control={control}
               error={errors.email?.message}
               label={t.signUp.emailTitle}
