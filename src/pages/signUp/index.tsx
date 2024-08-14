@@ -8,5 +8,5 @@ export function SignUp() {
   )
 }
 
-SignUp.getLayout = GetLayout
+// SignUp.getLayout = GetLayout
 export default SignUp

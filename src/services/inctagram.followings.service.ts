@@ -1,26 +1,66 @@
+import {
+  FollowersUsersType,
+  RequestForFollowersUsers,
+  RequestType,
+  UsersQueryParamsType,
+  UsersType,
+} from '@/components/modalFollowers/types'
 import { inctagramService } from '@/services/inctagram.service'
 
 export const inctagramUsersFollowingsService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
-      deleteFolowerFromFolowers: builder.mutation<any, any>({
-        query: args => {
-          return { method: 'DELETE', url: `/v1/users/follower/${args.userId}` }
+      deleteFolowerFromFolowers: builder.mutation<void, number>({
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          await queryFulfilled
+
+          dispatch(inctagramUsersFollowingsService.util.invalidateTags(['getFollowing']))
+        },
+        query: userId => {
+          return { method: 'DELETE', url: `/v1/users/follower/${userId}` }
         },
       }),
-      getProfileUsers: builder.query<any, any>({
-        query: args => {
-          return { params: args ? args : undefined, url: `/v1/users` }
+      followToUser: builder.mutation<void, { selectedUserId: number }>({
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          await queryFulfilled
+
+          dispatch(inctagramUsersFollowingsService.util.invalidateTags(['getFollowing']))
         },
-      }),
-      updateSubscriptionToUser: builder.mutation<any, any>({
         query: body => {
           return { body, method: 'POST', url: `/v1/users/following` }
+        },
+      }),
+      getFollowersUsers: builder.query<RequestType<FollowersUsersType>, RequestForFollowersUsers>({
+        providesTags: ['getFollowing'],
+        query: args => {
+          return {
+            params: args.params ? args.params : undefined,
+            url: `/v1/users/${args.username}/followers`,
+          }
+        },
+      }),
+      getFollowingUsers: builder.query<RequestType<FollowersUsersType>, RequestForFollowersUsers>({
+        providesTags: ['getFollowing'],
+        query: args => {
+          return {
+            params: args.params ? args.params : undefined,
+            url: `/v1/users/${args.username}/following`,
+          }
+        },
+      }),
+      getProfileUsers: builder.query<RequestType<UsersType>, void>({
+        query: () => {
+          return { url: `/v1/users` }
         },
       }),
     }
   },
 })
 
-export const { useDeleteFolowerFromFolowersMutation, useGetProfileUsersQuery } =
-  inctagramUsersFollowingsService
+export const {
+  useDeleteFolowerFromFolowersMutation,
+  useFollowToUserMutation,
+  useGetFollowersUsersQuery,
+  useGetFollowingUsersQuery,
+  useGetProfileUsersQuery,
+} = inctagramUsersFollowingsService
