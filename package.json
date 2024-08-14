@@ -18,12 +18,13 @@
     "async-mutex": "^0.5.0",
     "clsx": "^2.1.1",
     "next": "14.2.5",
+    "next-recaptcha-v3": "^1.4.1",
     "next-redux-wrapper": "^8.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
-    "remeda": "^2.6.0",
     "react-redux": "^9.1.2",
+    "remeda": "^2.6.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
