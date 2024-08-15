@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form'
 
 import { ImageIcon } from '@/assets/icons'
 import { GetNavLayout } from '@/components'
-import { FormSelect } from '@/components/controll/formSelect'
+import { FormSelect } from '@/components/controll/FormSelect'
+import { FormTextarea } from '@/components/controll/FormTextarea'
 import { FormInput } from '@/components/controll/formTextField'
 import { Select, SelectItem } from '@/components/uikit-temp-replacements/select/Select'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -204,11 +205,12 @@ const Page = () => {
               <Typography className={pageStyles.label} variant={'regular14'}>
                 About me
               </Typography>
-              <TextArea
+              <FormTextarea
+                control={control}
                 name={'aboutMe'}
-                placeholder={'about'}
+                placeholder={'tell about yourself'}
                 style={{ height: '100px', width: '100%' }}
-              ></TextArea>
+              />
             </section>
 
             <Button style={{ alignSelf: 'flex-end' }} type={'submit'}>
