@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form'
 import { ImageIcon } from '@/assets/icons'
 import { GetNavLayout } from '@/components'
 import { FormSelect } from '@/components/controll/FormSelect'
-import { FormTextarea } from '@/components/controll/FormTextarea'
+import { FormTextArea } from '@/components/controll/FormTextArea'
 import { FormInput } from '@/components/controll/formTextField'
-import { Select, SelectItem } from '@/components/uikit-temp-replacements/select/Select'
+import { SelectItem } from '@/components/uikit-temp-replacements/select/Select'
 import { useTranslation } from '@/hooks/useTranslation'
-import { Button, TabType, TextArea, Typography } from '@chrizzo/ui-kit'
+import { Button, TabType } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
@@ -24,14 +24,12 @@ const tabsList: TabType[] = [
   { title: 'My payments', value: 'payments' },
 ]
 
-// const countries = [{ item: 'Country1' }, { item: 'Country2' }, { item: 'Country3' }]
 const countries = [
   { title: 'Country1', value: 'country1' },
   { title: 'Country2', value: 'country2' },
   { title: 'Country3', value: 'country3' },
 ]
 
-// const cities = [{ item: 'City1',  }, { item: 'City1' }, { item: 'City1' }]
 const cities = [
   { title: 'City1', value: 'city1' },
   { title: 'City2', value: 'city2' },
@@ -48,10 +46,6 @@ const userGeneralInfoSchema = z.object({
   username: z.string().min(3),
 })
 
-// .refine(data => data.password === data.confirmPassword, {
-//   message: 'Passwords do not match',
-//   path: ['confirmPassword'],
-// })
 export type UserGeneralInfoData = z.infer<typeof userGeneralInfoSchema>
 
 const Page = () => {
@@ -87,147 +81,139 @@ const Page = () => {
           ))}
         </TabsPrimitive.TabsList>
       </TabsPrimitive.Tabs>
-      <div
-        style={{
-          alignItems: 'flex-start',
-          display: 'flex',
-          gap: '36px',
-          justifyContent: 'flex-start',
-          marginTop: '24px',
-        }}
-      >
-        <div
-          style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '24px' }}
-        >
-          <div
-            style={{
-              alignItems: 'center',
-              backgroundColor: 'var(--color-dark-500)',
-              borderRadius: '50%',
-              display: 'flex',
-              height: '192px',
-              justifyContent: 'center',
-              width: '192px',
-            }}
-          >
-            <ImageIcon size={36} />
-          </div>
-          <Button type={'button'} variant={'outline'}>
-            Add profile photo
-          </Button>
-        </div>
+      <div className={pageStyles.flexRow}>
+        <ImageSelector />
         <div style={{ flexGrow: '1' }}>
-          <DevTool control={control} />
-          <form
-            action={''}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <FormInput
-              control={control}
-              error={errors.username?.message}
-              label={t.signUp.userName}
-              name={'username'}
-              placeholder={'username'}
-              style={{ marginBottom: '24px' }}
-            />
-            <FormInput
-              control={control}
-              error={errors.firstname?.message}
-              label={t.signUp.userName}
-              name={'firstname'}
-              placeholder={'firstname'}
-              style={{ marginBottom: '24px' }}
-            />
-            <FormInput
-              control={control}
-              error={errors.lastname?.message}
-              label={t.signUp.userName}
-              name={'lastname'}
-              placeholder={'lastname'}
-              style={{ marginBottom: '24px' }}
-            />
-            <FormInput
-              control={control}
-              error={errors.lastname?.message}
-              label={'Date of birth'}
-              name={'birthDate'}
-              placeholder={'birthDate'}
-              style={{ marginBottom: '24px' }}
-            />
-            <section
-              className={pageStyles.locationSection}
-              style={{
-                display: 'flex',
-                gap: '2rem',
-                justifyContent: 'space-between',
-                marginBottom: '24px',
-                width: '100%',
-              }}
-            >
-              {/*<Select fullWidth label={'Select your country'} placeholder={'Country'}>*/}
-              {/*  {countries.map(item => (*/}
-              {/*    <SelectItem key={item.value + item.title} value={item.value}>*/}
-              {/*      {item.title}*/}
-              {/*    </SelectItem>*/}
-              {/*  ))}*/}
-              {/*</Select>*/}
-              <FormSelect
-                control={control}
-                fullWidth
-                label={'Select your country'}
-                name={'country'}
-                placeholder={'Country'}
-              >
-                {countries.map(item => (
-                  <SelectItem key={item.value + item.title} value={item.value}>
-                    {item.title}
-                  </SelectItem>
-                ))}
-              </FormSelect>
-              <FormSelect
-                control={control}
-                fullWidth
-                label={'Select your city'}
-                name={'city'}
-                placeholder={'City'}
-              >
-                {cities.map(item => (
-                  <SelectItem key={item.value + item.title} value={item.value}>
-                    {item.title}
-                  </SelectItem>
-                ))}
-              </FormSelect>
-            </section>
-            <section style={{ marginBottom: '48px', width: '100%' }}>
-              <Typography className={pageStyles.label} variant={'regular14'}>
-                About me
-              </Typography>
-              <FormTextarea
-                control={control}
-                name={'aboutMe'}
-                placeholder={'tell about yourself'}
-                style={{ height: '100px', width: '100%' }}
-              />
-            </section>
-
-            <Button style={{ alignSelf: 'flex-end' }} type={'submit'}>
-              Save changes
-            </Button>
-          </form>
+          <ProfileForm />
         </div>
       </div>
+      <div className={pageStyles.separator} />
+    </div>
+  )
+}
+
+function ProfileForm() {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<UserGeneralInfoData>({ resolver: zodResolver(userGeneralInfoSchema) })
+  const { t } = useTranslation()
+
+  return (
+    <>
+      <DevTool control={control} />
+      <form
+        action={''}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <FormInput
+          control={control}
+          error={errors.username?.message}
+          label={t.signUp.userName}
+          name={'username'}
+          placeholder={'username'}
+          style={{ marginBottom: '24px' }}
+        />
+        <FormInput
+          control={control}
+          error={errors.firstname?.message}
+          label={t.signUp.userName}
+          name={'firstname'}
+          placeholder={'firstname'}
+          style={{ marginBottom: '24px' }}
+        />
+        <FormInput
+          control={control}
+          error={errors.lastname?.message}
+          label={t.signUp.userName}
+          name={'lastname'}
+          placeholder={'lastname'}
+          style={{ marginBottom: '24px' }}
+        />
+        <FormInput
+          control={control}
+          error={errors.lastname?.message}
+          label={'Date of birth'}
+          name={'birthDate'}
+          placeholder={'birthDate'}
+          style={{ marginBottom: '24px' }}
+        />
+        <section
+          className={pageStyles.locationSection}
+          style={{
+            display: 'flex',
+            gap: '2rem',
+            justifyContent: 'space-between',
+            marginBottom: '24px',
+            width: '100%',
+          }}
+        >
+          <FormSelect
+            control={control}
+            fullWidth
+            label={'Select your country'}
+            name={'country'}
+            placeholder={'Country'}
+          >
+            {countries.map(item => (
+              <SelectItem key={item.value + item.title} value={item.value}>
+                {item.title}
+              </SelectItem>
+            ))}
+          </FormSelect>
+          <FormSelect
+            control={control}
+            fullWidth
+            label={'Select your city'}
+            name={'city'}
+            placeholder={'City'}
+          >
+            {cities.map(item => (
+              <SelectItem key={item.value + item.title} value={item.value}>
+                {item.title}
+              </SelectItem>
+            ))}
+          </FormSelect>
+        </section>
+        <FormTextArea
+          control={control}
+          label={'About me'}
+          name={'aboutMe'}
+          placeholder={'tell about yourself'}
+          style={{ height: '100px', marginBottom: '48px', width: '100%' }}
+        />
+
+        <Button style={{ alignSelf: 'flex-end' }} type={'submit'}>
+          Save changes
+        </Button>
+      </form>
+    </>
+  )
+}
+
+function ImageSelector() {
+  return (
+    <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div
         style={{
-          backgroundColor: '#333333',
-          bottom: '62px',
-          height: '2px',
-          position: 'relative',
-          width: '100%',
+          alignItems: 'center',
+          backgroundColor: 'var(--color-dark-500)',
+          borderRadius: '50%',
+          display: 'flex',
+          height: '192px',
+          justifyContent: 'center',
+          width: '192px',
         }}
-      />
+      >
+        <ImageIcon size={36} />
+      </div>
+      <Button type={'button'} variant={'outline'}>
+        Add profile photo
+      </Button>
     </div>
   )
 }

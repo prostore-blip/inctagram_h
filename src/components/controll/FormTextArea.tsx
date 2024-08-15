@@ -1,15 +1,15 @@
-import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
+import { ChangeEvent } from 'react'
 import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { TextArea, TextAreatype } from '@chrizzo/ui-kit'
+import { TextArea, TextAreaProps } from '../uikit-temp-replacements/textarea/TextArea'
 
 type Props<T extends FieldValues> = Omit<
-  TextAreatype,
+  TextAreaProps,
   'disabled' | 'name' | 'onBlur' | 'onChange' | 'ref' | 'value'
 > &
   UseControllerProps<T>
 
-export const FormTextarea = <T extends FieldValues>({
+export const FormTextArea = <T extends FieldValues>({
   control,
   defaultValue,
   disabled,
@@ -23,21 +23,16 @@ export const FormTextarea = <T extends FieldValues>({
     fieldState: { error },
   } = useController({ control, defaultValue, disabled, name, rules, shouldUnregister })
 
-  const handleValueChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value
-
-    onChange && onChange(value)
-  }
-
   //todo add forwardRef, remove polymorph(?), fix Props type, placeholder shouldn't be mandatory
   return (
     <TextArea
       {...restProps}
       disabled={disabled}
+      errorMessage={error?.message}
       name={fieldName}
       onBlur={onBlur}
-      onChange={handleValueChange}
-      // ref={ref}
+      onValueChange={onChange}
+      ref={ref}
       {...field}
     />
   )
