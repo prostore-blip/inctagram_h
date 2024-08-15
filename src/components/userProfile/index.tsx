@@ -1,4 +1,6 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
+import { ModalFollowing } from '@/components/modalFollowing'
+import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
 import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -9,6 +11,7 @@ import { useRouter } from 'next/router'
 import s from './userProfile.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
+import { ModalFollowers } from '../modalFollowers'
 
 type Props = {
   userName: string | undefined
@@ -17,20 +20,22 @@ type Props = {
 export function UserProfile({ userName }: Props) {
   const router = useRouter()
 
+  console.log('userProfile')
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
-  const { data } = useGetUserProfileByUserIdQuery(userName ?? '')
+  const { data, isFetching } = useGetUserProfileByUserIdQuery(userName ?? '')
 
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
-  const { data: subscriptionData } = useGetMySubscriptionsQuery()
+  const { data: subscriptionData, isFetching: isFetchingGetMySubscriptions } =
+    useGetMySubscriptionsQuery()
 
   /**
    * проверка залогинен или нет
    */
-  const { data: authMeData } = useAuthMeQuery()
+  const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthMeQuery()
 
   /**
    * открыть настройки
@@ -38,21 +43,9 @@ export function UserProfile({ userName }: Props) {
   const openSettings = () => {
     //открыть настройки
   }
-
-  const openFollowers = () => {
-    if (!authMeData) {
-      return null
-    }
-    alert('openFolowwers')
-    //открыть модалку фоловеров
-  }
-  const openFollowings = () => {
-    if (!authMeData) {
-      return null
-    }
-    alert('openFollowings')
-    //открыть модалку подписок
-  }
+  /**
+   * открыть публикации
+   */
   const openPublications = () => {
     if (!authMeData) {
       return null
@@ -75,25 +68,19 @@ export function UserProfile({ userName }: Props) {
           <div className={s.userNameSettingsButtonBlock}>
             <Typography className={s.userName} variant={'h1'}>
               {data?.userName ?? 'UserName'}
-              {subscriptionData?.length ? <PaidAccount /> : null}
+              {subscriptionData?.length && !isFetchingGetMySubscriptions ? <PaidAccount /> : null}
             </Typography>
-            {authMeData && (
+            {authMeData && !isFetchingAuthMe && (
               <Button onClick={openSettings} variant={'secondary'}>
                 <Typography variant={'h3'}>Profile Settings</Typography>
               </Button>
             )}
           </div>
           <div className={s.countsFolowwers}>
-            <div className={s.following} onClick={openFollowings}>
-              <Typography variant={'regularBold14'}>{data?.followingCount ?? 2218}</Typography>
-              <Typography variant={'regular14'}>Following</Typography>
-            </div>
-            <div className={s.followers} onClick={openFollowers}>
-              <Typography variant={'regularBold14'}>{data?.followersCount ?? 2358}</Typography>
-              <Typography variant={'regular14'}>Followers</Typography>
-            </div>
+            <ModalFollowing followingCount={data?.followingCount ?? 'X'} />
+            <ModalFollowers followersCount={data?.followersCount ?? 'X'} />
             <div className={s.publications} onClick={openPublications}>
-              <Typography variant={'regularBold14'}>{data?.publicationsCount ?? 2764}</Typography>
+              <Typography variant={'regularBold14'}>{data?.publicationsCount ?? 'X'}</Typography>
               <Typography variant={'regular14'}>Publications</Typography>
             </div>
           </div>
@@ -108,29 +95,30 @@ export function UserProfile({ userName }: Props) {
           </article>
         </section>
       </div>
-      <section className={s.cardsBlock}>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-        <div className={s.card}></div>
-      </section>
+      {/*<section className={s.cardsBlock}>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*  <div className={s.card}></div>*/}
+      {/*</section>*/}
+      <GetProfileUsers />
     </>
   )
 }

@@ -1,0 +1,46 @@
+.title {
+  margin-bottom: 19px;
+  text-align: center;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.text {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.flexColumn {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.resendButton {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.dialog {
+  color: var(--color-light-100);
+  padding: 24px;
+  background-color: #333333;
+  width: 400px;
+  height: 228px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: absolute;
+  z-index: 10;
+  left: calc(50% - 400px / 2);
+  top: 20%;
+  border: none;
+  .flexFiller {
+    flex-grow: 1;
+  }
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

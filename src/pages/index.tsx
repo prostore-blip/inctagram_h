@@ -1,17 +1,22 @@
-import { GetLayout, HeadMeta, PageWrapper } from '@/components'
-import { MailVerificationError } from '@/components/auth/mailVerificationError'
-import { PolicyDocuments } from '@/components/auth/policyDocuments'
+import { useEffect, useState } from 'react'
+
+import { GetLayout, GetNavLayout, HeadMeta, Layout, PageWrapper } from '@/components'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useRouter } from 'next/router'
 
 export function PublicPage() {
   const { t } = useTranslation()
 
+  console.log('PubliPage')
   //--------------  временный редирект на страницу пользователя--------------
 
   const router = useRouter()
 
-  void router.push('/profile')
+  useEffect(() => {
+    console.log('useEffect from PubliPage')
+
+    void router.push('/profile')
+  }, [])
 
   //-------------------------------------------------------------------------
   return (
