@@ -31,12 +31,6 @@
     outline-offset: -1px;
   }
 
-  //&:active {
-  //  border: 1px solid transparent;
-  //  outline: 2px solid var(--color-light-100);
-  //  outline-offset: -1px;
-  //}
-
   &[data-placeholder] {
     color: var(--color-light-100);
   }
@@ -50,7 +44,6 @@
 
 .triggerIcon {
   transition: transform 100ms;
-  //color: var(--color-light-100);
 }
 
 .trigger[data-state='open'] {
@@ -97,7 +90,7 @@
 
 .item[data-disabled] {
   pointer-events: none;
-  color: var(--color-text-disabled);
+  color: var(--color-dark-100);
 }
 
 .item[data-highlighted] {
