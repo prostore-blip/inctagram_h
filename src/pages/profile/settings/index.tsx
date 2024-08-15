@@ -3,10 +3,12 @@ import { useForm } from 'react-hook-form'
 
 import { ImageIcon } from '@/assets/icons'
 import { GetNavLayout } from '@/components'
+import { FormSelect } from '@/components/controll/formSelect'
 import { FormInput } from '@/components/controll/formTextField'
 import { Select, SelectItem } from '@/components/uikit-temp-replacements/select/Select'
 import { useTranslation } from '@/hooks/useTranslation'
 import { Button, TabType, TextArea, Typography } from '@chrizzo/ui-kit'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { z } from 'zod'
@@ -31,8 +33,8 @@ const countries = [
 // const cities = [{ item: 'City1',  }, { item: 'City1' }, { item: 'City1' }]
 const cities = [
   { title: 'City1', value: 'city1' },
-  { title: 'City1', value: 'city2' },
-  { title: 'City1', value: 'city3' },
+  { title: 'City2', value: 'city2' },
+  { title: 'City3', value: 'city3' },
 ]
 
 const userGeneralInfoSchema = z.object({
@@ -114,6 +116,7 @@ const Page = () => {
           </Button>
         </div>
         <div style={{ flexGrow: '1' }}>
+          <DevTool control={control} />
           <form
             action={''}
             style={{
@@ -163,20 +166,39 @@ const Page = () => {
                 width: '100%',
               }}
             >
-              <Select fullWidth label={'Select your country'} placeholder={'Country'}>
+              {/*<Select fullWidth label={'Select your country'} placeholder={'Country'}>*/}
+              {/*  {countries.map(item => (*/}
+              {/*    <SelectItem key={item.value + item.title} value={item.value}>*/}
+              {/*      {item.title}*/}
+              {/*    </SelectItem>*/}
+              {/*  ))}*/}
+              {/*</Select>*/}
+              <FormSelect
+                control={control}
+                fullWidth
+                label={'Select your country'}
+                name={'country'}
+                placeholder={'Country'}
+              >
                 {countries.map(item => (
                   <SelectItem key={item.value + item.title} value={item.value}>
                     {item.title}
                   </SelectItem>
                 ))}
-              </Select>
-              <Select fullWidth label={'Select your city'} placeholder={'City'}>
+              </FormSelect>
+              <FormSelect
+                control={control}
+                fullWidth
+                label={'Select your city'}
+                name={'city'}
+                placeholder={'City'}
+              >
                 {cities.map(item => (
                   <SelectItem key={item.value + item.title} value={item.value}>
                     {item.title}
                   </SelectItem>
                 ))}
-              </Select>
+              </FormSelect>
             </section>
             <section style={{ marginBottom: '48px', width: '100%' }}>
               <Typography className={pageStyles.label} variant={'regular14'}>
@@ -189,16 +211,6 @@ const Page = () => {
               ></TextArea>
             </section>
 
-            {/*<div*/}
-            {/*  style={{*/}
-            {/*    backgroundColor: 'grey',*/}
-            {/*    height: '2px',*/}
-            {/*    left: '-200px',*/}
-            {/*    marginBottom: '50x',*/}
-            {/*    position: 'relative',*/}
-            {/*    width: '100%',*/}
-            {/*  }}*/}
-            {/*/>*/}
             <Button style={{ alignSelf: 'flex-end' }} type={'submit'}>
               Save changes
             </Button>
