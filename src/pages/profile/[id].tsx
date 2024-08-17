@@ -1,21 +1,32 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { PageWrapper } from '@/components'
 import { UserProfile } from '@/components/userProfile'
-import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
+import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useGetMyProfileQuery } from '@/services/inctagram.profile.service'
+import { useGetPublicProfileForUserByIdQuery } from '@/services/inctagram.public-user.service'
 import { useRouter } from 'next/router'
 
 import s from './userProfilePage.module.scss'
 
 function UserProfileDinamicPage() {
+  const { data: authMe, isFetching: isFetchingAuthMe } = useAuthMeQuery()
   const router = useRouter()
 
-  console.log('profile[id]')
-  const { data, isFetching } = useGetUserProfileQuery()
+  const { data: publicProfileUserData, isFetching: isFetchingPublicProfileUser } =
+    useGetPublicProfileForUserByIdQuery(Number(router.query.id), {
+      skip: authMe !== undefined || isFetchingAuthMe,
+    })
+
+  const { data, isFetching } = useGetMyProfileQuery(undefined, {
+    skip: isFetchingAuthMe || !authMe,
+  })
 
   return (
     <PageWrapper>
       <div className={s.overflowedContainer}>
         <div className={s.mainCntainer}>
-          {!isFetching && <UserProfile userName={data?.userName} />}
+          {!isFetching && !isFetchingAuthMe && !isFetchingPublicProfileUser && (
+            <UserProfile dataProfile={publicProfileUserData || data} isAuthMe={!!authMe} />
+          )}
         </div>
       </div>
     </PageWrapper>
@@ -23,5 +34,5 @@ function UserProfileDinamicPage() {
 }
 
 // UserProfileDinamicPage.getLayout = GetNavLayout
-UserProfileDinamicPage.getLayout = GetLayout
+// UserProfileDinamicPage.getLayout = GetLayout
 export default UserProfileDinamicPage

@@ -4,13 +4,16 @@ import { inctagramService } from '@/services/inctagram.service'
 export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
-      getUserProfile: builder.query<ResponseDataUserProfile, void>({
+      getMyProfile: builder.query<ResponseDataUserProfile, void>({
         // providesTags: ['login'],
         query: () => {
           return { url: '/v1/users/profile' }
         },
       }),
-      getUserProfileByUserId: builder.query<ResponseDataUserProfileByUserName, string>({
+      getUserProfileByUserName: builder.query<
+        ResponseDataUserProfileByUserName,
+        string | undefined
+      >({
         // providesTags: ['login'],
         providesTags: ['getFollowing'],
         query: arg => {
@@ -21,5 +24,5 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   },
 })
 
-export const { useGetUserProfileByUserIdQuery, useGetUserProfileQuery } =
+export const { useGetMyProfileQuery, useGetUserProfileByUserNameQuery } =
   inctagramUsersProfileService

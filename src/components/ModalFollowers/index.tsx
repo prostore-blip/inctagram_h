@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useMemo, useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
+import { SearchInputValueType } from '@/components/ModalFollowers/types'
 import {
   Modalka,
   ModalkaButtonCancel,
@@ -9,8 +10,6 @@ import {
   ModalkaTrigger,
 } from '@/components/modal'
 import { ModalConfirm } from '@/components/modalConfirm'
-import { SearchInputValueType } from '@/components/modalFollowers/types'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import {
   useDeleteFolowerFromFolowersMutation,
   useFollowToUserMutation,
@@ -26,9 +25,10 @@ import defaultAva from '../../../public/defaultAva.jpg'
 type Props = {
   className?: string
   followersCount?: number | string
+  userName: string | undefined
 }
 
-export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) => {
+export const ModalFollowers: FC<Props> = memo(({ className, followersCount, userName }) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -45,17 +45,13 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
   })
 
   /**
-   * хук RTKQ. проверка залогинен или нет
-   */
-  const { data: authMeData } = useAuthMeQuery()
-  /**
    * хук RTKQ. запрос за подписчиками. params - это query-параметры, username используется, как uri.
    * skip - пока модальное окно подписчиков не открыто, не делаем запрос
    */
   const { data, isFetching: isFetchingGetFollowers } = useGetFollowersUsersQuery(
     {
       params: { search: inputValue.textFromDebounceInput },
-      username: authMeData?.userName,
+      username: userName,
     },
     { skip: !open }
   )

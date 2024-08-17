@@ -1,21 +1,35 @@
 import { GetLayout, HeadMeta, PageWrapper } from '@/components'
 import { useTranslation } from '@/hooks/useTranslation'
+import { ItemPost } from '@/pages/profile/itemPost'
 import { useGetAllPostsQuery } from '@/services/inctagram.public-posts.service'
-import { Button, Typography } from '@chrizzo/ui-kit'
-import Image from 'next/image'
+import { Typography } from '@chrizzo/ui-kit'
 import { useRouter } from 'next/router'
 
 import s from './posts.module.scss'
 
-import defaultAva from '../../public/defaultAva.jpg'
-
 export function PublicPage() {
+  /**
+   * кастомный хук интернационализация
+   */
   const { t } = useTranslation()
+  /**
+   * запрос за постами для публичной страницы. Доступно без авторизации
+   */
   const { data, isFetching } = useGetAllPostsQuery({
     endCursorPostId: undefined,
     params: { pageSize: 4 },
   })
+  /**
+   * хук обработки URL
+   */
   const router = useRouter()
+  /**
+   * редирект на страницу юзера по его id
+   * @param id - id профиля юзера
+   */
+  const navigateToPublicUserProfile = (id: number) => {
+    void router.push(`/profile/${id}`)
+  }
 
   //--------------  временный редирект на страницу пользователя--------------
   // useEffect(() => {
@@ -24,30 +38,18 @@ export function PublicPage() {
   //   void router.push('/profile')
   // }, [])
   //-------------------------------------------------------------------------
+  /**
+   * скелетон
+   */
   if (isFetching) {
     return <div>...LOADING...</div>
   }
+  /**
+   * массив постов
+   */
   const postsUsers = data?.items.map(p => {
     return (
-      <li className={s.post} key={p.id}>
-        <div className={s.postImage}>
-          <Image alt={'image'} priority src={defaultAva} />
-        </div>
-        <div className={s.avaUserNameBlock}>
-          <Image alt={'ava'} height={20} src={p.avatarOwner} width={20} />
-          <Typography variant={'h3'}>{p.userName}</Typography>
-        </div>
-        <Typography className={s.date} variant={'small'}>
-          {' '}
-          {p.createdAt}
-        </Typography>
-        <Typography className={s.description} variant={'regular14'}>
-          {p.description ||
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, deleniti? Lorem ipsum dolor sit amet, ' +
-              'consectetur adipisicing elit. Alias, cumque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, veritatis.'}
-        </Typography>
-        <Typography variant={'regularLink'}>Show more</Typography>
-      </li>
+      <ItemPost key={p.id} navigateToPublicUserProfile={navigateToPublicUserProfile} post={p} />
     )
   })
 

@@ -18,33 +18,32 @@ type GetAllPostsType = {
   endCursorPostId?: number
   params?: { pageSize?: number; sortBy?: string; sortDirection?: string }
 }
+export type Post = {
+  avatarOwner: string
+  createdAt: string
+  description: string
+  id: number
+  images: {
+    createdAt: string
+    fileSize: number
+    height: number
+    uploadId: string
+    url: string
+    width: number
+  }[]
+  isLiked: boolean
+  likesCount: number
+  location: string
+  owner: {
+    firstName: string
+    lastName: string
+  }
+  ownerId: number
+  updatedAt: string
+  userName: string
+}
 type ResponseAllPosts = {
-  items: [
-    {
-      avatarOwner: string
-      createdAt: string
-      description: string
-      id: number
-      images: {
-        createdAt: string
-        fileSize: number
-        height: number
-        uploadId: string
-        url: string
-        width: number
-      }[]
-      isLiked: boolean
-      likesCount: number
-      location: string
-      owner: {
-        firstName: string
-        lastName: string
-      }
-      ownerId: number
-      updatedAt: string
-      userName: string
-    },
-  ]
+  items: Post[]
   pageSize: number
   totalCount: number
   totalUsers: number

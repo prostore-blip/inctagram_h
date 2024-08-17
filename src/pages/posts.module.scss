@@ -6,13 +6,24 @@
   max-width: 972px;
   margin: 0 auto;
   .post {
-    aspect-ratio: 234/391;
+    aspect-ratio: 0.598;
     max-height: 391px;
     height: 100%;
+    max-width: 234px;
+    width: 100%;
+
     .postImage {
+      width: 100%;
+      aspect-ratio: 1;
+      transition: all linear 0.2s;
+      &[data-showMore='true'] {
+        transition: all linear 0.2s;
+        aspect-ratio: 2;
+      }
       img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
       }
     }
     .avaUserNameBlock {
@@ -29,6 +40,14 @@
       color: var(--color-light-900);
     }
     .description {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      float: left;
+      &[data-showMore='true'] {
+        -webkit-line-clamp: 6;
+      }
     }
   }
 }
@@ -54,4 +73,6 @@
       letter-spacing: 15px;
     }
   }
+}
+.showMore {
 }
