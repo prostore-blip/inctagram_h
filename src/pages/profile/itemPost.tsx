@@ -1,12 +1,11 @@
 import { useState } from 'react'
 
+import ModalkaPost from '@/pages/profile/modalkaPost'
 import { Post } from '@/services/inctagram.public-posts.service'
 import { Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
 import s from '@/pages/posts.module.scss'
-
-import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
   navigateToPublicUserProfile: (id: number) => void
@@ -27,15 +26,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
 
   return (
     <li className={s.post}>
-      <div className={s.postImage} data-showMore={showMore}>
-        <Image
-          alt={'image'}
-          height={p.images[0].height}
-          priority
-          src={p.images[0].url || defaultAva}
-          width={p.images[0].height}
-        />
-      </div>
+      <ModalkaPost post={p} showMore={showMore} />
       <div className={s.avaUserNameBlock} onClick={() => navigateToPublicUserProfile(p.ownerId)}>
         <Image alt={'ava'} height={20} src={p.avatarOwner} width={20} />
         <Typography variant={'h3'}>{p.userName}</Typography>

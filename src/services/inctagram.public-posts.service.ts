@@ -8,11 +8,47 @@ export const inctagramPublicPostsService = inctagramService.injectEndpoints({
           return { params: args.params, url: `/v1/public-posts/all/${args.endCursorPostId}` }
         },
       }),
+      getCommentsForPost: builder.query<ResponseCommentsForPost, RequestByComments>({
+        query: args => {
+          return { params: args.params, url: `/v1/public-posts/${args.postId}/comments` }
+        },
+      }),
     }
   },
 })
 
-export const { useGetAllPostsQuery } = inctagramPublicPostsService
+export const { useGetAllPostsQuery, useGetCommentsForPostQuery } = inctagramPublicPostsService
+
+type RequestByComments = {
+  params:
+    | {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDirection?: string
+      }
+    | undefined
+  postId: number
+}
+
+type ResponseCommentsForPost = {
+  items: {
+    answerCount: number
+    content: string
+    createdAt: string
+    from: {
+      avatars: {}[]
+      id: number
+      username: string
+    }
+    id: number
+    isLiked: true
+    likeCount: number
+    postId: number
+  }[]
+  pageSize: number
+  totalCount: number
+}
 
 type GetAllPostsType = {
   endCursorPostId?: number

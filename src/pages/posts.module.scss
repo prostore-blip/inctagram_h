@@ -76,3 +76,17 @@
 }
 .showMore {
 }
+.card {
+  max-height: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  .postImageContent {
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
