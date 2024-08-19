@@ -8,8 +8,12 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
-import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
-import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
+import {
+  Post,
+  useGetCommentsForPostQuery,
+  useGetPostsByUserIdQuery,
+} from '@/services/inctagram.public-posts.service'
+import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
 import s from '@/pages/posts.module.scss'

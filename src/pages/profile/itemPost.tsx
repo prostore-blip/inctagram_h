@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import ModalkaPost from '@/pages/profile/modalkaPost'
-import { Post } from '@/services/inctagram.public-posts.service'
+import { Post, useGetPostsByUserIdQuery } from '@/services/inctagram.public-posts.service'
 import { Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
@@ -17,6 +17,16 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
    * стейт раскрытия описания под фото
    */
   const [showMore, setShowMore] = useState(false)
+
+  /**
+   * запрос за постами конкретного юзера по Id. Доступно без авторизации
+   */
+  const { data: postsByUserId, isFetching: isFetchingPosts } = useGetPostsByUserIdQuery({
+    endCursorPostId: undefined,
+    params: { pageSize: undefined },
+    userId: p.ownerId,
+  })
+
   /**
    * раскрыть/скрыть описание под фото
    */

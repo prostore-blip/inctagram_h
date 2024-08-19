@@ -13,11 +13,20 @@ export const inctagramPublicPostsService = inctagramService.injectEndpoints({
           return { params: args.params, url: `/v1/public-posts/${args.postId}/comments` }
         },
       }),
+      getPostsByUserId: builder.query<ResponsePostsByUsedId, RequestToPostsByUserId>({
+        query: args => {
+          return {
+            params: args.params,
+            url: `v1/public-posts/user/${args.userId}/${args.endCursorPostId}`,
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useGetAllPostsQuery, useGetCommentsForPostQuery } = inctagramPublicPostsService
+export const { useGetAllPostsQuery, useGetCommentsForPostQuery, useGetPostsByUserIdQuery } =
+  inctagramPublicPostsService
 
 type RequestByComments = {
   params:
@@ -89,4 +98,46 @@ type ResponseAllPosts = {
   pageSize: number
   totalCount: number
   totalUsers: number
+}
+type ResponsePostsByUsedId = {
+  items: {
+    avatarOwner: string
+    createdAt: string
+    description: string
+    id: number
+    images: [
+      {
+        createdAt: string
+        fileSize: number
+        height: number
+        uploadId: string
+        url: string
+        width: number
+      },
+    ]
+    isLiked: true
+    likesCount: number
+    location: string
+    owner: {
+      firstName: string
+      lastName: string
+    }
+    ownerId: 1
+    updatedAt: string
+    userName: string
+  }[]
+  pageSize: number
+  totalCount: number
+  totalUsers: number
+}
+type RequestToPostsByUserId = {
+  endCursorPostId?: number
+  params:
+    | {
+        pageSize?: number
+        sortBy?: string
+        sortDirection?: string
+      }
+    | undefined
+  userId: number
 }
