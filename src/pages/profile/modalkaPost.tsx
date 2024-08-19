@@ -8,7 +8,7 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
-import { useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
+import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
 import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
@@ -16,7 +16,12 @@ import s from '@/pages/posts.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
 
-const ModalkaPost = ({ post: p, showMore }: any) => {
+type Props = {
+  post: Post
+  showMore: boolean
+}
+
+const ModalkaPost = ({ post: p, showMore }: Props) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -50,15 +55,15 @@ const ModalkaPost = ({ post: p, showMore }: any) => {
           />
         </div>
       </ModalkaTrigger>
-      <ModalkaContent aria-describedby={'open viewport followers'} className={s.content}>
+      <ModalkaContent aria-describedby={'open modal comments to post'} className={s.contentPost}>
         <ModalkaTitle className={s.title}>
           <ModalkaButtonCancel asChild>
-            <Button className={s.close} variant={'text'}>
+            <Button variant={'text'}>
               <Close />
             </Button>
           </ModalkaButtonCancel>
         </ModalkaTitle>
-        <Card className={s.card} maxWidth={'644px'} variant={'dark300'}>
+        <Card className={s.card} variant={'dark300'}>
           <div className={s.postImageContent} data-showMore={showMore}>
             <Image
               alt={'image'}
@@ -68,20 +73,55 @@ const ModalkaPost = ({ post: p, showMore }: any) => {
               width={p.images[0].height}
             />
           </div>
-          <ul>
-            {isFetching ? (
-              <>...Loading.....</>
-            ) : (
-              data?.items.map(c => {
-                return (
-                  <li key={c.id}>
-                    {c.from.username}
-                    {c.content}
-                  </li>
-                )
-              })
-            )}
-          </ul>
+          <div className={s.commentsWr}>
+            <div className={s.avaUserNameBlock}>
+              <Image alt={'ava'} height={36} src={p.avatarOwner || defaultAva} width={36} />
+              <Typography variant={'h3'}>{p.userName}</Typography>
+            </div>
+            <hr className={s.hr} />
+            <ul className={s.commentsUl}>
+              {isFetching ? (
+                <>...Loading.....</>
+              ) : (
+                data?.items.map(c => {
+                  return (
+                    <li className={s.commentWr} key={c.id}>
+                      <Image
+                        alt={'ava'}
+                        height={36}
+                        src={c.from.avatars[1].url || defaultAva}
+                        width={36}
+                      />
+                      <div className={s.commentBlock}>
+                        <Typography as={'span'} variant={'regular14'}>
+                          <Typography as={'span'} variant={'regularBold14'}>
+                            {c.from.username}
+                          </Typography>
+                          {c.content}
+                        </Typography>
+                        <Typography className={s.date} variant={'small'}>
+                          {c.createdAt}
+                        </Typography>
+                      </div>
+                    </li>
+                  )
+                })
+              )}
+            </ul>
+            <hr className={s.hr} />
+            <div className={s.likesBlock}>
+              <div className={s.avatarsLiked}></div>
+              <Typography as={'span'} variant={'regular14'}>
+                {p.likesCount}{' '}
+                <Typography as={'span'} variant={'regularBold14'}>
+                  &quot;Like&quot;
+                </Typography>
+              </Typography>
+              <Typography className={s.date} variant={'small'}>
+                {p.createdAt}
+              </Typography>
+            </div>
+          </div>
         </Card>
       </ModalkaContent>
     </Modalka>

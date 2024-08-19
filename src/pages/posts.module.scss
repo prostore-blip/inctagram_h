@@ -1,3 +1,17 @@
+@mixin avaUserNameBlock {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+  img {
+    border-radius: 50%;
+  }
+}
+
+@mixin date {
+  color: var(--color-light-900);
+}
+
 .postsWrapper {
   list-style: none;
   display: grid;
@@ -27,17 +41,11 @@
       }
     }
     .avaUserNameBlock {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin: 12px 0;
-      img {
-        border-radius: 50%;
-      }
+      @include avaUserNameBlock;
     }
     .date {
       margin-bottom: 3px;
-      color: var(--color-light-900);
+      @include date;
     }
     .description {
       overflow: hidden;
@@ -76,17 +84,79 @@
 }
 .showMore {
 }
-.card {
-  max-height: 500px;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  .postImageContent {
+
+.contentPost {
+  max-width: 972px;
+  width: 100%;
+  top: 84px;
+  .title {
+    position: relative;
+    height: 36px;
+    text-align: right;
+    width: calc(100% + 42px);
+    & > button {
+      padding: 0;
+    }
+  }
+  .card {
+    padding: 0;
+    height: 562px;
+    display: flex;
+    flex-direction: row;
+    max-width: inherit;
     width: 100%;
-    height: 100%;
-    img {
+    border-color: var(--color-dark-100);
+    .postImageContent {
+      flex: 1 1 490px;
       width: 100%;
       height: 100%;
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .commentsWr {
+      flex: 1 1 480px;
+      display: flex;
+      flex-direction: column;
+      .avaUserNameBlock {
+        @include avaUserNameBlock;
+        padding-left: 24px;
+      }
+      .hr {
+        width: 100%;
+        border-bottom: 1px solid var(--color-dark-100);
+        border-top: none;
+        border-left: none;
+        border-right: none;
+      }
+      .commentsUl {
+        padding-left: 24px;
+        flex-grow: 1;
+        //background: red;
+        list-style: none;
+        .commentWr {
+          display: flex;
+          gap: 12px;
+          .commentBlock {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            gap: 5px;
+            .date {
+              @include date;
+            }
+          }
+        }
+      }
+      .likesBlock {
+        padding-left: 24px;
+        height: 83px;
+        .date {
+          @include date;
+        }
+      }
     }
   }
 }

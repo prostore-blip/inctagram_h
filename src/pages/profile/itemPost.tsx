@@ -28,7 +28,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
     <li className={s.post}>
       <ModalkaPost post={p} showMore={showMore} />
       <div className={s.avaUserNameBlock} onClick={() => navigateToPublicUserProfile(p.ownerId)}>
-        <Image alt={'ava'} height={20} src={p.avatarOwner} width={20} />
+        <Image alt={'ava'} height={36} src={p.avatarOwner} width={36} />
         <Typography variant={'h3'}>{p.userName}</Typography>
       </div>
       <Typography className={s.date} variant={'small'}>

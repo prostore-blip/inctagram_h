@@ -37,7 +37,13 @@ type ResponseCommentsForPost = {
     content: string
     createdAt: string
     from: {
-      avatars: {}[]
+      avatars: {
+        createdAt: string
+        fileSize: number
+        height: number
+        url: string
+        width: number
+      }[]
       id: number
       username: string
     }
