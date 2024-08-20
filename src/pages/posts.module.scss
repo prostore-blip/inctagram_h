@@ -160,3 +160,13 @@
     }
   }
 }
+.embla {
+  overflow: hidden;
+}
+.emblaContainer {
+  display: flex;
+}
+.emblaSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+}

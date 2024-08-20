@@ -3,6 +3,7 @@ import { useState } from 'react'
 import ModalkaPost from '@/pages/profile/modalkaPost'
 import { Post, useGetPostsByUserIdQuery } from '@/services/inctagram.public-posts.service'
 import { Typography } from '@chrizzo/ui-kit'
+import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 
 import s from '@/pages/posts.module.scss'
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
+  const [emblaRef] = useEmblaCarousel()
   /**
    * стейт раскрытия описания под фото
    */
@@ -33,10 +35,19 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
   const expandDescription = () => {
     setShowMore(n => !n)
   }
+  const modalArrays = postsByUserId?.items.map(item => {
+    return (
+      <div className={s.emblaSlide} key={item.id}>
+        <ModalkaPost post={p} showMore={showMore} />
+      </div>
+    )
+  })
 
   return (
     <li className={s.post}>
-      <ModalkaPost post={p} showMore={showMore} />
+      <div className={s.embla} ref={emblaRef}>
+        <div className={s.emblaContainer}>{modalArrays}</div>
+      </div>
       <div className={s.avaUserNameBlock} onClick={() => navigateToPublicUserProfile(p.ownerId)}>
         <Image alt={'ava'} height={36} src={p.avatarOwner} width={36} />
         <Typography variant={'h3'}>{p.userName}</Typography>
