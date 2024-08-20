@@ -133,12 +133,17 @@
       }
       .commentsUl {
         padding-left: 24px;
+        padding-top: 16px;
         flex-grow: 1;
         //background: red;
         list-style: none;
         .commentWr {
           display: flex;
           gap: 12px;
+          img {
+            border-radius: 50%;
+            margin-top: 8px;
+          }
           .commentBlock {
             display: flex;
             flex-direction: column;

@@ -100,32 +100,7 @@ type ResponseAllPosts = {
   totalUsers: number
 }
 type ResponsePostsByUsedId = {
-  items: {
-    avatarOwner: string
-    createdAt: string
-    description: string
-    id: number
-    images: [
-      {
-        createdAt: string
-        fileSize: number
-        height: number
-        uploadId: string
-        url: string
-        width: number
-      },
-    ]
-    isLiked: true
-    likesCount: number
-    location: string
-    owner: {
-      firstName: string
-      lastName: string
-    }
-    ownerId: 1
-    updatedAt: string
-    userName: string
-  }[]
+  items: Post[]
   pageSize: number
   totalCount: number
   totalUsers: number

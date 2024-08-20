@@ -8,11 +8,7 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
-import {
-  Post,
-  useGetCommentsForPostQuery,
-  useGetPostsByUserIdQuery,
-} from '@/services/inctagram.public-posts.service'
+import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
@@ -99,7 +95,7 @@ const ModalkaPost = ({ post: p, showMore }: Props) => {
                       <div className={s.commentBlock}>
                         <Typography as={'span'} variant={'regular14'}>
                           <Typography as={'span'} variant={'regularBold14'}>
-                            {c.from.username}
+                            {c.from.username}{' '}
                           </Typography>
                           {c.content}
                         </Typography>
