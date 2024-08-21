@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import { NextCarousel, PrevCarousel } from '@/assets/icons'
 import { Close } from '@/assets/icons/close'
 import {
   Modalka,
@@ -8,8 +9,12 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
+import { useDotButton } from '@/hooks/useDotCarouselButton'
 import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
+import clsx from 'clsx'
+import { EmblaCarouselType } from 'embla-carousel'
+import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 
 import s from '@/pages/posts.module.scss'
@@ -17,19 +22,19 @@ import s from '@/pages/posts.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
-  post: Post
+  index: number
+  posts: Post[]
   showMore: boolean
 }
 
-const ModalkaPost = ({ post: p, showMore }: Props) => {
+const ModalkaPost = ({ index, posts, showMore }: Props) => {
   /**
-   * хук useState для управления open/close AlertDialog.Root. Нужен для того,
-   * чтобы модалка закрывалась после передачи на сервер данных из формы,
-   * иначе она просто закрывается и данные не передаются
+   * хук useState для управления open/close AlertDialog.Root. Нужна только для skip'а запроса за
+   * комментариями, если модалка не открыта. В компоненте Modalka можно не использовать
    */
   const [open, setOpen] = useState(false)
 
-  const [idPost, setIdPostn] = useState<number>(p.id)
+  const [postIndex, setPostIndex] = useState<number>(index)
 
   /**
    * запрос за комментариями к посту
@@ -37,10 +42,44 @@ const ModalkaPost = ({ post: p, showMore }: Props) => {
   const { data, isFetching } = useGetCommentsForPostQuery(
     {
       params: undefined,
-      postId: idPost,
+      postId: posts[postIndex].id,
     },
     { skip: !open }
   )
+
+  /**
+   * хук из библиотеки карусели
+   */
+  const [emblaRef, emblaApi] = useEmblaCarousel()
+
+  /**
+   * кастомный хук для точек перехода к слайдам карусели
+   */
+  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
+
+  /**
+   * массив слайдов (картинки постов) карусели
+   */
+  const modalArrays = posts.map(item => {
+    return (
+      <div className={s.emblaSlide} key={item.id}>
+        <Image
+          alt={'image'}
+          height={item.images[0].height}
+          priority
+          src={item.images[0].url || defaultAva}
+          width={item.images[0].height}
+        />
+      </div>
+    )
+  })
+
+  useEffect(() => {
+    if (open) {
+      console.log(index)
+      emblaApi?.scrollTo(index, true)
+    }
+  }, [open])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
@@ -48,10 +87,10 @@ const ModalkaPost = ({ post: p, showMore }: Props) => {
         <div className={s.postImage} data-showMore={showMore}>
           <Image
             alt={'image'}
-            height={p.images[0].height}
+            height={posts[postIndex].images[0].height}
             priority
-            src={p.images[0].url || defaultAva}
-            width={p.images[0].height}
+            src={posts[postIndex].images[0].url || defaultAva}
+            width={posts[postIndex].images[0].height}
           />
         </div>
       </ModalkaTrigger>
@@ -64,19 +103,52 @@ const ModalkaPost = ({ post: p, showMore }: Props) => {
           </ModalkaButtonCancel>
         </ModalkaTitle>
         <Card className={s.card} variant={'dark300'}>
-          <div className={s.postImageContent} data-showMore={showMore}>
-            <Image
-              alt={'image'}
-              height={p.images[0].height}
-              priority
-              src={p.images[0].url || defaultAva}
-              width={p.images[0].height}
-            />
+          <div className={s.postImageContent}>
+            <div className={s.embla} ref={emblaRef}>
+              <div className={s.emblaContainer}> {modalArrays}</div>
+            </div>
+            <Button
+              className={s.prevModalButton}
+              onClick={() => {
+                emblaApi?.scrollPrev()
+              }}
+              type={'button'}
+            >
+              <PrevCarousel height={'48'} width={'48'} />
+            </Button>
+            <Button
+              className={s.nextModalButton}
+              onClick={() => {
+                emblaApi?.scrollNext()
+                const selectedPostIndex = emblaApi?.selectedScrollSnap()
+
+                if (selectedPostIndex) {
+                  setPostIndex(selectedPostIndex)
+                }
+              }}
+              type={'button'}
+            >
+              <NextCarousel height={'48'} width={'48'} />
+            </Button>
+            <div className={s.dotes}>
+              {scrollSnaps.map((_, index) => (
+                <div
+                  className={clsx(s.dote, index === selectedIndex && s.activeDot)}
+                  key={index}
+                  onClick={() => onDotButtonClick(index)}
+                ></div>
+              ))}
+            </div>
           </div>
           <div className={s.commentsWr}>
             <div className={s.avaUserNameBlock}>
-              <Image alt={'ava'} height={36} src={p.avatarOwner || defaultAva} width={36} />
-              <Typography variant={'h3'}>{p.userName}</Typography>
+              <Image
+                alt={'ava'}
+                height={36}
+                src={posts[postIndex].avatarOwner || defaultAva}
+                width={36}
+              />
+              <Typography variant={'h3'}>{posts[postIndex].userName}</Typography>
             </div>
             <hr className={s.hr} />
             <ul className={s.commentsUl}>
@@ -112,13 +184,13 @@ const ModalkaPost = ({ post: p, showMore }: Props) => {
             <div className={s.likesBlock}>
               <div className={s.avatarsLiked}></div>
               <Typography as={'span'} variant={'regular14'}>
-                {p.likesCount}{' '}
+                {posts[postIndex].likesCount}{' '}
                 <Typography as={'span'} variant={'regularBold14'}>
                   &quot;Like&quot;
                 </Typography>
               </Typography>
               <Typography className={s.date} variant={'small'}>
-                {p.createdAt}
+                {posts[postIndex].createdAt}
               </Typography>
             </div>
           </div>

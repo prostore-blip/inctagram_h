@@ -3,9 +3,9 @@ import { SVGProps } from 'react'
 export const NextCarousel = (props: SVGProps<SVGSVGElement>) => (
   <svg
     fill={'none'}
-    height={'24'}
+    height={props.height ?? '24'}
     viewBox={'0 0 24 24'}
-    width={'24'}
+    width={props.width ?? '24'}
     xmlns={'http://www.w3.org/2000/svg'}
   >
     <rect fill={'#333333'} height={'24'} opacity={'0.5'} rx={'2'} width={'24'} />

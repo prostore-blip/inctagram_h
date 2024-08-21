@@ -17,7 +17,13 @@ type Props = {
 }
 
 export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
+  /**
+   * хук из библиотеки карусели
+   */
   const [emblaRef, emblaApi] = useEmblaCarousel()
+  /**
+   * кастомный хук для точек перехода к слайдам карусели
+   */
   const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
   /**
    * стейт раскрытия описания под фото
@@ -39,10 +45,13 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
   const expandDescription = () => {
     setShowMore(n => !n)
   }
-  const modalArrays = postsByUserId?.items.map(item => {
+  /**
+   * массив слайдов (модалки постов) карусели
+   */
+  const modalArrays = postsByUserId?.items.map((item, index, posts) => {
     return (
       <div className={s.emblaSlide} key={item.id}>
-        <ModalkaPost post={item} showMore={showMore} />
+        <ModalkaPost index={index} posts={posts} showMore={showMore} />
       </div>
     )
   })
