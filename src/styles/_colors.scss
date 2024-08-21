@@ -42,12 +42,12 @@
   --color-dark-900: #000;
 
   // semantic
-  // mostly helpful if case of themes implementation (different sets for each theme)
+  // mostly useful in case of themes implementation (different set for each theme)
   --color-primary: var(--color-accent-500);
   --color-danger: var(--color-danger-500);
   --color-success: var(--color-success-900);
   --color-bg: var(--color-dark-700);
-  --color-bg-heighlighted: var(--color-dark-500);
+  --color-bg-highlighted: var(--color-dark-500);
   --color-border: var(--color-dark-300);
   --color-text: var(--color-light-100);
   --color-text-subdued: var(--color-light-900);
