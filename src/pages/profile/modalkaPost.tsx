@@ -33,7 +33,12 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
    * комментариями, если модалка не открыта. В компоненте Modalka можно не использовать
    */
   const [open, setOpen] = useState(false)
-
+  /**
+   * стэйт индекса выбранного поста в массиве постов в карусели. При первом рендере равняется индексу поста из
+   * массива постов родительской компоненты.
+   * В дальнейшем меняется при нажатии на кнопки prev или next карусели.
+   * Используется для запроса комментариев к выбранному посту в карусели
+   */
   const [postIndex, setPostIndex] = useState<number>(index)
 
   /**
@@ -55,12 +60,12 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
   /**
    * кастомный хук для точек перехода к слайдам карусели
    */
-  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
+  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi, setPostIndex)
 
   /**
    * массив слайдов (картинки постов) карусели
    */
-  const modalArrays = posts.map(item => {
+  const imagePostsArray = posts.map(item => {
     return (
       <div className={s.emblaSlide} key={item.id}>
         <Image
@@ -76,8 +81,7 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
 
   useEffect(() => {
     if (open) {
-      console.log(index)
-      emblaApi?.scrollTo(index, true)
+      emblaApi?.scrollTo(postIndex, true)
     }
   }, [open])
 
@@ -105,12 +109,17 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
         <Card className={s.card} variant={'dark300'}>
           <div className={s.postImageContent}>
             <div className={s.embla} ref={emblaRef}>
-              <div className={s.emblaContainer}> {modalArrays}</div>
+              <div className={s.emblaContainer}> {imagePostsArray}</div>
             </div>
             <Button
               className={s.prevModalButton}
               onClick={() => {
                 emblaApi?.scrollPrev()
+                const selectedPostIndex = emblaApi?.selectedScrollSnap()
+
+                if (selectedPostIndex) {
+                  setPostIndex(selectedPostIndex)
+                }
               }}
               type={'button'}
             >
