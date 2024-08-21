@@ -3,28 +3,29 @@ import { PropsWithChildren } from 'react'
 import { Header } from '@/components/header'
 import { Main } from '@/components/main'
 import { Nav } from '@/components/nav'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useMeQuery } from '@/services/inctagram.auth.service'
+import { clsx } from 'clsx'
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 
 import s from '@/components/Layout/layout.module.scss'
 
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
-  const { data, isFetching, isLoading } = useAuthMeQuery()
+  // const { data, isFetching, isLoading } = useAuthMeQuery()
+  const { data, isFetching, isLoading } = useMeQuery()
 
+  //todo cleanup console.log
   console.log('Layout New', data, isLoading, isFetching)
 
-  const style = data || isLoading ? '' : s.gridHaveOneCol
-
   return (
-    <div className={s.container + ' ' + style}>
-      {isLoading ? (
+    <div className={clsx(s.container, s.oneColumn, (data || isLoading) && s.twoColumns)}>
+      {isLoading && (
         <>
-          <header className={s.headerSkelet}></header>
-          <nav className={s.navSkelet}></nav>
-          <div className={s.mainSkelet}>LOADING</div>
+          <header className={s.headerSkeleton}></header>
+          <nav className={s.navSkeleton}></nav>
+          <div className={s.mainSkeleton}>LOADING</div>
         </>
-      ) : (
+      )}
+      {!isLoading && (
         <>
           <Header isAuthMe={!!data} />
           {data && <Nav isSpecialAccount />}
