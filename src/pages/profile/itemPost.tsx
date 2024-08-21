@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
+import { NextCarousel, PrevCarousel } from '@/assets/icons'
+import { useDotButton } from '@/hooks/useDotCarouselButton'
 import ModalkaPost from '@/pages/profile/modalkaPost'
 import { Post, useGetPostsByUserIdQuery } from '@/services/inctagram.public-posts.service'
-import { Typography } from '@chrizzo/ui-kit'
+import { Button, Typography } from '@chrizzo/ui-kit'
+import clsx from 'clsx'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 
@@ -15,6 +18,7 @@ type Props = {
 
 export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
   const [emblaRef, emblaApi] = useEmblaCarousel()
+  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
   /**
    * стейт раскрытия описания под фото
    */
@@ -45,25 +49,42 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
 
   return (
     <li className={s.post}>
-      <div className={s.embla} ref={emblaRef}>
-        <div className={s.emblaContainer}>{modalArrays}</div>
+      <div className={s.modalWr}>
+        <div className={s.embla} ref={emblaRef}>
+          <div className={s.emblaContainer}>{modalArrays}</div>
+        </div>
+        {!showMore && (
+          <>
+            <Button
+              className={s.prevButton}
+              onClick={() => {
+                emblaApi?.scrollPrev()
+              }}
+              type={'button'}
+            >
+              <PrevCarousel />
+            </Button>
+            <Button
+              className={s.nextButton}
+              onClick={() => {
+                emblaApi?.scrollNext()
+              }}
+              type={'button'}
+            >
+              <NextCarousel />
+            </Button>
+            <div className={s.dots}>
+              {scrollSnaps.map((_, index) => (
+                <div
+                  className={clsx(s.dot, index === selectedIndex && s.activeDot)}
+                  key={index}
+                  onClick={() => onDotButtonClick(index)}
+                ></div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
-      <button
-        onClick={() => {
-          emblaApi?.scrollPrev()
-        }}
-        type={'button'}
-      >
-        prev
-      </button>
-      <button
-        onClick={() => {
-          emblaApi?.scrollNext()
-        }}
-        type={'button'}
-      >
-        next
-      </button>
       <div className={s.avaUserNameBlock} onClick={() => navigateToPublicUserProfile(p.ownerId)}>
         <Image alt={'ava'} height={36} src={p.avatarOwner} width={36} />
         <Typography variant={'h3'}>{p.userName}</Typography>
@@ -72,7 +93,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
         {' '}
         {p.createdAt}
       </Typography>
-      <Typography className={s.description} data-showMore={showMore} variant={'regular14'}>
+      <Typography className={s.description} data-showmore={showMore} variant={'regular14'}>
         {p.description ||
           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, deleniti? Lorem ipsum dolor sit amet, ' +
             'consectetur adipisicing elit. Alias, cumque! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, veritatis.'}
