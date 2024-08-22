@@ -2,16 +2,16 @@ import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
   common: {
-    cancel: 'Отменить',
-    email: 'Почта',
-    firstName: 'Имя',
-    lastName: 'Фамилия',
-    password: 'Пароль',
-    save: 'Сохранить',
+    cancel: 'Cancel',
+    email: 'Email',
+    firstName: 'Name',
+    lastName: 'Last name',
+    password: 'Password',
+    save: 'Save',
     selectFromComputer: 'Select from computer',
-    signIn: 'Войти',
-    signOut: 'Выйти',
-    username: 'Ник', //?
+    signIn: 'Sign in',
+    signOut: 'Sign out',
+    username: 'Username',
   },
   forgotPassword: {
     common: {
@@ -66,7 +66,7 @@ export const en: LocaleType = {
       saveChanges: 'Сохранить изменения',
     },
     settings: {
-      aboutMe: 'Обо мне',
+      aboutMe: 'About me',
       aboutMePlaceholder: 'Tell about yourself',
       accountManagement: 'Account management',
       addProfilePhoto: 'Add profile photo',
