@@ -13,7 +13,6 @@ import { useDotButton } from '@/hooks/useDotCarouselButton'
 import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
-import { EmblaCarouselType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
 
@@ -70,10 +69,9 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
       <div className={s.emblaSlide} key={item.id}>
         <Image
           alt={'image'}
-          height={item.images[0].height}
-          priority
-          src={item.images[0].url || defaultAva}
-          width={item.images[0].height}
+          height={item?.images[0]?.height}
+          src={item?.images[0]?.url || defaultAva}
+          width={item?.images[0]?.width}
         />
       </div>
     )
@@ -88,13 +86,13 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <div className={s.postImage} data-showMore={showMore}>
+        <div className={s.postImage} data-showmore={showMore}>
           <Image
             alt={'image'}
-            height={posts[postIndex].images[0].height}
+            height={posts[postIndex]?.images[0]?.height}
             priority
-            src={posts[postIndex].images[0].url || defaultAva}
-            width={posts[postIndex].images[0].height}
+            src={posts[postIndex]?.images[0]?.url || defaultAva}
+            width={posts[postIndex]?.images[0]?.width}
           />
         </div>
       </ModalkaTrigger>

@@ -11,6 +11,8 @@ import Image from 'next/image'
 
 import s from '@/pages/posts.module.scss'
 
+import defaultAva from '../../../public/defaultAva.jpg'
+
 type Props = {
   navigateToPublicUserProfile: (id: number) => void
   post: Post
@@ -95,7 +97,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
         )}
       </div>
       <div className={s.avaUserNameBlock} onClick={() => navigateToPublicUserProfile(p.ownerId)}>
-        <Image alt={'ava'} height={36} src={p.avatarOwner} width={36} />
+        <Image alt={'ava'} height={36} src={p.avatarOwner || defaultAva} width={36} />
         <Typography variant={'h3'}>{p.userName}</Typography>
       </div>
       <Typography className={s.date} variant={'small'}>
