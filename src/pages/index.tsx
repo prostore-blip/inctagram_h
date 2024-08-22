@@ -15,10 +15,13 @@ export function PublicPage() {
   /**
    * запрос за постами для публичной страницы. Доступно без авторизации
    */
-  const { data, isFetching } = useGetAllPostsQuery({
-    endCursorPostId: undefined,
-    params: { pageSize: 4 },
-  })
+  const { data, isLoading } = useGetAllPostsQuery(
+    {
+      endCursorPostId: undefined,
+      params: { pageSize: 4 },
+    },
+    { pollingInterval: 60000 }
+  )
   /**
    * хук обработки URL
    */
@@ -41,7 +44,7 @@ export function PublicPage() {
   /**
    * скелетон
    */
-  if (isFetching) {
+  if (isLoading) {
     return <div>...LOADING...</div>
   }
   /**
