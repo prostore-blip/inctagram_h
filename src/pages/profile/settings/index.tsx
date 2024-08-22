@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { GetNavLayout, ProfileForm } from '@/components'
+import { GetNavLayout } from '@/components'
+import { GeneralInfoForm } from '@/components/profile-settings'
 import { AvatarSelector } from '@/components/uikit-temp-replacements/avatar/AvatarSelector'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useMeQuery } from '@/services/inctagram.auth.service'
@@ -56,7 +57,7 @@ const Page = () => {
       </TabsPrimitive.Root>
       <div className={pageStyles.flexRow}>
         <AvatarSelector initialValue={data?.meta.avatar} onValueChange={handleImageSelection} />
-        <ProfileForm />
+        <GeneralInfoForm />
       </div>
       <div className={pageStyles.separator} />
     </div>
