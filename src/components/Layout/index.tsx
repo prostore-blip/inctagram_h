@@ -1,32 +1,27 @@
 import { PropsWithChildren } from 'react'
 
-import { Header } from '@/components/header'
-import { Main } from '@/components/main'
-import { Nav } from '@/components/nav'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useMeQuery } from '@/services/inctagram.auth.service'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-
-import s from '@/components/Layout/layout.module.scss'
 
 type Props = {
   showNav?: boolean
 }
 
 export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav = false }) => {
-  const { data, isFetching, isLoading } = useAuthMeQuery()
+  const { data, isFetching, isLoading } = useMeQuery()
   const router = useRouter()
 
   console.log('Layout ', data, isLoading, isFetching)
 
   // const style = data || isLoading ? '' : s.gridHaveOneCol
 
-  if (!data && !isFetching) {
-    console.log('LoginNaavigate rdirect to login')
-    void router.push('/login')
-
-    return null
-  }
+  // if (!data && !isFetching) {
+  //   console.log('LoginNaavigate rdirect to login')
+  //   void router.push('/login')
+  //
+  //   return null
+  // }
 
   return (
     // <div className={s.container + ' ' + style}>
