@@ -33,7 +33,7 @@ const cities = [
   { title: 'DemoCity', value: 'DemoCity' },
 ]
 
-export function ProfileForm() {
+export function GeneralInfoForm() {
   //todo props or hook?
   const [updateProfile, { error, isError, isLoading, isSuccess }] = useUpdateProfileMutation()
 

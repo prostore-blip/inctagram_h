@@ -4,7 +4,8 @@ export type User = {
     about: string
     avatar: null | string
     birthday: string
-    city: string
+    city: null | string
+    country: null | string
     name: string
     surname: string
   }

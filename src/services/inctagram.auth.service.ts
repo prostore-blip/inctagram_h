@@ -71,6 +71,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
                 avatar: null,
                 birthday: '',
                 city: 'DemoCity',
+                country: null,
                 name: 'Demo',
                 surname: 'User',
               },
