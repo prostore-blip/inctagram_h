@@ -1,4 +1,16 @@
 export const ru = {
+  common: {
+    cancel: 'Отменить',
+    email: 'Почта',
+    firstName: 'Имя',
+    lastName: 'Фамилия',
+    password: 'Пароль',
+    save: 'Сохранить',
+    selectFromComputer: 'Выбрать с диска',
+    signIn: 'Войти',
+    signOut: 'Выйти',
+    username: 'Логин', //?
+  },
   forgotPassword: {
     common: {
       inProgress: 'Отправка запроса...',
@@ -47,6 +59,28 @@ export const ru = {
   header: {
     signInButton: 'Войти',
     signUpButton: 'Регистрация',
+  },
+  profile: {
+    common: {
+      saveChanges: 'Сохранить изменения',
+    },
+    settings: {
+      aboutMe: 'Обо мне',
+      aboutMePlaceholder: 'Расскажите о себе',
+      accountManagement: 'Управление акаунтом',
+      addProfilePhoto: 'Добавить фото профиля',
+      birthDate: 'Дата рождения',
+      birthDatePlaceholder: 'дд.мм.ГГГГ',
+      devices: 'Устройства',
+      generalInformation: 'Общая информация',
+      imageSizeExceeded: 'Фото должно быть меньше 10 МБ!',
+      myPayments: 'Мои платежи',
+      selectYourCity: 'Выберите Ваш город',
+      selectYourCityPlaceholder: 'Город',
+      selectYourCountry: 'Выберите Вашу страну',
+      selectYourCountryPlaceholder: 'Страна',
+      wrongFileFormat: 'Поддеживаются только изображения \nPNG и JPG',
+    },
   },
   publicPage: {
     title: 'Главная страница',

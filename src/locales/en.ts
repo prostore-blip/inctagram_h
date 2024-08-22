@@ -1,6 +1,18 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  common: {
+    cancel: 'Отменить',
+    email: 'Почта',
+    firstName: 'Имя',
+    lastName: 'Фамилия',
+    password: 'Пароль',
+    save: 'Сохранить',
+    selectFromComputer: 'Select from computer',
+    signIn: 'Войти',
+    signOut: 'Выйти',
+    username: 'Ник', //?
+  },
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -27,6 +39,7 @@ export const en: LocaleType = {
       title: 'Create new password',
       tooSmallError: 'Password has to be at least 6 characters long',
     },
+
     startPage: {
       backToSignIn: 'Back to Sign-in page',
       emailNotFound: "User with this email doesn't exist",
@@ -47,6 +60,28 @@ export const en: LocaleType = {
   header: {
     signInButton: 'Log In',
     signUpButton: 'Sign up',
+  },
+  profile: {
+    common: {
+      saveChanges: 'Сохранить изменения',
+    },
+    settings: {
+      aboutMe: 'Обо мне',
+      aboutMePlaceholder: 'Tell about yourself',
+      accountManagement: 'Account management',
+      addProfilePhoto: 'Add profile photo',
+      birthDate: 'Birthday',
+      birthDatePlaceholder: 'mm.dd.YYYY',
+      devices: 'Devices',
+      generalInformation: 'General information',
+      imageSizeExceeded: 'Photo size must be less than 10 MB!',
+      myPayments: 'My payments',
+      selectYourCity: 'Choose your city',
+      selectYourCityPlaceholder: 'City',
+      selectYourCountry: 'Choose your country',
+      selectYourCountryPlaceholder: 'Country',
+      wrongFileFormat: 'Error! The format of the uploaded photo must be \nPNG and JPEG',
+    },
   },
   publicPage: {
     title: 'Public Page',
