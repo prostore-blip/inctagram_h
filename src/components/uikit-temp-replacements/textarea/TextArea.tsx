@@ -153,7 +153,13 @@ export const TextArea = forwardRef<ElementRef<'textarea'>, TextAreaProps>(
     }
 
     const cn = {
-      area: clsx(s.area, active && s.active, errorMessage && s.errorInput, s[resizeable]),
+      area: clsx(
+        s.area,
+        active && s.active,
+        errorMessage && s.errorInput,
+        s[resizeable],
+        className
+      ),
       container: clsx(s.container, disabled && s.disabled),
       error: clsx(!errorMessage && s.transparent),
       label: clsx(s.label, disabled && s.disabled),

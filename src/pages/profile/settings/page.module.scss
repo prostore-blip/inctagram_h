@@ -1,17 +1,25 @@
 .wrapper {
-  //button {
-  //  all: unset;
-  //}
-  //[id^='radix-:r9:-trigger-']:not([data-state='active']) {
-  //  background-color: transparent;
-  //}
-  //[id^='radix-:r9:-trigger-'][data-state='active'] {
-  //  background-color: red;
-  //}
-  //[id^='radix-:r9:-trigger-'] {
-  //  background-color: transparent;
-  //}
+  padding: 50px;
+  min-width: 960px;
 }
+
+.form {
+  display: inline-flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.aboutMe {
+  height: 100px;
+  //error text is 24px height
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.formItem {
+  margin-bottom: 24px;
+}
+
 .label {
   color: var(--color-light-900);
 }
@@ -26,8 +34,30 @@
 
 .separator {
   background-color: var(--color-dark-300);
-  bottom: 62px;
+  bottom: calc(36px + 48px / 2);
   height: 2px;
   position: relative;
   width: 100%;
+}
+
+.locationSection {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dateInput {
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  top: 32px;
+  padding-right: 12px;
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+.submitButton {
+  align-self: flex-end;
 }

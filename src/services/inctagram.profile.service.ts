@@ -1,5 +1,7 @@
+import { UserGeneralInfoData } from '@/components/profile-settings/general-info-form/schema'
 import { ResponseDataUserProfile, ResponseDataUserProfileByUserName } from '@/pages/profile/types'
 import { inctagramService } from '@/services/inctagram.service'
+import { SuccessfulRequestResult } from '@/types'
 
 export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   endpoints: builder => {
@@ -17,9 +19,19 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
           return { url: `/v1/users/${arg}` }
         },
       }),
+      updateProfile: builder.mutation<SuccessfulRequestResult, UserGeneralInfoData>({
+        invalidatesTags: ['me'],
+        query: body => {
+          return {
+            body,
+            method: 'PUT',
+            url: '/v1/users/update-meta',
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useGetUserProfileByUserIdQuery, useGetUserProfileQuery } =
+export const { useGetUserProfileByUserIdQuery, useGetUserProfileQuery, useUpdateProfileMutation } =
   inctagramUsersProfileService

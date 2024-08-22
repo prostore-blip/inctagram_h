@@ -33,14 +33,13 @@
   &:hover {
     cursor: pointer;
 
-    background-color: rgba(35, 78, 153, 0.15);
+    background-color: color-mix(in srgb, var(--color-accent-900), transparent 85%);
   }
   &:active {
-    background-color: rgb(115, 165, 255, 0.15);
+    background-color: color-mix(in srgb, var(--color-accent-100), transparent 85%);
   }
 
   &:focus-visible {
-    border-color: transparent;
     outline: 2px solid var(--color-accent-500);
     border-radius: 2px;
   }
