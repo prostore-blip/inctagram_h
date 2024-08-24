@@ -17,7 +17,7 @@ export function PublicPage() {
    */
   const { data, isLoading } = useGetAllPostsQuery(
     {
-      endCursorPostId: undefined,
+      endCursorPostId: 0,
       params: { pageSize: 4 },
     },
     { pollingInterval: 60000 }
@@ -34,13 +34,6 @@ export function PublicPage() {
     void router.push(`/profile/${id}`)
   }
 
-  //--------------  временный редирект на страницу пользователя--------------
-  // useEffect(() => {
-  //   console.log('useEffect from PubliPage')
-  //
-  //   void router.push('/profile')
-  // }, [])
-  //-------------------------------------------------------------------------
   /**
    * скелетон
    */

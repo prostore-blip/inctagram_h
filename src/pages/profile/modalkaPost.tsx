@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { NextCarousel, PrevCarousel } from '@/assets/icons'
 import { Close } from '@/assets/icons/close'
@@ -21,24 +21,16 @@ import s from '@/pages/posts.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
-  index: number
-  posts: Post[]
+  post: Post
   showMore: boolean
 }
 
-const ModalkaPost = ({ index, posts, showMore }: Props) => {
+const ModalkaPost = ({ post, showMore }: Props) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужна только для skip'а запроса за
    * комментариями, если модалка не открыта. В компоненте Modalka можно не использовать
    */
   const [open, setOpen] = useState(false)
-  /**
-   * стэйт индекса выбранного поста в массиве постов в карусели. При первом рендере равняется индексу поста из
-   * массива постов родительской компоненты.
-   * В дальнейшем меняется при нажатии на кнопки prev или next карусели.
-   * Используется для запроса комментариев к выбранному посту в карусели
-   */
-  const [postIndex, setPostIndex] = useState<number>(index)
 
   /**
    * запрос за комментариями к посту
@@ -46,7 +38,7 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
   const { data, isFetching } = useGetCommentsForPostQuery(
     {
       params: undefined,
-      postId: posts[postIndex].id,
+      postId: post.id,
     },
     { skip: !open }
   )
@@ -59,43 +51,66 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
   /**
    * кастомный хук для точек перехода к слайдам карусели
    */
-  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi, setPostIndex)
+  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
 
   /**
-   * массив слайдов (картинки постов) карусели
+   * массив images поста для карусели
    */
-  const imagePostsArray = posts.map(item => {
+  const imagesPostArray = post?.images.map(image => {
     return (
-      <div className={s.emblaSlide} key={item.id}>
-        <Image
-          alt={'image'}
-          height={item?.images[0]?.height}
-          src={item?.images[0]?.url || defaultAva}
-          width={item?.images[0]?.width}
-        />
+      <div className={s.emblaSlide} key={image.uploadId}>
+        <div className={s.postImage} data-showmore={showMore}>
+          <Image
+            alt={'image'}
+            height={image?.height}
+            priority
+            src={image?.url || defaultAva}
+            width={image?.width}
+          />
+        </div>
       </div>
     )
   })
 
-  useEffect(() => {
-    if (open) {
-      emblaApi?.scrollTo(postIndex, true)
-    }
-  }, [open])
-
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <div className={s.postImage} data-showmore={showMore}>
-          <Image
-            alt={'image'}
-            height={posts[postIndex]?.images[0]?.height}
-            priority
-            src={posts[postIndex]?.images[0]?.url || defaultAva}
-            width={posts[postIndex]?.images[0]?.width}
-          />
+        <div className={s.embla} ref={emblaRef}>
+          <div className={s.emblaContainer}>{imagesPostArray}</div>
         </div>
       </ModalkaTrigger>
+
+      {!showMore && (
+        <>
+          <Button
+            className={s.prevButton}
+            onClick={() => {
+              emblaApi?.scrollPrev()
+            }}
+            type={'button'}
+          >
+            <PrevCarousel />
+          </Button>
+          <Button
+            className={s.nextButton}
+            onClick={() => {
+              emblaApi?.scrollNext()
+            }}
+            type={'button'}
+          >
+            <NextCarousel />
+          </Button>
+          <div className={s.dots}>
+            {scrollSnaps.map((_, index) => (
+              <div
+                className={clsx(s.dot, index === selectedIndex && s.activeDot)}
+                key={index}
+                onClick={() => onDotButtonClick(index)}
+              ></div>
+            ))}
+          </div>
+        </>
+      )}
       <ModalkaContent aria-describedby={'open modal comments to post'} className={s.contentPost}>
         <ModalkaTitle className={s.title}>
           <ModalkaButtonCancel asChild>
@@ -107,17 +122,12 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
         <Card className={s.card} variant={'dark300'}>
           <div className={s.postImageContent}>
             <div className={s.embla} ref={emblaRef}>
-              <div className={s.emblaContainer}> {imagePostsArray}</div>
+              <div className={s.emblaContainer}> {imagesPostArray}</div>
             </div>
             <Button
               className={s.prevModalButton}
               onClick={() => {
                 emblaApi?.scrollPrev()
-                const selectedPostIndex = emblaApi?.selectedScrollSnap()
-
-                if (selectedPostIndex) {
-                  setPostIndex(selectedPostIndex)
-                }
               }}
               type={'button'}
             >
@@ -127,11 +137,6 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
               className={s.nextModalButton}
               onClick={() => {
                 emblaApi?.scrollNext()
-                const selectedPostIndex = emblaApi?.selectedScrollSnap()
-
-                if (selectedPostIndex) {
-                  setPostIndex(selectedPostIndex)
-                }
               }}
               type={'button'}
             >
@@ -149,13 +154,8 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
           </div>
           <div className={s.commentsWr}>
             <div className={s.avaUserNameBlock}>
-              <Image
-                alt={'ava'}
-                height={36}
-                src={posts[postIndex].avatarOwner || defaultAva}
-                width={36}
-              />
-              <Typography variant={'h3'}>{posts[postIndex].userName}</Typography>
+              <Image alt={'ava'} height={36} src={post.avatarOwner || defaultAva} width={36} />
+              <Typography variant={'h3'}>{post.userName}</Typography>
             </div>
             <hr className={s.hr} />
             <ul className={s.commentsUl}>
@@ -168,7 +168,7 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
                       <Image
                         alt={'ava'}
                         height={36}
-                        src={c.from.avatars[1].url || defaultAva}
+                        src={c.from?.avatars[1]?.url || defaultAva}
                         width={36}
                       />
                       <div className={s.commentBlock}>
@@ -191,13 +191,13 @@ const ModalkaPost = ({ index, posts, showMore }: Props) => {
             <div className={s.likesBlock}>
               <div className={s.avatarsLiked}></div>
               <Typography as={'span'} variant={'regular14'}>
-                {posts[postIndex].likesCount}{' '}
+                {post.likesCount}{' '}
                 <Typography as={'span'} variant={'regularBold14'}>
                   &quot;Like&quot;
                 </Typography>
               </Typography>
               <Typography className={s.date} variant={'small'}>
-                {posts[postIndex].createdAt}
+                {post.createdAt}
               </Typography>
             </div>
           </div>

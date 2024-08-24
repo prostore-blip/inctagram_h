@@ -34,8 +34,26 @@
     height: 100%;
     max-width: 234px;
     width: 100%;
+
     .modalWr {
       position: relative;
+
+      .postImage {
+        width: 100%;
+        aspect-ratio: 1;
+        transition: all linear 0.2s;
+
+        &[data-showmore='true'] {
+          transition: all linear 0.2s;
+          aspect-ratio: 2;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
 
       .prevButton {
         @include carouselButton;
@@ -69,23 +87,6 @@
             background: var(--color-accent-500);
           }
         }
-      }
-    }
-
-    .postImage {
-      width: 100%;
-      aspect-ratio: 1;
-      transition: all linear 0.2s;
-
-      &[data-showmore='true'] {
-        transition: all linear 0.2s;
-        aspect-ratio: 2;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
       }
     }
 
@@ -282,6 +283,7 @@
     }
   }
 }
+
 .embla {
   overflow: hidden;
   .emblaContainer {
