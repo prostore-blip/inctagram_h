@@ -26,7 +26,12 @@ export const GetProfileUsers = () => {
     return (
       <li className={s.card} key={u.id} onClick={() => redirectToUserProfile(u.userName)}>
         <div>
-          <Image alt={'avatar'} src={u.avatars[0]?.url ?? defaultAva} />
+          <Image
+            alt={'avatar'}
+            height={u?.avatars[0]?.height}
+            src={u?.avatars[0]?.url ?? defaultAva}
+            width={u?.avatars[0]?.width}
+          />
         </div>
       </li>
     )

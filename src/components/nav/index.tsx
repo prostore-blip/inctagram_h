@@ -78,7 +78,7 @@ export const Nav = ({ isSpecialAccount }: Props) => {
           const shouldHide = isStatisticsLink && !isSpecialAccount
           const activeLink =
             (router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0) ||
-            !router.pathname.slice(1).length
+            (!router.pathname.slice(1).length && link.name === 'Home')
           const hiddenStaticticsStyle = link.name === 'Statistics' && !data?.length
 
           return (
