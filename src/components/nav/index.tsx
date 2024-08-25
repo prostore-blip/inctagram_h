@@ -54,10 +54,10 @@ const links: PropsLink[] = [
 ]
 
 type Props = {
-  isSpecialAccount: boolean
+  isSpecialAccount?: boolean
 }
 
-export const Nav = ({ isSpecialAccount }: Props) => {
+export const Nav = ({ isSpecialAccount = false }: Props) => {
   const router = useRouter()
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)

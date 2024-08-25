@@ -1,9 +1,42 @@
 import { inctagramService } from '@/services/inctagram.service'
 import { getResponse, Respones, SignInRequest, SignUpRequest } from './instagramm.auth.type'
+import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
+import { SuccessfulRequestResult } from '@/types'
 
 export const inctagramAuthService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
+      forgotPassword: builder.mutation<SuccessfulRequestResult, ForgotPasswordRequestData>({
+        query: ({ email, recaptcha }) => {
+          const body = {
+            'email-or-login': email,
+            'recaptcha-token': recaptcha,
+          }
+
+          return {
+            body,
+            method: 'POST',
+            url: '/v1/users/forgot-password',
+          }
+        },
+      }),
+
+      resetPassword: builder.mutation<void, ResetPasswordRequestData>({
+        query: ({ password, recaptcha, repeatPassword, token }) => {
+          const body = {
+            password,
+            'recaptcha-token': recaptcha,
+            'repeat-password': repeatPassword,
+            token,
+          }
+
+          return {
+            body,
+            method: 'POST',
+            url: '/v1/users/reset-password',
+          }
+        },
+      }),
       authGet: builder.query<any, getResponse>({
         providesTags: ['login'],
         query: params => {
@@ -44,7 +77,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           url: '/v1/auth/rotate-token',
         }),
       }),
-      
+
       // login: builder.mutation<any, any>({
       //   async onQueryStarted(arg, { dispatch, queryFulfilled }) {
       //     const res = await queryFulfilled
@@ -64,5 +97,11 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
   },
 })
 
-export const { useSingInMutation, useSingUpMutation, useAuthGetQuery, useLogoutMutation } =
-  inctagramAuthService
+export const {
+  useSingInMutation,
+  useSingUpMutation,
+  useAuthGetQuery,
+  useLogoutMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} = inctagramAuthService

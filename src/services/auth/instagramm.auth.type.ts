@@ -11,7 +11,6 @@ export type SignUpRequest = {
 export type Respones = {
   success: successSignUpResponse
   badRequest: badRegisterResponse
-  
 }
 
 export type successSignUpResponse = {
