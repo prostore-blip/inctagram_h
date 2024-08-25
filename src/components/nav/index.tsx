@@ -55,9 +55,10 @@ const links: PropsLink[] = [
 
 type Props = {
   isSpecialAccount: boolean
+  myProfileId: number | undefined
 }
 
-export const Nav = ({ isSpecialAccount }: Props) => {
+export const Nav = ({ isSpecialAccount, myProfileId }: Props) => {
   const router = useRouter()
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
@@ -77,8 +78,9 @@ export const Nav = ({ isSpecialAccount }: Props) => {
           const isStatisticsLink = link.name === 'Statistics'
           const shouldHide = isStatisticsLink && !isSpecialAccount
           const activeLink =
-            (router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0) ||
-            (!router.pathname.slice(1).length && link.name === 'Home')
+            ((router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0) ||
+              (!router.pathname.slice(1).length && link.name === 'Home')) &&
+            Number(router.query.id) === myProfileId
           const hiddenStaticticsStyle = link.name === 'Statistics' && !data?.length
 
           return (
