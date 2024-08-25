@@ -11,7 +11,8 @@ import '../styles/index.scss'
 import '@chrizzo/ui-kit/dist/style.css'
 
 import { wrapper } from '../services/store'
-import { LayoutNew } from '@/components'
+import { LayoutNew } from '@/components/Layout/layoutNew'
+
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode

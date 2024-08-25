@@ -15,7 +15,7 @@ import { useAuthGetQuery } from '@/services'
 
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
 
-  const { data, isFetching, isLoading } = useAuthGetQuery({})
+  const { data, isFetching, isLoading } = useAuthGetQuery()
 
  
 
