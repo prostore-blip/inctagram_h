@@ -16,7 +16,7 @@ export function SignUp() {
   }
 
   // if(data?.success) {
-    
+
   // router.push('/profile')
   // }
 

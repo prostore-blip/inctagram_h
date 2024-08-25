@@ -1,12 +1,13 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
-import { Layout } from '@/components/Layout'
+
 import { NextPage } from 'next'
+import { LayoutNew } from '..'
 
 export const BaseLayout: NextPage<PropsWithChildren> = ({ children }) => {
   console.log('BaseLayout')
 
-  return <Layout>{children}</Layout>
+  return <LayoutNew>{children}</LayoutNew>
 }
 
 export const GetLayout = (page: ReactElement) => {

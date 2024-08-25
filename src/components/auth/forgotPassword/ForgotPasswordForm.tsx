@@ -5,7 +5,7 @@ import { RecaptchaLogo } from '@/assets/image/recaptchaLogo'
 import { FormInput } from '@/components/controll/formTextField'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
+
 import { isUnsuccessfulRequestResult } from '@/types'
 import { Button, Card, Checkbox, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
@@ -17,6 +17,7 @@ import { useReCaptcha } from 'next-recaptcha-v3'
 import s from './forgotPasswordForm.module.scss'
 
 import { ForgotPasswordRequestData, forgotPasswordFormSchema } from './schema'
+import { useForgotPasswordMutation } from '@/services'
 
 export const ForgotPasswordForm = () => {
   const [forgotPassword, { error, isLoading, isSuccess }] = useForgotPasswordMutation()

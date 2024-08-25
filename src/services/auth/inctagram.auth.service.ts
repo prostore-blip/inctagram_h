@@ -37,11 +37,11 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           }
         },
       }),
-      authGet: builder.query<any, getResponse>({
+      authGet: builder.query<any, void>({
         providesTags: ['login'],
         query: params => {
           return {
-            url: `/v1/auth/external/?agreement=${params.agreement}&provider=${params.provider}`,
+            url: `/v1/auth/external/?agreement=${params}&provider=${params}`,
           }
         },
       }),

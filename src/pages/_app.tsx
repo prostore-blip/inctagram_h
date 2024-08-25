@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import React, { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
 
-import { LayoutNew } from '@/components/Layout/layoutNew'
+
 import { NextPage } from 'next'
 
 import '../styles/index.scss'
@@ -11,6 +11,7 @@ import '../styles/index.scss'
 import '@chrizzo/ui-kit/dist/style.css'
 
 import { wrapper } from '../services/store'
+import { LayoutNew } from '@/components'
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode

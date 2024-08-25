@@ -3,12 +3,13 @@ import { useState } from 'react'
 import { RecoveryCodeExpired } from '@/assets/image/recoveryCodeExpired'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
+
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './recoveryCodeError.module.scss'
+import { useForgotPasswordMutation } from '@/services'
 
 type Props = {
   text: string
