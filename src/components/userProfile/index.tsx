@@ -2,7 +2,6 @@ import { PaidAccount } from '@/assets/icons/paidAccount'
 import { ModalFollowers } from '@/components/ModalFollowers'
 import { ModalFollowing } from '@/components/modalFollowing'
 import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserNameQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
@@ -14,31 +13,25 @@ import s from './userProfile.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
-  // userName: string | undefined
   dataProfile: any
-  isAuthMe: boolean
+  myProfileId: number | undefined
 }
 
-export function UserProfile({ dataProfile, isAuthMe }: Props) {
-  // /**
-  //  * проверка залогинен или нет
-  //  */
-  // const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthMeQuery()
+export function UserProfile({ dataProfile, myProfileId }: Props) {
   const router = useRouter()
 
-  console.log('userProfile1111111111111111', isAuthMe, dataProfile)
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
   const { data, isFetching } = useGetUserProfileByUserNameQuery(dataProfile?.userName, {
-    skip: !isAuthMe,
+    // skip: !isAuthMe,
   })
 
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
   const { data: subscriptionData, isFetching: isFetchingGetMySubscriptions } =
-    useGetMySubscriptionsQuery(undefined, { skip: !isAuthMe })
+    useGetMySubscriptionsQuery(undefined, { skip: !myProfileId })
 
   /**
    * открыть настройки
@@ -50,7 +43,7 @@ export function UserProfile({ dataProfile, isAuthMe }: Props) {
    * открыть публикации
    */
   const openPublications = () => {
-    if (!isAuthMe) {
+    if (!myProfileId) {
       return null
     }
     alert('openPublications')
@@ -73,7 +66,7 @@ export function UserProfile({ dataProfile, isAuthMe }: Props) {
               {data?.userName ?? 'UserName'}
               {subscriptionData?.length && !isFetchingGetMySubscriptions ? <PaidAccount /> : null}
             </Typography>
-            {isAuthMe && (
+            {myProfileId === dataProfile.id && (
               <Button onClick={openSettings} variant={'secondary'}>
                 <Typography variant={'h3'}>Profile Settings</Typography>
               </Button>
@@ -104,29 +97,6 @@ export function UserProfile({ dataProfile, isAuthMe }: Props) {
           </article>
         </section>
       </div>
-      {/*<section className={s.cardsBlock}>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*</section>*/}
       <GetProfileUsers />
     </>
   )

@@ -13,7 +13,7 @@ function UserProfileDinamicPage() {
 
   const { data: publicProfileUserData, isFetching: isFetchingPublicProfileUser } =
     useGetPublicProfileForUserByIdQuery(Number(router.query.id), {
-      skip: authMe !== undefined || isFetchingAuthMe,
+      skip: isFetchingAuthMe,
     })
 
   const { data, isFetching } = useGetMyProfileQuery(undefined, {
@@ -25,7 +25,7 @@ function UserProfileDinamicPage() {
       <div className={s.overflowedContainer}>
         <div className={s.mainCntainer}>
           {!isFetching && !isFetchingAuthMe && !isFetchingPublicProfileUser && (
-            <UserProfile dataProfile={publicProfileUserData || data} isAuthMe={!!authMe} />
+            <UserProfile dataProfile={publicProfileUserData || data} myProfileId={authMe.userId} />
           )}
         </div>
       </div>
@@ -33,6 +33,4 @@ function UserProfileDinamicPage() {
   )
 }
 
-// UserProfileDinamicPage.getLayout = GetNavLayout
-// UserProfileDinamicPage.getLayout = GetLayout
 export default UserProfileDinamicPage
