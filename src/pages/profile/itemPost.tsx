@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactTimeAgo from 'react-time-ago'
 
 import ModalkaPost from '@/pages/profile/modalkaPost'
 import { Post } from '@/services/inctagram.public-posts.service'
@@ -26,6 +27,10 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
   const expandDescription = () => {
     setShowMore(n => !n)
   }
+  /**
+   * дата создания поста
+   */
+  const dateAgo = new Date(p.createdAt)
 
   return (
     <li className={s.post}>
@@ -38,7 +43,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
       </div>
       <Typography className={s.date} variant={'small'}>
         {' '}
-        {p.createdAt}
+        <ReactTimeAgo date={dateAgo} />
       </Typography>
       <Typography className={s.description} data-showmore={showMore} variant={'regular14'}>
         {p.description ||

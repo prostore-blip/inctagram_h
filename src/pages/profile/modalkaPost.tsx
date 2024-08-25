@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactTimeAgo from 'react-time-ago'
 
 import { NextCarousel, PrevCarousel } from '@/assets/icons'
 import { Close } from '@/assets/icons/close'
@@ -10,6 +11,7 @@ import {
   ModalkaTrigger,
 } from '@/components/modal'
 import { useDotButton } from '@/hooks/useDotCarouselButton'
+import { DateTimeFormatOptions } from '@/pages/profile/types'
 import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
@@ -44,14 +46,29 @@ const ModalkaPost = ({ post, showMore }: Props) => {
   )
 
   /**
-   * хук из библиотеки карусели
+   * хук из библиотеки карусели для триггера модалки
    */
   const [emblaRef, emblaApi] = useEmblaCarousel()
 
   /**
-   * кастомный хук для точек перехода к слайдам карусели
+   * кастомный хук для точек перехода к слайдам карусели для триггера модалки
    */
   const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
+
+  /**
+   * хук из библиотеки карусели для контента модалки (там, где большое изображение нужно прокручивать)
+   */
+  const [emblaRefBig, emblaApiBig] = useEmblaCarousel()
+
+  /**
+   * кастомный хук для точек перехода к слайдам карусели для контента модалки  (там, где большое
+   * изображение нужно прокручивать)
+   */
+  const {
+    onDotButtonClick: onDotButtonClickBig,
+    scrollSnaps: scrollSnapsBig,
+    selectedIndex: selectedIndexBig,
+  } = useDotButton(emblaApiBig)
 
   /**
    * массив images поста для карусели
@@ -71,6 +88,13 @@ const ModalkaPost = ({ post, showMore }: Props) => {
       </div>
     )
   })
+
+  /**
+   * дата создания поста
+   */
+  const date = new Date(post.createdAt)
+  const options: DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
+  const formattedDate = date.toLocaleDateString('en-US', options)
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
@@ -121,13 +145,13 @@ const ModalkaPost = ({ post, showMore }: Props) => {
         </ModalkaTitle>
         <Card className={s.card} variant={'dark300'}>
           <div className={s.postImageContent}>
-            <div className={s.embla} ref={emblaRef}>
+            <div className={s.embla} ref={emblaRefBig}>
               <div className={s.emblaContainer}> {imagesPostArray}</div>
             </div>
             <Button
               className={s.prevModalButton}
               onClick={() => {
-                emblaApi?.scrollPrev()
+                emblaApiBig?.scrollPrev()
               }}
               type={'button'}
             >
@@ -136,18 +160,18 @@ const ModalkaPost = ({ post, showMore }: Props) => {
             <Button
               className={s.nextModalButton}
               onClick={() => {
-                emblaApi?.scrollNext()
+                emblaApiBig?.scrollNext()
               }}
               type={'button'}
             >
               <NextCarousel height={'48'} width={'48'} />
             </Button>
             <div className={s.dotes}>
-              {scrollSnaps.map((_, index) => (
+              {scrollSnapsBig.map((_, index) => (
                 <div
-                  className={clsx(s.dote, index === selectedIndex && s.activeDot)}
+                  className={clsx(s.dote, index === selectedIndexBig && s.activeDot)}
                   key={index}
-                  onClick={() => onDotButtonClick(index)}
+                  onClick={() => onDotButtonClickBig(index)}
                 ></div>
               ))}
             </div>
@@ -163,6 +187,11 @@ const ModalkaPost = ({ post, showMore }: Props) => {
                 <>...Loading.....</>
               ) : (
                 data?.items.map(c => {
+                  /**
+                   * дата создания комментария
+                   */
+                  const dateAgo = new Date(c.createdAt)
+
                   return (
                     <li className={s.commentWr} key={c.id}>
                       <Image
@@ -179,7 +208,7 @@ const ModalkaPost = ({ post, showMore }: Props) => {
                           {c.content}
                         </Typography>
                         <Typography className={s.date} variant={'small'}>
-                          {c.createdAt}
+                          <ReactTimeAgo date={dateAgo} />
                         </Typography>
                       </div>
                     </li>
@@ -197,7 +226,7 @@ const ModalkaPost = ({ post, showMore }: Props) => {
                 </Typography>
               </Typography>
               <Typography className={s.date} variant={'small'}>
-                {post.createdAt}
+                {formattedDate}
               </Typography>
             </div>
           </div>

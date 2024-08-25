@@ -37,3 +37,9 @@ export type ResponseDataUserProfileByUserName = {
   region: string
   userName: string
 }
+
+export type DateTimeFormatOptions = {
+  day: 'numeric'
+  month: 'long'
+  year: 'numeric'
+}
