@@ -25,7 +25,7 @@ function UserProfileDinamicPage() {
       <div className={s.overflowedContainer}>
         <div className={s.mainCntainer}>
           {!isFetching && !isFetchingAuthMe && !isFetchingPublicProfileUser && (
-            <UserProfile dataProfile={publicProfileUserData || data} myProfileId={authMe.userId} />
+            <UserProfile dataProfile={publicProfileUserData || data} myProfileId={authMe?.userId} />
           )}
         </div>
       </div>
