@@ -12,9 +12,9 @@ import s from '@/components/Layout/layout.module.scss'
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
   const { data, isFetching, isLoading } = useAuthMeQuery()
 
-  console.log('Layout New', data, isLoading, isFetching)
-
   const style = data || isLoading ? '' : s.gridHaveOneCol
+  const router = useRouter()
+  const path = router.pathname
 
   return (
     <div className={s.container + ' ' + style}>
@@ -28,7 +28,7 @@ export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
         <>
           <Header isAuthMe={!!data} />
           {data && <Nav isSpecialAccount myProfileId={data.userId} />}
-          <Main>{children}</Main>
+          <Main>{!(path === '/login' && data) && children}</Main>
         </>
       )}
     </div>
