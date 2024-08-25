@@ -1,0 +1,28 @@
+.content {
+  max-width: 644px;
+  width: 100%;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-dark-300);
+    border: 1px solid var(--color-dark-100);
+    padding: 12px 24px;
+  }
+  .card {
+    border: 1px solid var(--color-dark-100);
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    .image {
+      border-radius: 50%;
+    }
+  }
+
+  .close {
+    padding: 0;
+  }
+}

@@ -15,5 +15,5 @@ export function SignIn() {
   )
 }
 
-SignIn.getLayout = GetLayout
+// SignIn.getLayout = GetLayout
 export default SignIn

@@ -1,6 +1,6 @@
-import { string } from "zod"
+import { string } from 'zod'
 
-export interface SungUpRequest {
+export type SignUpRequest = {
   email: string
   login: string
   password: string
@@ -8,51 +8,29 @@ export interface SungUpRequest {
   agreement: string
 }
 
-export interface SignedUpResponse {
-  success: successSingUpResponse
+export type Respones = {
+  success: successSignUpResponse
   badRequest: badRegisterResponse
-  conflict: conflictResponse
+  
 }
 
-export interface successSingUpResponse {
+export type successSignUpResponse = {
   success: boolean
   message: string
 }
 
-export interface badRegisterResponse {
+export type badRegisterResponse = {
   statusCode: number
   message: string
   errors: string[]
 }
 
-export interface conflictResponse {
-  statusCode: number
-  message: string
-  errors: string[]
+export type SignInRequest = {
+  email: string
+  password: string
 }
 
-export interface SingInRequest {
-    email: string;
-    password: string;
-  }
-
-  export interface SignedInResponse {
-    success: successSingInResponse;
-    unauthorized: Unauthorized
-  }
-
-  export interface successSingInResponse {
-    success: boolean
-    message: string
-  }
-
-  export interface Unauthorized {
-    statusCode: number;
-    message: string;
-    errors: string[];
-  }
-  
-  export interface getResponse {
-    agreement: number;
-    provider:string; 
-  }
+export type getResponse = {
+  agreement: number
+  provider: string
+}

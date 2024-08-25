@@ -10,9 +10,9 @@ export const LoginNavigate: FC<PropsWithChildren<{}>> = ({ children }) => {
   if (isFetching) {
     return <div style={{ fontSize: '50px' }}>...Loading</div>
   }
-  if (!data) {
-    void router.push('/signIn')
-  }
+  // if (!data) {
+  //   void router.push('/login')
+  // }
 
   return <>{children}</>
 }

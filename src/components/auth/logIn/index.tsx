@@ -48,7 +48,7 @@ export function LogIn() {
     login(data)
       .unwrap()
       .then(() => {
-        void router.push(`/home`)
+        void router.push(`/profile`)
       })
       .catch(() => {
         void router.push('/signUp')

@@ -15,10 +15,10 @@ export function SignUp() {
     singUp(data)
   }
 
-  if(data?.success) {
+  // if(data?.success) {
     
-  router.push('/profile')
-  }
+  // router.push('/profile')
+  // }
 
   return (
     <PageWrapper>
@@ -27,5 +27,5 @@ export function SignUp() {
   )
 }
 
-SignUp.getLayout = GetLayout
+// SignUp.getLayout = GetLayout
 export default SignUp

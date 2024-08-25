@@ -1,13 +1,36 @@
-import { GetNavLayout, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { GetLayout, PageWrapper } from '@/components'
+import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
+import { useRouter } from 'next/router'
 
-export function MyProfile() {
-  return (
-    <LoginNavigate>
-      <PageWrapper>MyProfile</PageWrapper>
-    </LoginNavigate>
-  )
+import s from './userProfilePage.module.scss'
+
+function UserProfileWrapper() {
+  const router = useRouter()
+
+  /**
+   * запрос на сервер за своим профилем юзера
+   */
+  const { data, isFetching } = useGetUserProfileQuery()
+
+  console.log('UserprofileWrapper ', data, isFetching)
+  if (isFetching) {
+    console.log('UserprofileWrapper is Fetching')
+
+    return (
+      <PageWrapper>
+        <h1 className={s.loader}>!!!!!!!!!!loading!!!!!!!!!</h1>
+      </PageWrapper>
+    )
+  }
+  if (data) {
+    console.log('UserprofileWrapper is data true ', data)
+    void router.push(`/profile/${data?.id}`)
+  }
+  console.log('UserprofileWrapper return null')
+
+  return null
 }
 
-MyProfile.getLayout = GetNavLayout
-export default MyProfile
+// UserProfileWrapper.getLayout = GetNavLayout
+UserProfileWrapper.getLayout = GetLayout
+export default UserProfileWrapper
