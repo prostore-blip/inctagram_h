@@ -1,7 +1,6 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
 import { ModalFollowing } from '@/components/modalFollowing'
 import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
@@ -12,6 +11,7 @@ import s from './userProfile.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
 import { ModalFollowers } from '../modalFollowers'
+import { useAuthGetQuery } from '@/services'
 
 type Props = {
   userName: string | undefined
@@ -35,7 +35,7 @@ export function UserProfile({ userName }: Props) {
   /**
    * проверка залогинен или нет
    */
-  const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthMeQuery()
+  const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthGetQuery()
 
   /**
    * открыть настройки
