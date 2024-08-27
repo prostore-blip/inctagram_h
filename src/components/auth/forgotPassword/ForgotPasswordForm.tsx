@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 
 import { RecaptchaLogo } from '@/assets/image/recaptchaLogo'
 import { FormInput } from '@/components/controll/formTextField'
+import { NativeConfirm } from '@/components/native-dialog/native-confirm'
+import Spinner from '@/components/uikit-temp-replacements/spinner/Spinner'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
@@ -103,44 +105,27 @@ export const ForgotPasswordForm = () => {
 
   const submitDisabled = !isDirty || !isValid || isLoading || isValidating || isSubmitting
 
-  //todo replace native dialog with component
   //todo translation with dynamic values
+  //todo use toast instead of dialogs
   return (
     <div className={s.wrapper}>
       <DevTool control={control} />
-      <dialog
-        className={clsx(showSuccessDialog && s.dialog)}
+      <NativeConfirm
+        isModal
+        onClose={handleCloseSuccessDialog}
         open={showSuccessDialog}
         role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.startPage.successDialogText}
-          {` ${getValues('email') || 'undefined@undefined'}`}
-        </Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={handleCloseSuccessDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
-      <dialog
-        className={clsx(showErrorDialog && s.dialog)}
+        text={`${t.forgotPassword.startPage.successDialogText} ${getValues('email') || 'undefined@undefined'}`}
+        title={t.forgotPassword.startPage.successDialogTitle}
+      />
+      <NativeConfirm
+        isModal
+        onClose={handleCloseErrorDialog}
         open={showErrorDialog}
         role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
-        <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
-        {/*todo remove*/}
-        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={handleCloseErrorDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
+        text={`${error && JSON.stringify(error)} ${t.forgotPassword.startPage.errorDialogText}`}
+        title={t.forgotPassword.startPage.errorDialogTitle}
+      />
       <Card className={s.card} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.startPage.title}
@@ -174,7 +159,7 @@ export const ForgotPasswordForm = () => {
             <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
               {emailSent && t.forgotPassword.startPage.sendLinkAgain}
               {!emailSent && t.forgotPassword.startPage.sendLink}
-              {isSubmitting && <span className={clsx(s.loader)} />}
+              <Spinner active={isSubmitting} size={16} />
             </Button>
           </div>
         </form>
@@ -219,7 +204,7 @@ function RecaptchaBox({ checked, hidden, isLoading, isReady, onClick }: Props) {
       </div>
 
       <div className={clsx(s.flexRow, !isLoading && s.noDisplay)}>
-        <span className={clsx(s.loader)}></span>
+        <Spinner active size={16} />
         <Typography className={s.textNoWrap} variant={'small'}>
           I&apos;m not a robot
         </Typography>

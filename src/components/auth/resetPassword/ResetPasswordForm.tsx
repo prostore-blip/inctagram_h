@@ -6,6 +6,8 @@ import {
   resetPasswordFormSchema,
 } from '@/components/auth/resetPassword/schema'
 import { FormInput } from '@/components/controll/formTextField'
+import { NativeConfirm } from '@/components/native-dialog/native-confirm'
+import Spinner from '@/components/uikit-temp-replacements/spinner/Spinner'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useResetPasswordMutation } from '@/services/inctagram.auth.service'
@@ -14,7 +16,6 @@ import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './resetPasswordForm.module.scss'
@@ -92,50 +93,28 @@ export const ResetPasswordForm = () => {
 
   const handleCloseSuccessDialog = async () => {
     setShowSuccessDialog(false)
-    // await router.push('/login')
+    await router.push('/login')
   }
   //isResetPasswordLoading has a delay - the button seems to be disabled too late, isSubmitting works better
   const submitDisabled =
     isResetPasswordLoading || !isValid || !isDirty || isResetPasswordSuccess || isSubmitting
 
-  //todo use replace dialogs
+  //todo replace dialogs with toasts
   return (
     <div className={s.wrapper}>
       <DevTool control={control} />
-      <dialog
-        className={clsx(showSuccessDialog && s.dialog)}
+      <NativeConfirm
+        onClose={handleCloseSuccessDialog}
         open={showSuccessDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.newPassword.successDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.newPassword.successDialogText}
-        </Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button as={Link} href={'/login'} onClick={handleCloseSuccessDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
-      <dialog
-        className={clsx(showErrorDialog && s.dialog)}
+        text={t.forgotPassword.newPassword.successDialogText}
+        title={t.forgotPassword.newPassword.successDialogTitle}
+      />
+      <NativeConfirm
+        onClose={() => setShowErrorDialog(false)}
         open={showErrorDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.newPassword.errorDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.newPassword.errorDialogText}
-        </Typography>
-        {/*todo remove*/}
-        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={() => setShowErrorDialog(false)} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
+        text={`${t.forgotPassword.newPassword.errorDialogText} ${error && JSON.stringify(error)}`}
+        title={t.forgotPassword.newPassword.errorDialogTitle}
+      />
       <Card className={clsx(s.card, token === 'invalid-token' && s.hidden)} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.newPassword.title}
@@ -168,7 +147,7 @@ export const ResetPasswordForm = () => {
             </Typography>
             <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
               {t.forgotPassword.newPassword.createNewPassword}
-              {isSubmitting && <span className={clsx(s.loader)} />}
+              <Spinner active={isSubmitting} size={16} />
             </Button>
           </div>
         </form>

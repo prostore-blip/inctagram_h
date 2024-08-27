@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
 import { RecoveryCodeExpired } from '@/assets/image/recoveryCodeExpired'
+import { NativeConfirm } from '@/components/native-dialog/native-confirm'
+import Spinner from '@/components/uikit-temp-replacements/spinner/Spinner'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
-import clsx from 'clsx'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './recoveryCodeError.module.scss'
@@ -51,41 +52,21 @@ export function RecoveryCodeError({ text, title }: Props) {
   const submitDisabled =
     isForgotPasswordLoading || !localStorage.getItem(EMAIL_KEY_FOR_PASSWORD_RESET)
 
+  //todo replace dialogs with toasts
   return (
     <div className={s.flexColumn}>
-      <dialog
-        className={clsx(showSuccessDialog && s.dialog)}
+      <NativeConfirm
+        onClose={handleCloseSuccessDialog}
         open={showSuccessDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.startPage.successDialogText}
-          {` ${localStorage.getItem(EMAIL_KEY_FOR_PASSWORD_RESET)}`}
-        </Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={handleCloseSuccessDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
-      <dialog
-        className={clsx(showErrorDialog && s.dialog)}
+        text={`${t.forgotPassword.startPage.successDialogText}
+           ${localStorage.getItem(EMAIL_KEY_FOR_PASSWORD_RESET)}`}
+      />
+      <NativeConfirm
+        onClose={() => setShowErrorDialog(false)}
         open={showErrorDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
-        <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
-        {/*todo remove*/}
-        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={() => setShowErrorDialog(false)} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
+        text={`${t.forgotPassword.startPage.errorDialogText}
+           ${error && JSON.stringify(error)}`}
+      />
       <Typography className={s.title} textAlign={'center'} variant={'h1'}>
         {title}
       </Typography>
@@ -95,6 +76,7 @@ export function RecoveryCodeError({ text, title }: Props) {
       <Button className={s.resendButton} disabled={submitDisabled} onClick={makeResendEmailRequest}>
         {!isForgotPasswordLoading && t.forgotPassword.expiredLink.resendButtonCaption}
         {isForgotPasswordLoading && t.forgotPassword.common.inProgress}
+        <Spinner active={isForgotPasswordLoading} size={16} />
       </Button>
       <RecoveryCodeExpired />
     </div>
