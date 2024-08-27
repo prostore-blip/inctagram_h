@@ -31,7 +31,6 @@ const flags = [
 ]
 
 export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
-  console.log('header ')
   /**
    * стейт контроля ширины окна
    */
@@ -71,9 +70,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
    * после каждого set'а будем вешать слушателей.
    */
   useEffect(() => {
-    console.log('useEffect headeer')
     if (!windowWidth) {
-      console.log('useEffect headeer set')
       setWindowWidth(window.innerWidth)
     }
     const handleResize = () => {
@@ -83,7 +80,6 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
     window.addEventListener('resize', handleResize)
 
     return () => {
-      console.log('useEffect headeer removeeventLostener')
       window.removeEventListener('resize', handleResize)
     }
   }, [])

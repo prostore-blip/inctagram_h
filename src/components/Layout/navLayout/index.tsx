@@ -5,8 +5,6 @@ import { LoginNavigate } from '@/hoc/LoginNavigate'
 import { NextPage } from 'next'
 
 export const NavLayout: NextPage<PropsWithChildren> = ({ children }) => {
-  console.log('NavLayout')
-
   return <Layout showNav>{children}</Layout>
 }
 

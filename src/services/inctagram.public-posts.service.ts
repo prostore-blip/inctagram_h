@@ -93,7 +93,7 @@ export type Post = {
   updatedAt: string
   userName: string
 }
-type ResponseAllPosts = {
+export type ResponseAllPosts = {
   items: Post[]
   pageSize: number
   totalCount: number
