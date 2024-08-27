@@ -9,5 +9,5 @@ export function Search() {
   )
 }
 
-Search.getLayout = GetNavLayout
+// Search.getLayout = GetNavLayout
 export default Search

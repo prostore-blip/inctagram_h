@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { GetLayout, GetNavLayout, HeadMeta, Layout, PageWrapper } from '@/components'
+import { HeadMeta, PageWrapper } from '@/components'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useRouter } from 'next/router'
 
@@ -27,5 +27,5 @@ export function PublicPage() {
   )
 }
 
-PublicPage.getLayout = GetLayout
+// PublicPage.getLayout = GetBaseLayout
 export default PublicPage

@@ -1,8 +1,7 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { PageWrapper } from '@/components'
+import LinearProgress from '@/components/uikit-temp-replacements/linear-progress/LinearProgress'
 import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
 import { useRouter } from 'next/router'
-
-import s from './userProfilePage.module.scss'
 
 function UserProfileWrapper() {
   const router = useRouter()
@@ -18,7 +17,8 @@ function UserProfileWrapper() {
 
     return (
       <PageWrapper>
-        <h1 className={s.loader}>!!!!!!!!!!loading!!!!!!!!!</h1>
+        <LinearProgress active={isFetching} />
+        {/*<h1 className={s.loader}>!!!!!!!!!!loading!!!!!!!!!</h1>*/}
       </PageWrapper>
     )
   }
@@ -32,5 +32,5 @@ function UserProfileWrapper() {
 }
 
 // UserProfileWrapper.getLayout = GetNavLayout
-UserProfileWrapper.getLayout = GetLayout
+// UserProfileWrapper.getLayout = GetBaseLayout
 export default UserProfileWrapper

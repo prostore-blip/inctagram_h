@@ -9,5 +9,5 @@ export function Messenger() {
   )
 }
 
-Messenger.getLayout = GetNavLayout
+// Messenger.getLayout = GetNavLayout
 export default Messenger

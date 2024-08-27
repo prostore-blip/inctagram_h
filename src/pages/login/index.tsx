@@ -1,4 +1,4 @@
-import { GetLayout, LogIn, MailVerificationError, MailVerificationSuccess } from '@/components'
+import { LogIn, MailVerificationError, MailVerificationSuccess } from '@/components'
 import { useRouter } from 'next/router'
 
 export function SignIn() {

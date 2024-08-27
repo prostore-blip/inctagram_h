@@ -1,9 +1,9 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { PageWrapper } from '@/components'
 import { ForgotPasswordForm } from '@/components/auth'
 import { useTranslation } from '@/hooks/useTranslation'
 import { ReCaptchaProvider } from 'next-recaptcha-v3'
 
-export function ForgotPassword() {
+export function Page() {
   const { router } = useTranslation()
 
   return (
@@ -17,5 +17,4 @@ export function ForgotPassword() {
     </ReCaptchaProvider>
   )
 }
-ForgotPassword.getLayout = GetLayout
-export default ForgotPassword
+export default Page

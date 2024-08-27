@@ -1,4 +1,4 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { PageWrapper } from '@/components'
 import { PolicyDocuments } from '@/components/auth/policyDocuments'
 
 export function TermsOfService() {
@@ -9,5 +9,5 @@ export function TermsOfService() {
   )
 }
 
-TermsOfService.getLayout = GetLayout
+// TermsOfService.getLayout = GetBaseLayout
 export default TermsOfService

@@ -1,4 +1,4 @@
-import { GetLayout, PageWrapper, SingUp } from '@/components'
+import { PageWrapper, SingUp } from '@/components'
 
 export function SignUp() {
   return (

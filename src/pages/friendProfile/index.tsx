@@ -9,5 +9,5 @@ export function FriendProfile() {
   )
 }
 
-FriendProfile.getLayout = GetNavLayout
+// FriendProfile.getLayout = GetNavLayout
 export default FriendProfile

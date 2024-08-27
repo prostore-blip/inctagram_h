@@ -8,5 +8,5 @@ export function Favorites() {
     </LoginNavigate>
   )
 }
-Favorites.getLayout = GetNavLayout
+// Favorites.getLayout = GetNavLayout
 export default Favorites

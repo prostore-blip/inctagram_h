@@ -12,5 +12,5 @@ export function Home() {
   )
 }
 
-Home.getLayout = GetNavLayout
+// Home.getLayout = GetNavLayout
 export default Home
