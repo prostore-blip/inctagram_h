@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { GetNavLayout } from '@/components'
 import { GeneralInfoForm } from '@/components/profile-settings'
 import { AvatarSelector } from '@/components/uikit-temp-replacements/avatar/AvatarSelector'
+import LinearProgress from '@/components/uikit-temp-replacements/linear-progress/LinearProgress'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useMeQuery } from '@/services/inctagram.auth.service'
 import { TabType } from '@chrizzo/ui-kit'
@@ -22,7 +22,7 @@ const tabsList: TabType[] = [
 const Page = () => {
   //todo what is better for a form: props (defaultValues, submit function) or rtk-query hook?
 
-  const { data } = useMeQuery()
+  const { data, isLoading } = useMeQuery()
 
   const [currentTab, setCurrentTab] = useState(tabsList[0].value)
 
@@ -35,8 +35,15 @@ const Page = () => {
     setImage(file)
   }
 
+  const getTabName = (value: string) => {
+    const key = value as keyof typeof t.profile.settings
+
+    return t.profile.settings[key]
+  }
+
   return (
     <div className={pageStyles.wrapper}>
+      <LinearProgress active={isLoading} thickness={3} />
       <TabsPrimitive.Root
         activationMode={'manual'}
         onValueChange={setCurrentTab}
@@ -50,7 +57,7 @@ const Page = () => {
               key={item.title + item.value}
               value={item.value}
             >
-              {t.profile.settings[item.value] || item.title}
+              {getTabName(item.value) || item.title}
             </TabsPrimitive.TabsTrigger>
           ))}
         </TabsPrimitive.TabsList>
@@ -64,5 +71,4 @@ const Page = () => {
   )
 }
 
-Page.getLayout = GetNavLayout
 export default Page
