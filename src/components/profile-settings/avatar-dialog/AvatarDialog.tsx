@@ -17,7 +17,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../../uikit-temp-replacements/regular-dialog/regular-dialog'
+} from '../../uikit-temp-replacements/regular-dialog/RegularDialog'
 
 const BYTES_IN_MB = 1024 * 1024
 const IMAGE_SIZE_MAX_MB = 10

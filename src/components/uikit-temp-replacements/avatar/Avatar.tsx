@@ -13,7 +13,6 @@ type ImageSelectorProps = {
 
 //todo create avatar component with radix primitives
 //todo add size and shape control prop (72, 192, 222?, 300)
-//todo remove button
 export function Avatar({ image, ...restProps }: ImageSelectorProps) {
   return (
     <>
