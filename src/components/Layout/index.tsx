@@ -4,6 +4,8 @@ import { useMeQuery } from '@/services/inctagram.auth.service'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
+const privateRoutes = ['profile/settings']
+
 type Props = {
   showNav?: boolean
 }
@@ -12,16 +14,9 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
   const { data, isFetching, isLoading } = useMeQuery()
   const router = useRouter()
 
-  console.log('Layout ', data, isLoading, isFetching)
-
-  // const style = data || isLoading ? '' : s.gridHaveOneCol
-
-  // if (!data && !isFetching) {
-  //   console.log('LoginNaavigate rdirect to login')
-  //   void router.push('/login')
-  //
-  //   return null
-  // }
+  //todo create middleware for redirects
+  //this layout is useless - loading now displayed in LayoutNew and redirects should go to middleware
+  //the app has public pages - it is not right to redirect to /login blindly
 
   return (
     // <div className={s.container + ' ' + style}>
