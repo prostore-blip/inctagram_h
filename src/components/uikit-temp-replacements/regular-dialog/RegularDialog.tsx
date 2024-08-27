@@ -5,7 +5,7 @@ import { ComponentPropsWithoutRef, ElementRef, HTMLAttributes, forwardRef } from
 import * as DialogSource from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
-import s from './regular-dialog.module.scss'
+import s from './regularDialog.module.scss'
 
 const Dialog = DialogSource.Root
 
