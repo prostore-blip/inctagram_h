@@ -1,4 +1,4 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { PageWrapper } from '@/components'
 import { RecoveryCodeError, ResetPasswordForm } from '@/components/auth'
 import { useTranslation } from '@/hooks/useTranslation'
 import { ReCaptchaProvider } from 'next-recaptcha-v3'
@@ -28,5 +28,5 @@ export function Page() {
   )
 }
 
-Page.getLayout = GetLayout
+// Page.getLayout = GetBaseLayout
 export default Page
