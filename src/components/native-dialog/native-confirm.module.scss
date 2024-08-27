@@ -1,0 +1,20 @@
+.flexFiller {
+  flex-grow: 1;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 36px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+.header {
+  border-bottom: 1px solid var(--color-border);
+  padding: 12px 24px;
+  position: relative;
+}
+
+.content {
+  padding: 30px 24px 0 24px;
+  margin-bottom: 54px;
+}

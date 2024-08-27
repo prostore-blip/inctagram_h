@@ -1,16 +1,24 @@
 import { ComponentPropsWithoutRef, useEffect, useRef } from 'react'
 
-import { Close } from '@/assets/icons/close'
+import { CloseIcon } from '@/assets/icons/close-icon'
 import { Button } from '@chrizzo/ui-kit'
-import * as Dialog from '@radix-ui/react-dialog'
+import { clsx } from 'clsx'
+
+import s from './native-dialog.module.scss'
 
 export type DialogProps = {
   isModal?: boolean
-  isOpen: boolean
-  onClose: () => void
+  onClose?: () => void
 } & ComponentPropsWithoutRef<'dialog'>
 
-const NativeDialog = ({ children, isModal = true, isOpen, onClose }: DialogProps) => {
+export const NativeDialog = ({
+  children,
+  className,
+  isModal = true,
+  onClose,
+  open,
+  ...restProps
+}: DialogProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -20,27 +28,32 @@ const NativeDialog = ({ children, isModal = true, isOpen, onClose }: DialogProps
       return
     }
 
-    if (isOpen) {
+    if (open) {
       if (isModal) {
         dialogElement.showModal()
       } else {
         dialogElement.show()
       }
-    } else {
+    }
+    if (!open) {
       dialogElement.close()
     }
-  }, [isOpen, isModal])
+  }, [open, isModal])
 
   const handleClose = () => {
-    onClose()
+    onClose && onClose()
   }
 
   return (
-    <dialog onClose={handleClose} ref={dialogRef}>
-      <Dialog.Root></Dialog.Root>
+    <dialog
+      className={clsx(open && s.dialog, className)}
+      onClose={handleClose}
+      ref={dialogRef}
+      {...restProps}
+    >
       {children}
-      <Button onClick={handleClose}>
-        <Close />
+      <Button className={s.closeButton} onClick={handleClose} variant={'text'}>
+        <CloseIcon size={14} />
       </Button>
     </dialog>
   )
