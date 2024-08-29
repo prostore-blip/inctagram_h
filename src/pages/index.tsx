@@ -1,11 +1,7 @@
-import { GetLayout, HeadMeta, PageWrapper } from '@/components'
+import { HeadMeta, PageWrapper } from '@/components'
 import { useTranslation } from '@/hooks/useTranslation'
 import { ItemPost } from '@/pages/profile/itemPost'
-import {
-  Post,
-  ResponseAllPosts,
-  useGetAllPostsQuery,
-} from '@/services/inctagram.public-posts.service'
+import { Post, ResponseAllPosts } from '@/services/inctagram.public-posts.service'
 import { Typography } from '@chrizzo/ui-kit'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
@@ -27,33 +23,21 @@ export function PublicPage(props: InferGetStaticPropsType<typeof getStaticProps>
    */
   const { t } = useTranslation()
   /**
-   * запрос за постами для публичной страницы. Доступно без авторизации
-   */
-  // const { data, isLoading } = useGetAllPostsQuery(
-  //   {
-  //     endCursorPostId: 0,
-  //     params: { pageSize: 4 },
-  //   },
-  //   { pollingInterval: 60000, skip: true }
-  // )
-  /**
    * хук обработки URL
    */
   const router = useRouter()
   /**
    * редирект на страницу юзера по его id
+   * @param postId - id поста, который нужно открыть
    * @param id - id профиля юзера
    */
-  const navigateToPublicUserProfile = (id: number) => {
+  const navigateToPublicUserProfile = (postId: number | undefined, id: number) => {
+    if (postId) {
+      localStorage.setItem('postId', JSON.stringify(postId))
+    }
+
     void router.push(`/profile/${id}`)
   }
-
-  /**
-   * скелетон
-   */
-  // if (isLoading) {
-  //   return <div>...LOADING...</div>
-  // }
   /**
    * массив постов
    */
@@ -81,5 +65,4 @@ export function PublicPage(props: InferGetStaticPropsType<typeof getStaticProps>
   )
 }
 
-PublicPage.getLayout = GetLayout
 export default PublicPage
