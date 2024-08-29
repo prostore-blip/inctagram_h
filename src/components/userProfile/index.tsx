@@ -1,12 +1,11 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
 import { ModalFollowers } from '@/components/ModalFollowers'
 import { ModalFollowing } from '@/components/modalFollowing'
-import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
+import { GetPostsUser } from '@/components/userProfile/getPostsUser'
 import { useGetUserProfileByUserNameQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 
 import s from './userProfile.module.scss'
 
@@ -14,18 +13,14 @@ import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
   dataProfile: any
-  myProfileId: number | undefined
+  myProfileId: null | number
 }
 
 export function UserProfile({ dataProfile, myProfileId }: Props) {
-  const router = useRouter()
-
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
-  const { data, isFetching } = useGetUserProfileByUserNameQuery(dataProfile?.userName, {
-    // skip: !isAuthMe,
-  })
+  const { data } = useGetUserProfileByUserNameQuery(dataProfile?.userName, {})
 
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
@@ -97,7 +92,7 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
           </article>
         </section>
       </div>
-      <GetProfileUsers />
+      <GetPostsUser />
     </>
   )
 }
