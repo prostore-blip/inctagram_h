@@ -16,7 +16,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           return {
             body,
             method: 'POST',
-            url: '/v1/users/forgot-password',
+            url: '/users/forgot-password',
           }
         },
       }),
@@ -33,7 +33,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           return {
             body,
             method: 'POST',
-            url: '/v1/users/reset-password',
+            url: '/users/reset-password',
           }
         },
       }),
@@ -41,7 +41,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
         providesTags: ['login'],
         query: params => {
           return {
-            url: `/v1/auth/external/?agreement=${params}&provider=${params}`,
+            url: `/auth/me`,
           }
         },
       }),
@@ -50,7 +50,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
         query: params => ({
           body: params,
           method: 'POST',
-          url: '/v1/auth/local/signup',
+          url: '/auth/signup',
         }),
       }),
       singIn: builder.mutation<Respones, SignInRequest>({
@@ -58,7 +58,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
         query: params => ({
           body: params,
           method: 'POST',
-          url: '/v1/auth/local/signin',
+          url: '/auth/signin',
         }),
       }),
       logout: builder.mutation<Respones, any>({
@@ -66,7 +66,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
         query: params => ({
           body: params,
           method: 'POST',
-          url: '/v1/auth/logout',
+          url: '/auth/logout',
         }),
       }),
       rotateToken: builder.mutation<Respones, any>({
@@ -74,7 +74,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
         query: params => ({
           body: params,
           method: 'POST',
-          url: '/v1/auth/rotate-token',
+          url: '/auth/rotate-token',
         }),
       }),
 

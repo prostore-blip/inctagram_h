@@ -9,7 +9,7 @@ const mutex = new Mutex()
 //todo нужно править URL и endpoints
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://gateway.incta.team/api',
+  baseUrl: 'https://incta.team/api/v1/',
   prepareHeaders: headers => {
     headers.set('Content-type', `application/json`)
 
