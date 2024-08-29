@@ -23,16 +23,18 @@ import s from '@/pages/posts.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
+  openModal: boolean
   post: Post
   showMore: boolean
 }
 
-const ModalkaPost = ({ post, showMore }: Props) => {
+const ModalkaPost = ({ openModal = false, post, showMore }: Props) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужна только для skip'а запроса за
    * комментариями, если модалка не открыта. В компоненте Modalka можно не использовать
    */
-  const [open, setOpen] = useState(false)
+
+  const [open, setOpen] = useState(openModal)
 
   /**
    * запрос за комментариями к посту
@@ -45,15 +47,9 @@ const ModalkaPost = ({ post, showMore }: Props) => {
     { skip: !open }
   )
 
-  /**
-   * хук из библиотеки карусели для триггера модалки
-   */
-  const [emblaRef, emblaApi] = useEmblaCarousel()
-
-  /**
-   * кастомный хук для точек перехода к слайдам карусели для триггера модалки
-   */
-  const { onDotButtonClick, scrollSnaps, selectedIndex } = useDotButton(emblaApi)
+  if (data) {
+    localStorage.removeItem('postId')
+  }
 
   /**
    * хук из библиотеки карусели для контента модалки (там, где большое изображение нужно прокручивать)
@@ -99,42 +95,13 @@ const ModalkaPost = ({ post, showMore }: Props) => {
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <div className={s.embla} ref={emblaRef}>
-          <div className={s.emblaContainer}>{imagesPostArray}</div>
-        </div>
+        <Image
+          alt={'avatar'}
+          height={post?.images[0]?.height}
+          src={post?.images[0]?.url ?? defaultAva}
+          width={post?.images[0]?.width}
+        />
       </ModalkaTrigger>
-
-      {!showMore && (
-        <>
-          <Button
-            className={s.prevButton}
-            onClick={() => {
-              emblaApi?.scrollPrev()
-            }}
-            type={'button'}
-          >
-            <PrevCarousel />
-          </Button>
-          <Button
-            className={s.nextButton}
-            onClick={() => {
-              emblaApi?.scrollNext()
-            }}
-            type={'button'}
-          >
-            <NextCarousel />
-          </Button>
-          <div className={s.dots}>
-            {scrollSnaps.map((_, index) => (
-              <div
-                className={clsx(s.dot, index === selectedIndex && s.activeDot)}
-                key={index}
-                onClick={() => onDotButtonClick(index)}
-              ></div>
-            ))}
-          </div>
-        </>
-      )}
       <ModalkaContent aria-describedby={'open modal comments to post'} className={s.contentPost}>
         <ModalkaTitle className={s.title}>
           <ModalkaButtonCancel asChild>

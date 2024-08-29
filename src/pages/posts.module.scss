@@ -142,9 +142,11 @@
 }
 
 .contentPost {
-  max-width: 972px;
+  //max-width: 972px;
+  max-width: 1114px;
   width: 100%;
   top: 84px;
+  padding-right: 42px;
 
   .title {
     position: relative;
