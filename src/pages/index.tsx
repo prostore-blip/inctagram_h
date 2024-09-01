@@ -30,13 +30,19 @@ export function PublicPage(props: InferGetStaticPropsType<typeof getStaticProps>
    * редирект на страницу юзера по его id
    * @param postId - id поста, который нужно открыть
    * @param id - id профиля юзера
+   * 1) если postId есть, то добавляем его в url в качестве query-параметра и переходим на стрицу юзера. И там по
+   * этому postId открываем модалку поста
+   * 2) если postId нет, то просто переходим на страницу юзера
    */
   const navigateToPublicUserProfile = (postId: number | undefined, id: number) => {
     if (postId) {
-      localStorage.setItem('postId', JSON.stringify(postId))
+      void router.push({
+        pathname: `/profile/${id}`,
+        query: { postId },
+      })
+    } else {
+      void router.push(`/profile/${id}`)
     }
-
-    void router.push(`/profile/${id}`)
   }
   /**
    * массив постов

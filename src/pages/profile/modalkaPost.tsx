@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactTimeAgo from 'react-time-ago'
 
 import { NextCarousel, PrevCarousel } from '@/assets/icons'
@@ -17,24 +17,26 @@ import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import s from '@/pages/posts.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
-  openModal: boolean
   post: Post
   showMore: boolean
 }
 
-const ModalkaPost = ({ openModal = false, post, showMore }: Props) => {
+const ModalkaPost = ({ post, showMore }: Props) => {
+  const router = useRouter()
+  const queryParams = router.query
+
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужна только для skip'а запроса за
    * комментариями, если модалка не открыта. В компоненте Modalka можно не использовать
    */
-
-  const [open, setOpen] = useState(openModal)
+  const [open, setOpen] = useState(Number(queryParams.postId) === post.id)
 
   /**
    * запрос за комментариями к посту
@@ -91,6 +93,27 @@ const ModalkaPost = ({ openModal = false, post, showMore }: Props) => {
   const date = new Date(post.createdAt)
   const options: DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
   const formattedDate = date.toLocaleDateString('en-US', options)
+
+  /**
+   * добавляем query-параметры в url. А именно id открытого поста. Это нужно, чтобы, когды мы открыли модалку
+   * поста, в url появился id этого поста. Далее мы можем скопировать url и переслать другу. Он перейдёт
+   * по нашей ссылке и у него откроется модалка поста автоматически. Без id в url при переходе по ссылку,
+   * как понять, модалку какого поста открыть, ведь подгрузитсястраница пользователя с несколькими постами?
+   * При закрытии модалки, убираем query-параметры.
+   */
+  useEffect(() => {
+    if (open && !queryParams.postId) {
+      router.replace({
+        pathname: router.asPath,
+        query: { postId: post.id },
+      })
+    }
+    if (!open && Number(queryParams.postId) === post.id) {
+      router.replace({
+        pathname: `${post.ownerId}`,
+      })
+    }
+  }, [open])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>

@@ -8,13 +8,6 @@ import s from '@/components/userProfile/userProfile.module.scss'
 
 export const GetPostsUser = () => {
   const router = useRouter()
-
-  const postIdFromLocalStorage = localStorage.getItem('postId')
-  let postId = undefined
-
-  if (postIdFromLocalStorage) {
-    postId = JSON.parse(postIdFromLocalStorage)
-  }
   /**
    * запрос на сервер за постами юзера
    */
@@ -31,7 +24,7 @@ export const GetPostsUser = () => {
     return (
       <li className={s.card} key={u.id} onClick={() => {}}>
         <div>
-          <ModalkaPost openModal={u.id === postId} post={u} showMore={false} />
+          <ModalkaPost post={u} showMore={false} />
         </div>
       </li>
     )

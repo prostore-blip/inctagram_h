@@ -14,11 +14,7 @@ import s from '@/pages/posts.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
-  navigateToPublicUserProfile: (
-    postId: number | undefined,
-    id: number,
-    toOpenModal?: boolean
-  ) => void
+  navigateToPublicUserProfile: (postId: number | undefined, id: number) => void
   post: Post
 }
 
@@ -57,7 +53,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
         <div
           className={s.postImage}
           data-showmore={showMore}
-          onClick={() => navigateToPublicUserProfile(p.id, p.ownerId, true)}
+          onClick={() => navigateToPublicUserProfile(p.id, p.ownerId)}
         >
           <Image
             alt={'image'}
