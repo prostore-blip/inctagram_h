@@ -118,14 +118,14 @@ const ModalkaPost = ({ post, showMore }: Props) => {
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <Image
+        <img
           alt={'avatar'}
           height={post?.images[0]?.height}
           src={post?.images[0]?.url ?? defaultAva}
           width={post?.images[0]?.width}
         />
       </ModalkaTrigger>
-      <ModalkaContent aria-describedby={'open modal comments to post'} className={s.contentPost}>
+      <ModalkaContent aria-describedby={undefined} className={s.contentPost}>
         <ModalkaTitle className={s.title}>
           <ModalkaButtonCancel asChild>
             <Button variant={'text'}>
@@ -168,7 +168,7 @@ const ModalkaPost = ({ post, showMore }: Props) => {
           </div>
           <div className={s.commentsWr}>
             <div className={s.avaUserNameBlock}>
-              <Image alt={'ava'} height={36} src={post.avatarOwner || defaultAva} width={36} />
+              <img alt={'ava'} height={36} src={post.avatarOwner ?? defaultAva} width={36} />
               <Typography variant={'h3'}>{post.userName}</Typography>
             </div>
             <hr className={s.hr} />
@@ -184,10 +184,10 @@ const ModalkaPost = ({ post, showMore }: Props) => {
 
                   return (
                     <li className={s.commentWr} key={c.id}>
-                      <Image
+                      <img
                         alt={'ava'}
                         height={36}
-                        src={c.from?.avatars[1]?.url || defaultAva}
+                        src={c.from?.avatars[1]?.url ?? defaultAva}
                         width={36}
                       />
                       <div className={s.commentBlock}>

@@ -7,7 +7,6 @@ import { Post } from '@/services/inctagram.public-posts.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import useEmblaCarousel from 'embla-carousel-react'
-import Image from 'next/image'
 
 import s from '@/pages/posts.module.scss'
 
@@ -55,11 +54,10 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
           data-showmore={showMore}
           onClick={() => navigateToPublicUserProfile(p.id, p.ownerId)}
         >
-          <Image
+          <img
             alt={'image'}
             height={image?.height}
-            priority
-            src={image?.url || defaultAva}
+            src={image?.url ?? defaultAva}
             width={image?.width}
           />
         </div>
@@ -109,7 +107,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
         className={s.avaUserNameBlock}
         onClick={() => navigateToPublicUserProfile(undefined, p.ownerId)}
       >
-        <Image alt={'ava'} height={36} src={p.avatarOwner || defaultAva} width={36} />
+        <img alt={'ava'} height={36} src={p.avatarOwner ?? defaultAva} width={36} />
         <Typography variant={'h3'}>{p.userName}</Typography>
       </div>
       <Typography className={s.date} variant={'small'}>
