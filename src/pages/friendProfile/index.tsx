@@ -1,13 +1,8 @@
-import { GetNavLayout, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { GetLayout, PageWrapper } from '@/components'
 
 export function FriendProfile() {
-  return (
-    <LoginNavigate>
-      <PageWrapper>FriendProfile</PageWrapper>
-    </LoginNavigate>
-  )
+  return <PageWrapper>FriendProfile</PageWrapper>
 }
 
-FriendProfile.getLayout = GetNavLayout
+FriendProfile.getLayout = GetLayout
 export default FriendProfile

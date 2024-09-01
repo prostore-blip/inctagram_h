@@ -1,12 +1,7 @@
-import { GetNavLayout, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { GetLayout, PageWrapper } from '@/components'
 
 export function Favorites() {
-  return (
-    <LoginNavigate>
-      <PageWrapper>Favorites</PageWrapper>
-    </LoginNavigate>
-  )
+  return <PageWrapper>Favorites</PageWrapper>
 }
-Favorites.getLayout = GetNavLayout
+Favorites.getLayout = GetLayout
 export default Favorites

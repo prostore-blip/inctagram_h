@@ -4,11 +4,7 @@ import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-type Props = {
-  showNav?: boolean
-}
-
-export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav = false }) => {
+export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   const { data, isFetching } = useAuthMeQuery()
   const router = useRouter()
 

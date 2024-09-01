@@ -1,13 +1,8 @@
-import { GetNavLayout, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { GetLayout, PageWrapper } from '@/components'
 
 export function Search() {
-  return (
-    <LoginNavigate>
-      <PageWrapper>Search</PageWrapper>
-    </LoginNavigate>
-  )
+  return <PageWrapper>Search</PageWrapper>
 }
 
-Search.getLayout = GetNavLayout
+Search.getLayout = GetLayout
 export default Search
