@@ -2,6 +2,10 @@ import { PaidAccount } from '@/assets/icons/paidAccount'
 import { ModalFollowers } from '@/components/ModalFollowers'
 import { ModalFollowing } from '@/components/modalFollowing'
 import { GetPostsUser } from '@/components/userProfile/getPostsUser'
+import {
+  useDeleteFolowerFromFolowersMutation,
+  useFollowToUserMutation,
+} from '@/services/inctagram.followings.service'
 import { useGetUserProfileByUserNameQuery } from '@/services/inctagram.profile.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
@@ -45,6 +49,33 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
     //открыть модалку публикаций
   }
 
+  /**
+   * хук RTKQ. Подписка на юзера
+   */
+  const [followingToUser] = useFollowToUserMutation()
+  /**
+   * хук RTKQ. Убрать юзера из подписчиков
+   */
+  const [unfollow] = useDeleteFolowerFromFolowersMutation()
+
+  /**
+   * коллбэк для подписки на юзера
+   * @param selectedUserId - id юзера, на которого хотим подпсаться
+   */
+  const toFollowUser = (selectedUserId: number | undefined) => {
+    if (selectedUserId) {
+      followingToUser({ selectedUserId }).unwrap()
+    }
+  }
+
+  /**
+   * коллбэк для отподписки на юзера
+   * @param selectedUserId - id юзера, на которого хотим подпсаться
+   */
+  const unfollowUser = (selectedUserId: number) => {
+    unfollow(selectedUserId).unwrap()
+  }
+
   return (
     <>
       <div className={s.avaAndDescrBlock}>
@@ -65,6 +96,23 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
               <Button onClick={openSettings} variant={'secondary'}>
                 <Typography variant={'h3'}>Profile Settings</Typography>
               </Button>
+            )}
+            {myProfileId && myProfileId !== dataProfile.id && (
+              <div className={s.followUnfollowSendMessageButtonsBlock}>
+                {!data?.isFollowing && (
+                  <Button onClick={() => toFollowUser(data?.id)} variant={'primary'}>
+                    <Typography variant={'h3'}>Follow</Typography>
+                  </Button>
+                )}
+                {data?.isFollowing && (
+                  <Button onClick={() => unfollowUser(data?.id)} variant={'outline'}>
+                    <Typography variant={'h3'}>Unfollow</Typography>
+                  </Button>
+                )}
+                <Button onClick={() => {}} variant={'secondary'}>
+                  <Typography variant={'h3'}>Send Message</Typography>
+                </Button>
+              </div>
             )}
           </div>
           <div className={s.countsFolowwers}>

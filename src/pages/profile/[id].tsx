@@ -21,7 +21,7 @@ export const getServerSideProps = (async ({ params }) => {
     const resProfile = await fetch(`https://inctagram.work/api/v1/users/profile`)
     const profile: any = await resProfile.json()
 
-    return { props: { myProfileId: me.userId, profile } }
+    return { props: { myProfileId: Number(me.userId), profile } }
   } else {
     const resProfile = await fetch(
       `https://inctagram.work/api/v1/public-user/profile/${params?.id}`
@@ -30,7 +30,7 @@ export const getServerSideProps = (async ({ params }) => {
 
     return { props: { myProfileId: null, profile } }
   }
-}) satisfies GetServerSideProps<{ myProfileId: null | undefined; profile: any }>
+}) satisfies GetServerSideProps<{ myProfileId: null | number; profile: any }>
 
 /**
  * Компонент
