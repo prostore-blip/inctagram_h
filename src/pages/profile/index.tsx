@@ -1,5 +1,5 @@
 import { GetLayout, PageWrapper } from '@/components'
-import { useGetMyProfileQuery } from '@/services/inctagram.profile.service'
+import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 import { useRouter } from 'next/router'
 
 import s from './userProfilePage.module.scss'
@@ -11,9 +11,9 @@ function UserProfileWrapper() {
   const router = useRouter()
 
   /**
-   * запрос на сервер за своим профилем юзера
+   * authMe запрос для вытягивания моего id
    */
-  const { data, isFetching } = useGetMyProfileQuery()
+  const { data, isFetching } = useAuthMeQuery()
 
   /**
    * Скелетон
@@ -29,11 +29,10 @@ function UserProfileWrapper() {
    * Если залогинен, то редирект на свою страницу
    */
   if (data) {
-    void router.push(`/profile/${data?.id}`)
+    void router.push(`/profile/${data?.userId}`)
   }
 
   return null
 }
 
-UserProfileWrapper.getLayout = GetLayout
 export default UserProfileWrapper
