@@ -117,7 +117,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
           <Link href={'/'}>Inctagram</Link>
         </Typography>
         <div className={s.buttonsBlock}>
-          {windowWidth > 450 ? (
+          {windowWidth > 450 && (
             <button
               aria-label={'Notification'}
               className={clsx(s.noties, isNotiefShowStyle)}
@@ -126,16 +126,13 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
               tabIndex={!countNotifies ? -1 : undefined}
               type={'button'}
             >
-              {countNotifies ? (
+              {!asPath.includes('generalInfo') && !!countNotifies && (
                 <>
                   <span className={s.countNotifies}>{countNotifies}</span> <NotiefWithCount />{' '}
                 </>
-              ) : (
-                <NotiefWithOutCount />
               )}
+              {!asPath.includes('generalInfo') && !countNotifies && <NotiefWithOutCount />}
             </button>
-          ) : (
-            <></>
           )}
           <Select
             defaultValue={defaultLocale}
@@ -163,22 +160,3 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
     </header>
   )
 }
-
-// <header className={s.header}>
-//     header
-//     <button onClick={() => push('/logIn')} type={'button'}>
-//         {t.header.signInButton}
-//     </button>
-//     <button onClick={() => push('/signUp')} type={'button'}>
-//         {t.header.signUpButton}
-//     </button>
-//     <select defaultValue={locale} onChange={changeLangHandler}>
-//         {locales?.map(l => {
-//             return (
-//                 <option key={l} value={l}>
-//                     {l}
-//                 </option>
-//             )
-//         })}
-//     </select>
-// </header>

@@ -10,6 +10,7 @@ import { useGetUserProfileByUserNameQuery } from '@/services/inctagram.profile.s
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import s from './userProfile.module.scss'
 
@@ -21,6 +22,7 @@ type Props = {
 }
 
 export function UserProfile({ dataProfile, myProfileId }: Props) {
+  const router = useRouter()
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
@@ -36,7 +38,7 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
    * открыть настройки
    */
   const openSettings = () => {
-    //открыть настройки
+    void router.push('/generalInfo')
   }
   /**
    * открыть публикации

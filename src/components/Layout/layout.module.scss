@@ -2,7 +2,7 @@
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 220px minmax(1fr);
 
   &.gridHaveOneCol {
     grid-template-columns: 1fr;
