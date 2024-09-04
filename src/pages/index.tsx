@@ -61,7 +61,7 @@ export function PublicPage(props: InferGetStaticPropsType<typeof getStaticProps>
           <div className={s.countUsersBlock}>
             <Typography variant={'h2'}>Registred users:</Typography>
             <Typography className={s.countUsers} variant={'h2'}>
-              {props?.totalUsers}
+              {props?.pageProps?.totalUsers}
             </Typography>
           </div>
           <ul className={s.postsWrapper}>{postsUsers}</ul>
