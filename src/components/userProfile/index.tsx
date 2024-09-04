@@ -120,10 +120,12 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
           <div className={s.countsFolowwers}>
             <ModalFollowing
               followingCount={data?.followingCount ?? 'X'}
+              myProfileId={myProfileId}
               userName={dataProfile.userName}
             />
             <ModalFollowers
               followersCount={data?.followersCount ?? 'X'}
+              myProfileId={myProfileId}
               userName={dataProfile.userName}
             />
             <div className={s.publications} onClick={openPublications}>

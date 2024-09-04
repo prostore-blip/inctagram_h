@@ -17,6 +17,7 @@ import {
 } from '@/services/inctagram.followings.service'
 import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import s from './modalFollowers.module.scss'
 
@@ -25,10 +26,17 @@ import defaultAva from '../../../public/defaultAva.jpg'
 type Props = {
   className?: string
   followersCount?: number | string
+  myProfileId: null | number
   userName: string | undefined
 }
 
-export const ModalFollowers: FC<Props> = memo(({ className, followersCount, userName }) => {
+export const ModalFollowers: FC<Props> = memo(({ followersCount, myProfileId, userName }) => {
+  /**
+   * вытягиваем id юзера из URL
+   */
+  const {
+    query: { id },
+  } = useRouter()
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -107,14 +115,17 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount, user
   const followers = useMemo(() => {
     return data?.items?.map(f => {
       return (
-        <li key={f.id}>
-          <Image
-            alt={'small-avatar'}
-            className={s.image}
-            height={36}
-            src={f.avatars[0]?.url ?? defaultAva}
-            width={36}
-          />
+        <li className={s.li} key={f.id}>
+          <div className={s.avaAndUserNameBlock}>
+            <Image
+              alt={'small-avatar'}
+              className={s.image}
+              height={36}
+              src={f.avatars[0]?.url ?? defaultAva}
+              width={36}
+            />
+            <Typography variant={'regular16'}> {f.userName}</Typography>
+          </div>
           <div className={s.followButtonsBlock}>
             {!f.isFollowing && (
               <Button
@@ -149,14 +160,14 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount, user
   }, [data])
 
   return (
-    <Modalka onOpenChange={setOpen} open={open}>
+    <Modalka onOpenChange={setOpen} open={myProfileId === Number(id) ? open : false}>
       <ModalkaTrigger asChild>
         <div className={s.followers}>
           <Typography variant={'regularBold14'}>{followersCount}</Typography>
           <Typography variant={'regular14'}>Followers</Typography>
         </div>
       </ModalkaTrigger>
-      <ModalkaContent aria-describedby={'open viewport followers'} className={s.content}>
+      <ModalkaContent className={s.content}>
         <ModalkaTitle className={s.title}>
           <Typography variant={'h1'}>{followersCount} Followers</Typography>
           <ModalkaButtonCancel asChild>

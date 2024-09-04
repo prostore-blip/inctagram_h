@@ -16,6 +16,7 @@ import {
 } from '@/services/inctagram.followings.service'
 import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import s from './modalFollowin.module.scss'
 
@@ -24,10 +25,17 @@ import defaultAva from '../../../public/defaultAva.jpg'
 type Props = {
   className?: string
   followingCount?: number | string
+  myProfileId: null | number
   userName: string | undefined
 }
 
-export const ModalFollowing: FC<Props> = memo(({ className, followingCount, userName }) => {
+export const ModalFollowing: FC<Props> = memo(({ followingCount, myProfileId, userName }) => {
+  /**
+   * вытягиваем id юзера из URL
+   */
+  const {
+    query: { id },
+  } = useRouter()
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -131,7 +139,7 @@ export const ModalFollowing: FC<Props> = memo(({ className, followingCount, user
   }, [data])
 
   return (
-    <Modalka onOpenChange={setOpen} open={open}>
+    <Modalka onOpenChange={setOpen} open={myProfileId === Number(id) ? open : false}>
       <ModalkaTrigger asChild>
         <div className={s.following}>
           <Typography variant={'regularBold14'}>{followingCount}</Typography>
