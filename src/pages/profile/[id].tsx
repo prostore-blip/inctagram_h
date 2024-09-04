@@ -7,28 +7,33 @@ import s from './userProfilePage.module.scss'
 /**
  * SSR
  */
-export const getServerSideProps = (async ({ params }) => {
+export const getServerSideProps = (async ({ params, req }) => {
   /**
-   * запрос me
+   * вытягиваю из куки access-токен. Это та кука, которую я создал при логине
    */
-  const res = await fetch('https://inctagram.work/api/v1/auth/me')
-  const me: any = await res.json()
+  const token = req.cookies.access_token
 
   /**
-   * если я залогинен, то делаю запрос за своим профилем, иначе за публичным
+   * если access-токен есть, то из него парсим вторую часть. Там сидит id моего аккаунта
    */
-  if (me.userId) {
-    const resProfile = await fetch(`https://inctagram.work/api/v1/users/profile`)
+  const tokenPayload = token ? JSON.parse(atob(token?.split('.')[1])) : undefined
+
+  if (token && tokenPayload.userId === Number(params?.id)) {
+    const resProfile = await fetch(`https://inctagram.work/api/v1/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     const profile: any = await resProfile.json()
 
-    return { props: { myProfileId: Number(me.userId), profile } }
+    return { props: { myProfileId: tokenPayload.userId, profile } }
   } else {
     const resProfile = await fetch(
       `https://inctagram.work/api/v1/public-user/profile/${params?.id}`
     )
     const profile: any = await resProfile.json()
 
-    return { props: { myProfileId: null, profile } }
+    return { props: { myProfileId: token ? tokenPayload.userId : null, profile } }
   }
 }) satisfies GetServerSideProps<{ myProfileId: null | number; profile: any }>
 
