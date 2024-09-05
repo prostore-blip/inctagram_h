@@ -1,13 +1,14 @@
-import { GetNavLayout, PageWrapper } from '@/components'
+import React from 'react'
+import { PageWrapper } from '@/components'
 import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { StatisticsPage } from '@/components/statisticsPage'
 
-export function Statistics() {
+export const Statistics: React.FC = () => {
   return (
     <LoginNavigate>
-      <PageWrapper>Statistics</PageWrapper>
+      <PageWrapper>
+        <StatisticsPage />
+      </PageWrapper>
     </LoginNavigate>
   )
 }
-
-Statistics.getLayout = GetNavLayout
-export default Statistics

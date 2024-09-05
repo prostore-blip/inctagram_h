@@ -3,11 +3,13 @@ import { PropsWithChildren } from 'react'
 import { Header } from '@/components/header'
 import { Main } from '@/components/main'
 import { Nav } from '@/components/nav'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import s from '@/components/Layout/layout.module.scss'
+
+import { useAuthMeQuery } from '@/services/inctagram.auth.service'
 
 type Props = {
   showNav?: boolean
@@ -21,12 +23,12 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
 
   // const style = data || isLoading ? '' : s.gridHaveOneCol
 
-  if (!data && !isFetching) {
-    console.log('LoginNaavigate rdirect to login')
-    void router.push('/login')
+  // if (!data && !isFetching) {
+  //   console.log('LoginNaavigate rdirect to login')
+  //   void router.push('/login')
 
-    return null
-  }
+  //   return null
+  // }
 
   return (
     // <div className={s.container + ' ' + style}>
@@ -48,3 +50,4 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
     <>{!isFetching && children}</>
   )
 }
+

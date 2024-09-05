@@ -1,5 +1,6 @@
 import { GetLayout, LogIn, MailVerificationError, MailVerificationSuccess } from '@/components'
 import { useRouter } from 'next/router'
+import { Statistics } from '../statistics'
 
 export function SignIn() {
   const router = useRouter()
