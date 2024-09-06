@@ -1,4 +1,5 @@
 import { inctagramService } from '@/services/inctagram.service'
+import { inctagramSessionsService } from '@/services/inctagram.sessions.service'
 
 export const inctagramAuthService = inctagramService.injectEndpoints({
   endpoints: builder => {
@@ -29,8 +30,22 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           }
         },
       }),
+      logout: builder.mutation<void, void>({
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+          await dispatch(inctagramSessionsService.endpoints.deleteAllSessions.initiate())
+          await queryFulfilled
+          localStorage.removeItem('token')
+          document.cookie = `access_token=; expires=${new Date('1970-09-04').toUTCString()}; SameSite=None; Secure`
+        },
+        query: () => {
+          return {
+            method: 'POST',
+            url: '/v1/auth/logout',
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useAuthMeQuery, useLoginMutation } = inctagramAuthService
+export const { useAuthMeQuery, useLoginMutation, useLogoutMutation } = inctagramAuthService

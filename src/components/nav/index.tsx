@@ -1,5 +1,6 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
 import { PropsLink } from '@/components/nav/types'
+import { useLogoutMutation } from '@/services/inctagram.auth.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
@@ -65,9 +66,18 @@ export const Nav = ({ isSpecialAccount, myProfileId }: Props) => {
    */
   const { data } = useGetMySubscriptionsQuery()
 
-  const handleClick = (isButton?: boolean) => {
-    if (isButton) {
-      alert(9)
+  /**
+   * вылогинивание
+   */
+  const [logout, { isLoading }] = useLogoutMutation()
+
+  const handleClick = (isButton?: boolean, linkName?: string) => {
+    if (isButton && linkName === 'Log Out') {
+      logout()
+        .unwrap()
+        .then(() => {
+          void router.push('/login')
+        })
     }
   }
 
@@ -96,8 +106,9 @@ export const Nav = ({ isSpecialAccount, myProfileId }: Props) => {
               <Button
                 as={link.isButton ? 'button' : Link}
                 className={clsx(s.wrapper, activeLink && s.activeLink)}
+                disabled={isLoading}
                 href={link.path}
-                onClick={() => handleClick(link.isButton)}
+                onClick={() => handleClick(link.isButton, link.name)}
                 variant={'text'}
               >
                 {link.icon}
