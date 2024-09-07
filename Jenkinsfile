@@ -4,12 +4,12 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3448
+        PORT = 3509
         NAMESPACE = "incta-team"
-        REGISTRY_HOSTNAME = "sbbs8668"
+        REGISTRY_HOSTNAME = "backinstateam"
         REGISTRY = "registry.hub.docker.com"
-        PROJECT = "incta-frontend-users"
-        DEPLOYMENT_NAME = "incta-frontend-users-deployment"
+        PROJECT = "humming-birds-front"
+        DEPLOYMENT_NAME = "humming-birds-front-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
     }
