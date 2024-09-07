@@ -1,0 +1,44 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: calc(100vh - 65px);
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.itemWrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin-bottom: 19px;
+}
+
+.description {
+  margin-bottom: 54px;
+}
+
+.button {
+  margin-bottom: 72px;
+  padding-right: 37px;
+  padding-left: 37px;
+}
+
+.signin {
+  padding-right: 37px;
+  padding-left: 37px;
+}
+
+.img {
+  max-height: 300px;
+  object-fit: contain;
+}

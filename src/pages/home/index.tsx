@@ -1,8 +1,16 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { PageWrapper } from '@/components/PageWrapper/pageWrapper'
+import { GetNavLayout, HeadMeta, PageWrapper } from '@/components'
+import { LoginNavigate } from '@/hoc/LoginNavigate'
 
 export function Home() {
-  return <PageWrapper>Home</PageWrapper>
+  return (
+    <LoginNavigate>
+      <PageWrapper>
+        <HeadMeta title={'Inctagram'} />
+        Home
+      </PageWrapper>
+    </LoginNavigate>
+  )
 }
-Home.getLayout = getNavLayout
+
+Home.getLayout = GetNavLayout
 export default Home

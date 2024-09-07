@@ -11,8 +11,33 @@ html {
   padding: 0;
 }
 
-a{
+a,
+input,
+button,
+select,
+textarea,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+}
+
+a {
   text-decoration: none;
+}
+
+input {
+  background: none;
+  border: none;
+
+  &:active,
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 body {

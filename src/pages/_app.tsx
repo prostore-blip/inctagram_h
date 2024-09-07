@@ -1,14 +1,16 @@
 import type { AppProps } from 'next/app'
 
-import { ReactElement, ReactNode } from 'react'
+import React, { ReactElement, ReactNode } from 'react'
+import { Provider } from 'react-redux'
 
+import { LayoutNew } from '@/components/Layout/layoutNew'
 import { NextPage } from 'next'
 
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
-import '@chrizzo/ui-kit/css'
-import '../styles/_colors.scss'
-import '../styles/_typography.scss'
+import '@chrizzo/ui-kit/dist/style.css'
+
+import { wrapper } from '../../store'
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
@@ -18,8 +20,13 @@ type AppPropsWithLayout = {
   Component: NextPageWithLayout
 } & AppProps
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+export default function App({ Component, ...rest }: AppPropsWithLayout) {
+  const { props, store } = wrapper.useWrappedStore(rest)
   const getLayout = Component.getLayout ?? (page => page)
 
-  return getLayout(<Component {...pageProps} />)
+  return (
+    <Provider store={store}>
+      <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
+    </Provider>
+  )
 }

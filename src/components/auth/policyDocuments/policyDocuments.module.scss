@@ -1,0 +1,51 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.topBar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 24px 0 23px 64px;
+}
+
+.backSign {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  gap: 16px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.box {
+  text-align: center;
+  margin: 0 161px;
+}
+
+@media (max-width: 768px) {
+  .text {
+    display: none;
+  }
+  .box {
+    margin: 0 15px;
+  }
+}

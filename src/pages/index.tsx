@@ -1,14 +1,30 @@
-import { getNavLayout } from '@/components/Layout/NavLayout/navLayout'
-import { Nav } from '@/components/Nav'
-import { Inter } from 'next/font/google'
+import { useEffect, useState } from 'react'
 
-const inter = Inter({ subsets: ['latin'] })
+import { GetLayout, GetNavLayout, HeadMeta, Layout, PageWrapper } from '@/components'
+import { useTranslation } from '@/hooks/useTranslation'
+import { useRouter } from 'next/router'
 
-export default function Home() {
+export function PublicPage() {
+  const { t } = useTranslation()
+
+  //--------------  временный редирект на страницу пользователя--------------
+
+  const router = useRouter()
+
+  useEffect(() => {
+    void router.push('/profile')
+    //todo redirecting with useEffect in nextjs not a good option
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  //-------------------------------------------------------------------------
   return (
-    <>
-      <main></main>
-    </>
+    <PageWrapper>
+      <HeadMeta title={'Inctagram'} />
+      {t.publicPage.title}
+    </PageWrapper>
   )
 }
-Home.getLayout = getNavLayout
+
+PublicPage.getLayout = GetLayout
+export default PublicPage
