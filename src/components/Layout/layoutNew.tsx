@@ -13,9 +13,6 @@ export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
   // const { data, isFetching, isLoading } = useAuthMeQuery()
   const { data, isFetching, isLoading } = useMeQuery()
 
-  //todo cleanup console.log
-  console.log('Layout New', data, isLoading, isFetching)
-
   return (
     <div className={clsx(s.container, s.oneColumn, (data || isLoading) && s.twoColumns)}>
       {isLoading && (

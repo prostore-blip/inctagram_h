@@ -60,7 +60,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
               url: '/v1/users/me',
             })
           } catch (err) {
-            console.log(err)
+            console.warn(err)
           }
 
           return {
