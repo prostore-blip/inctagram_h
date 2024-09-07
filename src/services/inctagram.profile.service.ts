@@ -1,5 +1,5 @@
-import { ResponseDataUserProfile, ResponseDataUserProfileByUserName } from '@/pages/profile/types'
 import { inctagramService } from '@/services/inctagram.service'
+import { ResponseDataUserProfile, ResponseDataUserProfileByUserName } from '@/types/user-data'
 
 export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   endpoints: builder => {

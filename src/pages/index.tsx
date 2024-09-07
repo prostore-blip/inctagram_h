@@ -7,15 +7,14 @@ import { useRouter } from 'next/router'
 export function PublicPage() {
   const { t } = useTranslation()
 
-  console.log('PubliPage')
   //--------------  временный редирект на страницу пользователя--------------
 
   const router = useRouter()
 
   useEffect(() => {
-    console.log('useEffect from PubliPage')
-
     void router.push('/profile')
+    //todo redirecting with useEffect in nextjs not a good option
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   //-------------------------------------------------------------------------

@@ -17,12 +17,9 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
   const { data, isFetching, isLoading } = useAuthMeQuery()
   const router = useRouter()
 
-  console.log('Layout ', data, isLoading, isFetching)
-
   // const style = data || isLoading ? '' : s.gridHaveOneCol
 
   if (!data && !isFetching) {
-    console.log('LoginNaavigate rdirect to login')
     void router.push('/login')
 
     return null
