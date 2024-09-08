@@ -43,3 +43,14 @@ export type DateTimeFormatOptions = {
   month: 'long'
   year: 'numeric'
 }
+
+export type RequestUpdateProfile = {
+  aboutMe?: string
+  city?: string
+  country?: string
+  dateOfBirth?: string
+  firstName: string
+  lastName: string
+  region?: string
+  userName: string
+}

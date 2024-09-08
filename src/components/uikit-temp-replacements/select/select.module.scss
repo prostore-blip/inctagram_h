@@ -1,0 +1,125 @@
+.trigger {
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+
+  box-sizing: border-box;
+  min-width: 10px;
+  padding: 6px 12px;
+  height: 36px;
+
+  color: var(--color-light-100);
+
+  background-color: transparent;
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--color-light-900);
+    transition: background-color 300ms;
+    &[data-placeholder] {
+      color: var(--color-light-900);
+    }
+  }
+
+  &:focus-visible {
+    border: 1px solid transparent;
+    outline: 2px solid var(--color-light-100);
+    outline-offset: -1px;
+  }
+
+  &[data-placeholder] {
+    color: var(--color-light-100);
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: var(--color-text-disabled);
+    border: 1px solid var(--color-text-disabled);
+  }
+}
+
+.triggerIcon {
+  transition: transform 100ms;
+}
+
+.trigger[data-state='open'] {
+  border-radius: 2px 2px 0 0;
+  border: 1px solid transparent;
+  outline: 1px solid var(--color-light-100);
+  outline-offset: -1px;
+
+  .triggerIcon {
+    transform: rotate(180deg);
+    transition: transform 200ms;
+  }
+}
+
+.content {
+  z-index: 9999;
+
+  box-sizing: border-box;
+  width: var(--radix-select-trigger-width);
+
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-light-100);
+  border-radius: 0 0 2px 2px;
+
+  &[data-side='top'] {
+    border-bottom: 0;
+  }
+
+  &[data-side='bottom'] {
+    border-top: 0;
+  }
+}
+
+.item {
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+
+  padding: 6px 12px;
+}
+
+.item[data-disabled] {
+  pointer-events: none;
+  color: var(--color-dark-100);
+}
+
+.item[data-highlighted] {
+  cursor: pointer;
+
+  color: var(--color-accent-500);
+
+  background-color: var(--color-dark-300);
+  outline: none;
+
+  transition:
+    background-color 100ms,
+    color 300ms;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.dense {
+  gap: 7px;
+  padding: 0 6px;
+}
+
+.disabled {
+  color: var(--color-text-disabled);
+}
+
+.label {
+  color: var(--color-light-900);
+}

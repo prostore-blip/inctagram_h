@@ -1,11 +1,15 @@
-import { ResponseDataUserProfile, ResponseDataUserProfileByUserName } from '@/pages/profile/types'
+import {
+  RequestUpdateProfile,
+  ResponseDataUserProfile,
+  ResponseDataUserProfileByUserName,
+} from '@/pages/profile/types'
 import { inctagramService } from '@/services/inctagram.service'
 
 export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
       getMyProfile: builder.query<ResponseDataUserProfile, void>({
-        // providesTags: ['login'],
+        // providesTags: ['getMyProfile'],
         query: () => {
           return { url: '/v1/users/profile' }
         },
@@ -20,9 +24,19 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
           return { url: `/v1/users/${arg}` }
         },
       }),
+      updateProfile: builder.mutation<void, RequestUpdateProfile>({
+        // invalidatesTags: ['getMyProfile'],
+        query: body => {
+          return {
+            body,
+            method: 'PUT',
+            url: '/v1/users/profile',
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useGetMyProfileQuery, useGetUserProfileByUserNameQuery } =
+export const { useGetMyProfileQuery, useGetUserProfileByUserNameQuery, useUpdateProfileMutation } =
   inctagramUsersProfileService
