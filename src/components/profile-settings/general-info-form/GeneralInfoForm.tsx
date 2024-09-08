@@ -1,18 +1,21 @@
 import { useForm } from 'react-hook-form'
 
 import { Close } from '@/assets/icons/close'
+import { FormSelect } from '@/components/controll/FormSelect'
 import { FormTextArea } from '@/components/controll/FormTextArea'
 import { FormInput } from '@/components/controll/formTextField'
 import {
   UserGeneralInfoData,
   userGeneralInfoSchema,
 } from '@/components/profile-settings/general-info-form/schema'
+import { SelectItem } from '@/components/uikit-temp-replacements/select/Select'
 import { useTranslation } from '@/hooks/useTranslation'
 import { ResponseDataUserProfile } from '@/pages/profile/types'
 import { useUpdateProfileMutation } from '@/services/inctagram.profile.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import clsx from 'clsx'
 import { toast } from 'sonner'
 
 import pageStyles from '@/pages/generalInfo/page.module.scss'
@@ -47,8 +50,8 @@ export function GeneralInfoForm(props: Props) {
   } = useForm<UserGeneralInfoData>({
     defaultValues: {
       aboutMe: props?.profile?.aboutMe ?? '',
-      // city: props?.profile?.city ?? '',
-      // country: props?.profile?.country ?? '',
+      city: props?.profile?.city ?? '',
+      country: props?.profile?.country ?? '',
       dateOfBirth: props?.profile?.dateOfBirth.split('T')[0] ?? '',
       firstName: props?.profile?.firstName ?? '',
       lastName: props?.profile?.lastName ?? '',
@@ -135,34 +138,34 @@ export function GeneralInfoForm(props: Props) {
           />
           <span>{errors.dateOfBirth?.message}</span>
         </div>
-        {/*<section className={clsx(pageStyles.locationSection, pageStyles.formItem)}>*/}
-        {/*  <FormSelect*/}
-        {/*    control={control}*/}
-        {/*    fullWidth*/}
-        {/*    // label={t.profile.settings.selectYourCountry}*/}
-        {/*    name={'country'}*/}
-        {/*    // placeholder={t.profile.settings.selectYourCountryPlaceholder}*/}
-        {/*  >*/}
-        {/*    {countries.map(item => (*/}
-        {/*      <SelectItem key={item.value + item.title} value={item.value}>*/}
-        {/*        {item.title}*/}
-        {/*      </SelectItem>*/}
-        {/*    ))}*/}
-        {/*  </FormSelect>*/}
-        {/*  <FormSelect*/}
-        {/*    control={control}*/}
-        {/*    fullWidth*/}
-        {/*    // label={t.profile.settings.selectYourCity}*/}
-        {/*    name={'city'}*/}
-        {/*    // placeholder={t.profile.settings.selectYourCityPlaceholder}*/}
-        {/*  >*/}
-        {/*    {cities.map(item => (*/}
-        {/*      <SelectItem key={item.value + item.title} value={item.value}>*/}
-        {/*        {item.title}*/}
-        {/*      </SelectItem>*/}
-        {/*    ))}*/}
-        {/*  </FormSelect>*/}
-        {/*</section>*/}
+        <section className={clsx(pageStyles.locationSection, pageStyles.formItem)}>
+          <FormSelect
+            control={control}
+            fullWidth
+            label={t.profile.settings.selectYourCountry}
+            name={'country'}
+            placeholder={t.profile.settings.selectYourCountryPlaceholder}
+          >
+            {countries.map(item => (
+              <SelectItem key={item.value + item.title} value={item.value}>
+                {item.title}
+              </SelectItem>
+            ))}
+          </FormSelect>
+          <FormSelect
+            control={control}
+            fullWidth
+            label={t.profile.settings.selectYourCity}
+            name={'city'}
+            placeholder={t.profile.settings.selectYourCityPlaceholder}
+          >
+            {cities.map(item => (
+              <SelectItem key={item.value + item.title} value={item.value}>
+                {item.title}
+              </SelectItem>
+            ))}
+          </FormSelect>
+        </section>
         <FormTextArea
           className={pageStyles.aboutMe}
           control={control}

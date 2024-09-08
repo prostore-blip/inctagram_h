@@ -9,7 +9,7 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
       getMyProfile: builder.query<ResponseDataUserProfile, void>({
-        // providesTags: ['getMyProfile'],
+        providesTags: ['getMyProfile'],
         query: () => {
           return { url: '/v1/users/profile' }
         },
@@ -25,7 +25,7 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
         },
       }),
       updateProfile: builder.mutation<void, RequestUpdateProfile>({
-        // invalidatesTags: ['getMyProfile'],
+        invalidatesTags: ['getMyProfile'],
         query: body => {
           return {
             body,

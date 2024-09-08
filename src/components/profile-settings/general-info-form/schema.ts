@@ -5,8 +5,8 @@ export const userGeneralInfoSchema = z.object({
   // .regex(
   //   /^[0-9A-Za-zА-Яа-я\s!@#$%^&*()_+\-=[\]{};':"\\|,./?]+$/,
   //   'Поле "about" может содержать цифры, буквы латинского и кириллического алфавита, а также специальные символы'
-  // city: z.string().min(3).optional(),
-  // country: z.string().min(3).optional(),
+  city: z.string().min(3).optional(),
+  country: z.string().min(3).optional(),
   // ),
   dateOfBirth: z
     .string()
