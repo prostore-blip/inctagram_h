@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 
+import { Close } from '@/assets/icons/close'
 import { FormTextArea } from '@/components/controll/FormTextArea'
 import { FormInput } from '@/components/controll/formTextField'
 import {
@@ -9,9 +10,10 @@ import {
 import { useTranslation } from '@/hooks/useTranslation'
 import { ResponseDataUserProfile } from '@/pages/profile/types'
 import { useUpdateProfileMutation } from '@/services/inctagram.profile.service'
-import { Button } from '@chrizzo/ui-kit'
+import { Button, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
 
 import pageStyles from '@/pages/generalInfo/page.module.scss'
 
@@ -57,18 +59,45 @@ export function GeneralInfoForm(props: Props) {
   })
   const { router, t } = useTranslation()
 
-  const makeRequest = (data: any) => {
+  const makeRequest = async (data: any) => {
     const now = new Date()
     const currentTime = now.toISOString().split('T')[1].split('.')[0] + 'Z'
 
     data.dateOfBirth = data.dateOfBirth + 'T' + currentTime
+
     try {
-      updateProfile(data).unwrap()
+      await updateProfile(data).unwrap()
+      toast.custom(
+        t => (
+          <div className={pageStyles.toastWrapper}>
+            <Typography variant={'regular16'}>Your settings are saved</Typography>{' '}
+            <Button className={pageStyles.close} onClick={() => toast.dismiss(t)} variant={'text'}>
+              <Close />
+            </Button>
+          </div>
+        ),
+        {
+          className: pageStyles.succesToast,
+          duration: Infinity,
+        }
+      )
     } catch (error) {
       //todo set fields errors
+      toast.custom(
+        t => (
+          <div className={pageStyles.toastWrapper}>
+            <Typography variant={'regular16'}>Error! Server is not available</Typography>{' '}
+            <Button className={pageStyles.close} onClick={() => toast.dismiss(t)} variant={'text'}>
+              <Close />
+            </Button>
+          </div>
+        ),
+        {
+          className: pageStyles.errorToast,
+        }
+      )
     }
   }
-
   const submitDisabled = isSubmitting || !isDirty || isValidating
 
   return (

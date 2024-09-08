@@ -7,6 +7,7 @@ import { LayoutNew } from '@/components/Layout/layoutNew'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import { NextPage } from 'next'
+import { Toaster } from 'sonner'
 
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
@@ -29,6 +30,7 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
 
   return (
     <Provider store={store}>
+      <Toaster position={'bottom-left'} />
       <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
     </Provider>
   )
