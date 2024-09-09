@@ -49,7 +49,7 @@ export const baseQueryWithReauth: BaseQueryFn<
           result = await baseQuery(args, api, extraOptions)
         } else {
           console.log('logged out')
-          void Router.push('/login')
+        //   void Router.push('/login')
         }
       } finally {
         release()
