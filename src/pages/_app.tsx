@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 
 import { LayoutNew } from '@/components/Layout/layoutNew'
 import { NextPage } from 'next'
-import { Inter } from 'next/font/google'
 
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
@@ -21,17 +20,13 @@ type AppPropsWithLayout = {
   Component: NextPageWithLayout
 } & AppProps
 
-const inter = Inter({ subsets: ['latin'] })
-
 export default function App({ Component, ...rest }: AppPropsWithLayout) {
   const { props, store } = wrapper.useWrappedStore(rest)
   const getLayout = Component.getLayout ?? (page => page)
 
   return (
     <Provider store={store}>
-      <main className={inter.className}>
-        <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
-      </main>
+      <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
     </Provider>
   )
 }
