@@ -52,6 +52,7 @@ export const baseQueryWithReauth: BaseQueryFn<
           refreshResult.data?.accessToken &&
           typeof refreshResult.data?.accessToken === 'string'
         ) {
+          document.cookie = `access_token=${refreshResult.data.accessToken}; expires=${new Date('2050-09-04').toUTCString()}; SameSite=None; Secure`
           localStorage.setItem('token', refreshResult.data.accessToken)
           result = await baseQuery(args, api, extraOptions)
         }
