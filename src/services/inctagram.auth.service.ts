@@ -36,6 +36,8 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           await queryFulfilled
           localStorage.removeItem('token')
           document.cookie = `access_token=; expires=${new Date('1970-09-04').toUTCString()}; SameSite=None; Secure`
+          dispatch(inctagramAuthService.util.invalidateTags(['login']))
+          dispatch(inctagramAuthService.util.resetApiState())
         },
         query: () => {
           return {
