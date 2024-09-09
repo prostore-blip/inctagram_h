@@ -3,7 +3,7 @@ import { PageWrapper } from '@/components'
 import { LoginNavigate } from '@/hoc/LoginNavigate'
 import { StatisticsPage } from '@/components/statisticsPage'
 
-export const Statistics: React.FC = () => {
+const Statistics: React.FC = () => {
   return (
     <LoginNavigate>
       <PageWrapper>
@@ -12,3 +12,4 @@ export const Statistics: React.FC = () => {
     </LoginNavigate>
   )
 }
+export default Statistics
