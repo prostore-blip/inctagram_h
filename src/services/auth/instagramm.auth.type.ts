@@ -4,13 +4,13 @@ export interface SignUpRequest {
   email: string;
   password: string;
   userName: string;
-  captchaToken: string;
+  
 }
 
 export interface SignInRequest {
   email: string;
   password: string;
-  captchaToken: string;
+  
 }
 //--------------------------------------------------------
 // export type Respones = {
