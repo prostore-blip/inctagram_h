@@ -1,5 +1,5 @@
 import { inctagramService } from '@/services/inctagram.service'
-import { getResponse, Respones, SignInRequest, SignUpRequest } from './instagramm.auth.type'
+import { SignInRequest, SignUpRequest } from './instagramm.auth.type'
 import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
 import { SuccessfulRequestResult } from '@/types'
 
@@ -45,23 +45,23 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           }
         },
       }),
-      singUp: builder.mutation<Respones, SignUpRequest>({
+      singUp: builder.mutation<any, SignUpRequest>({
         invalidatesTags: ['login'],
         query: params => ({
-          body: params,
+          body: { ...params, captchaToken: params.captchaToken },
           method: 'POST',
           url: '/auth/signup',
         }),
       }),
-      singIn: builder.mutation<Respones, SignInRequest>({
+      singIn: builder.mutation<any, SignInRequest>({
         invalidatesTags: ['login'],
         query: params => ({
-          body: params,
+          body: { ...params, captchaToken: params.captchaToken },
           method: 'POST',
           url: '/auth/signin',
         }),
       }),
-      logout: builder.mutation<Respones, any>({
+      logout: builder.mutation<any, any>({
         invalidatesTags: ['login'],
         query: params => ({
           body: params,
@@ -69,7 +69,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           url: '/auth/logout',
         }),
       }),
-      rotateToken: builder.mutation<Respones, any>({
+      rotateToken: builder.mutation<any, any>({
         invalidatesTags: ['login'],
         query: params => ({
           body: params,
