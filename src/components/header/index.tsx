@@ -115,7 +115,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
   return (
     <header className={s.header}>
       <div className={s.wrapper}>
-        <Typography variant={'large'}>
+        <Typography as={'a'} variant={'large'}>
           <Link href={'/'}>Inctagram</Link>
         </Typography>
         <div className={s.buttonsBlock}>
