@@ -1,5 +1,5 @@
 import { inctagramService } from '@/services/inctagram.service'
-import { SignInRequest, SignUpRequest } from './instagramm.auth.type'
+import { AuthGetResponse, SignInRequest, SignUpRequest } from './instagramm.auth.type'
 import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
 import { SuccessfulRequestResult } from '@/types'
 
@@ -37,7 +37,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
           }
         },
       }),
-      authGet: builder.query<any, void>({
+      authGet: builder.query<AuthGetResponse, void>({
         providesTags: ['login'],
         query: params => {
           return {
@@ -48,7 +48,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
       singUp: builder.mutation<any, SignUpRequest>({
         invalidatesTags: ['login'],
         query: params => ({
-          body: { ...params, captchaToken: params.captchaToken },
+          body: params ,
           method: 'POST',
           url: '/auth/signup',
         }),
@@ -56,7 +56,7 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
       singIn: builder.mutation<any, SignInRequest>({
         invalidatesTags: ['login'],
         query: params => ({
-          body: { ...params, captchaToken: params.captchaToken },
+          body: params,
           method: 'POST',
           url: '/auth/signin',
         }),

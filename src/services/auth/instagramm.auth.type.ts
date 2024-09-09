@@ -12,6 +12,11 @@ export interface SignInRequest {
   password: string;
   
 }
+export interface AuthGetResponse {
+  email: string;
+  userName: string;
+  userId: string;
+}
 //--------------------------------------------------------
 // export type Respones = {
 //   success: successSignUpResponse
