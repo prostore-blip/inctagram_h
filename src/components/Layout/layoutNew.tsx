@@ -27,7 +27,7 @@ export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
       ) : (
         <>
           <Header isAuthMe={!!data} />
-          {data && <Nav isSpecialAccount myProfileId={data.userId} />}
+          {data && <Nav isSpecialAccount myEmail={data.email} myProfileId={data.userId} />}
           <Main>{!(path === '/login' && data) && children}</Main>
         </>
       )}

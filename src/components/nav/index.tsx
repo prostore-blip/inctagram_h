@@ -1,4 +1,5 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
+import { ModalConfirmLogout } from '@/components/modalConfirmLogout'
 import { PropsLink } from '@/components/nav/types'
 import { useLogoutMutation } from '@/services/inctagram.auth.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -56,10 +57,11 @@ const links: PropsLink[] = [
 
 type Props = {
   isSpecialAccount: boolean
+  myEmail: string | undefined
   myProfileId: number | undefined
 }
 
-export const Nav = ({ isSpecialAccount, myProfileId }: Props) => {
+export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
   const router = useRouter()
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
@@ -71,6 +73,11 @@ export const Nav = ({ isSpecialAccount, myProfileId }: Props) => {
    */
   const [logout, { isLoading }] = useLogoutMutation()
 
+  /**
+   *  Обработчик кнопок меню nav. На данный момент обрабатывется только для "logout"
+   * @param isButton - является ли кнопка меню NAV кнопкой (может быть ссылка)
+   * @param linkName - название кнопки меню NAV
+   */
   const handleClick = (isButton?: boolean, linkName?: string) => {
     if (isButton && linkName === 'Log Out') {
       logout()
@@ -103,19 +110,51 @@ export const Nav = ({ isSpecialAccount, myProfileId }: Props) => {
               )}
               key={index}
             >
-              <Button
-                as={link.isButton ? 'button' : Link}
-                className={clsx(s.wrapper, activeLink && s.activeLink)}
-                disabled={isLoading}
-                href={link.path}
-                onClick={() => handleClick(link.isButton, link.name)}
-                variant={'text'}
-              >
-                {link.icon}
-                <Typography as={'span'} variant={'regularMedium14'}>
-                  {link.name}
-                </Typography>
-              </Button>
+              {link.name === 'Log Out' && (
+                <ModalConfirmLogout
+                  callback={handleClick}
+                  link={link}
+                  title={'Log Out'}
+                  variantTriggerButton={
+                    <Button
+                      as={link.isButton ? 'button' : Link}
+                      className={clsx(s.wrapper, activeLink && s.activeLink)}
+                      disabled={isLoading}
+                      href={link.path}
+                      // onClick={() => handleClick(link.isButton, link.name)}
+                      variant={'text'}
+                    >
+                      {link.icon}
+                      <Typography as={'span'} variant={'regularMedium14'}>
+                        {link.name}
+                      </Typography>
+                    </Button>
+                  }
+                >
+                  <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
+                    Are you really want to log out of your account &quot;
+                    <Typography as={'span'} className={s.userName} variant={'h3'}>
+                      {myEmail}
+                    </Typography>
+                    &quot;?
+                  </Typography>
+                </ModalConfirmLogout>
+              )}
+              {link.name !== 'Log Out' && (
+                <Button
+                  as={link.isButton ? 'button' : Link}
+                  className={clsx(s.wrapper, activeLink && s.activeLink)}
+                  disabled={isLoading}
+                  href={link.path}
+                  onClick={() => handleClick(link.isButton, link.name)}
+                  variant={'text'}
+                >
+                  {link.icon}
+                  <Typography as={'span'} variant={'regularMedium14'}>
+                    {link.name}
+                  </Typography>
+                </Button>
+              )}
             </li>
           )
         })}
