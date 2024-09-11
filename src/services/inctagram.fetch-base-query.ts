@@ -9,7 +9,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: 'https://incta.team/api/v1/',
   credentials: 'include',
   prepareHeaders: headers => {
-    headers.set('Content-type', 'application/json')
+    headers.set('Authorization', `Bearer 6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P`)
 
     return headers
   },

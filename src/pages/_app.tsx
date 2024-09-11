@@ -6,7 +6,6 @@ import { Provider } from 'react-redux'
 import { LayoutNew } from '@/components/Layout/layoutNew'
 import { useTranslation } from '@/hooks/useTranslation'
 import { NextPage } from 'next'
-import { ReCaptchaProvider } from 'next-recaptcha-v3'
 
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
@@ -29,13 +28,8 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page)
 
   return (
-    <ReCaptchaProvider
-      language={router.locale}
-      reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
-    >
-      <Provider store={store}>
-        <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
-      </Provider>
-    </ReCaptchaProvider>
+    <Provider store={store}>
+      <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
+    </Provider>
   )
 }

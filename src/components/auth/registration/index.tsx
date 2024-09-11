@@ -19,7 +19,7 @@ const signUpSchema = z
     email: z.string().email('Invalid email address'),
     password: z.string().min(3, 'Password has to be at least 3 characters long'),
     rememberMe: z.boolean().default(false),
-    username: z.string().min(3, 'Username has to be at least 3 characters long'),
+    userName: z.string().min(3, 'Username has to be at least 3 characters long'),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -29,7 +29,7 @@ const signUpSchema = z
 export type SignUpFormType = z.infer<typeof signUpSchema>
 
 type Props = {
-  onSubmit: (data: Omit<SignUpFormType, 'confirmPassword'>) => void
+  onSubmit: (data: Omit<SignUpFormType, 'confirmPassword' | 'rememberMe'>) => void
 }
 
 export const SingUp = (props: Props) => {
@@ -41,7 +41,10 @@ export const SingUp = (props: Props) => {
   } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
 
   const onHandleSubmit = handleSubmit(data => {
-    props.onSubmit(omit(data, ['confirmPassword']))
+    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
+
+    console.log('Filtered Data:', filteredData)
+    props.onSubmit(filteredData)
   })
 
   const { t } = useTranslation()
@@ -61,7 +64,7 @@ export const SingUp = (props: Props) => {
               control={control}
               error={errors.email?.message}
               label={t.signUp.userName}
-              name={'username'}
+              name={'userName'}
               placeholder={'username'}
             />
             <FormInput

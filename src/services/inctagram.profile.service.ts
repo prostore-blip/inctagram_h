@@ -7,14 +7,14 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
       getUserProfile: builder.query<ResponseDataUserProfile, void>({
         // providesTags: ['login'],
         query: () => {
-          return { url: '/v1/users/profile' }
+          return { url: 'users/profiles/get' }
         },
       }),
       getUserProfileByUserId: builder.query<ResponseDataUserProfileByUserName, string>({
         // providesTags: ['login'],
         providesTags: ['getFollowing'],
         query: arg => {
-          return { url: `/v1/users/${arg}` }
+          return { url: `users/${arg}` }
         },
       }),
     }

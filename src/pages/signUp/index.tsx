@@ -7,50 +7,22 @@ import { useReCaptcha } from 'next-recaptcha-v3'
 
 export function SignUp() {
   const [singUp, { data, isLoading }] = useSingUpMutation()
-  const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
-  const [recaptchaToken, setRecaptchaToken] = useState<null | string>(null)
-  const [recaptchaLoading, setRecaptchaLoading] = useState<boolean>(false)
+
   const router = useRouter()
 
-  const getRecaptchaToken = async () => {
-    if (!recaptchaReady) {
-      console.error('Recaptcha is not ready')
-
-      return
-    }
-
-    try {
-      setRecaptchaLoading(true)
-      const token = await executeRecaptcha('submit')
-
-      setRecaptchaToken(token)
-    } catch (err) {
-      console.error('Error getting recaptcha token:', err)
-      setRecaptchaToken(null)
-    } finally {
-      setRecaptchaLoading(false)
-    }
-  }
-
   const register = async (formData: any) => {
-    if (!recaptchaToken) {
-      await getRecaptchaToken()
-    }
+    try {
+      const response = await singUp(formData)
 
-    const dataWithRecaptcha = {
-      ...formData,
-      recaptcha: recaptchaToken,
+      router.push('/profile')
+      console.log('Response from server:', response)
+    } catch (error) {
+      console.error('Error during registration:', error)
     }
-
-    singUp(dataWithRecaptcha)
   }
 
-  if (isLoading || recaptchaLoading) {
+  if (isLoading) {
     return <div>Loading</div>
-  }
-
-  if (data?.success) {
-    router.push('/profile')
   }
 
   return (
