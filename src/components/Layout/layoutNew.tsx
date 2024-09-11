@@ -3,21 +3,14 @@ import { PropsWithChildren } from 'react'
 import { Header } from '@/components/header'
 import { Main } from '@/components/main'
 import { Nav } from '@/components/nav'
-
-
+import { useAuthGetQuery } from '@/services'
 import { clsx } from 'clsx'
-
 import { NextPage } from 'next'
 
 import s from '@/components/Layout/layout.module.scss'
-import { useAuthGetQuery } from '@/services'
-
 
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
-
   const { data, isFetching, isLoading } = useAuthGetQuery()
-
- 
 
   //todo cleanup console.log
   console.log('Layout New', data, isLoading, isFetching)

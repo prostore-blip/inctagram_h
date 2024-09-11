@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { GetLayout, GetNavLayout, HeadMeta, Layout, PageWrapper } from '@/components'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useRouter } from 'next/router'

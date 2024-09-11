@@ -1,26 +1,33 @@
+import { useState } from 'react'
+
 import { PageWrapper, SingUp } from '@/components'
 import { useSingUpMutation } from '@/services'
-import { useReCaptcha } from 'next-recaptcha-v3'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useReCaptcha } from 'next-recaptcha-v3'
 
 export function SignUp() {
   const [singUp, { data, isLoading }] = useSingUpMutation()
-  const { executeRecaptcha, loaded: recaptchaReady  } = useReCaptcha()
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
+  const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
+  const [recaptchaToken, setRecaptchaToken] = useState<null | string>(null)
   const [recaptchaLoading, setRecaptchaLoading] = useState<boolean>(false)
   const router = useRouter()
 
   const getRecaptchaToken = async () => {
     if (!recaptchaReady) {
+      console.error('Recaptcha is not ready')
+
       return
     }
 
     try {
       setRecaptchaLoading(true)
       const token = await executeRecaptcha('submit')
+
+      console.log('TOKEN', token)
+
       setRecaptchaToken(token)
     } catch (err) {
+      console.error('Error getting recaptcha token:', err)
       setRecaptchaToken(null)
     } finally {
       setRecaptchaLoading(false)
@@ -34,7 +41,7 @@ export function SignUp() {
 
     const dataWithRecaptcha = {
       ...formData,
-      recaptcha: recaptchaToken
+      recaptcha: recaptchaToken,
     }
 
     console.log(dataWithRecaptcha)
