@@ -80,12 +80,11 @@ export function AvatarSelector({ initialValue, onValueChange, ...restProps }: Im
       />
       <div className={s.container}>
         <div style={{ position: 'relative' }}>
-          {initialValue ||
-            (savedImage && (
-              <Button className={clsx(s.clearButton)} onClick={clearAvatar} type={'button'}>
-                <Close />
-              </Button>
-            ))}
+          {savedImage && (
+            <Button className={clsx(s.clearButton)} onClick={clearAvatar} type={'button'}>
+              <Close />
+            </Button>
+          )}
           <div className={clsx(s.imageContainer, s.round)}>
             {!savedImage && <ImageIcon size={36} />}
 

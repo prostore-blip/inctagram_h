@@ -54,3 +54,11 @@ export type RequestUpdateProfile = {
   region?: string
   userName: string
 }
+
+export type ResponseUpdateAvatarProfile = {
+  createdAt?: string
+  fileSize: number
+  height: number
+  url: string
+  width: number
+}

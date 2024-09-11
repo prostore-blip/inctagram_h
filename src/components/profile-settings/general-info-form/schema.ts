@@ -13,11 +13,8 @@ export const userGeneralInfoSchema = z.object({
     // .min(10, 'Дата введена неполностью')
     // .regex(/^\d{2}\.\d{2}\.\d{4}$/, 'Дата должна быть в формате ДД.ММ.ГГГГ')
     .refine(date => {
-      console.log('date', date)
       const [year, month, day] = date.split('-').map(Number)
       const dateObj = new Date(year, month - 1, day)
-
-      console.log(day, month, year)
 
       return (
         dateObj.getFullYear() === year &&

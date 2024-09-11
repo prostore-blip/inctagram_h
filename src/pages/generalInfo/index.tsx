@@ -5,7 +5,10 @@ import { GeneralInfoForm } from '@/components/profile-settings'
 import { AvatarSelector } from '@/components/uikit-temp-replacements/avatar/AvatarSelector'
 import LinearProgress from '@/components/uikit-temp-replacements/linear-progress/LinearProgress'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useGetMyProfileQuery } from '@/services/inctagram.profile.service'
+import {
+  useGetMyProfileQuery,
+  useUpdateAvatarProfileMutation,
+} from '@/services/inctagram.profile.service'
 import { TabType } from '@chrizzo/ui-kit'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 
@@ -23,6 +26,8 @@ const tabsList: TabType[] = [
 export function GeneralInfo() {
   const { data, isFetching } = useGetMyProfileQuery()
 
+  const [updateAvatarProfile, { isLoading }] = useUpdateAvatarProfileMutation()
+
   const [currentTab, setCurrentTab] = useState(tabsList[0].value)
 
   const { router, t } = useTranslation()
@@ -31,7 +36,14 @@ export function GeneralInfo() {
 
   const handleImageSelection = (file: File | null) => {
     //todo call mutation hook
-    setImage(file)
+
+    if (file) {
+      const formData = new FormData()
+
+      setImage(file)
+      formData.append('avatar', file)
+      updateAvatarProfile({ file: formData })
+    }
   }
 
   const getTabName = (value: string) => {

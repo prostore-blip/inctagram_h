@@ -2,6 +2,7 @@ import {
   RequestUpdateProfile,
   ResponseDataUserProfile,
   ResponseDataUserProfileByUserName,
+  ResponseUpdateAvatarProfile,
 } from '@/pages/profile/types'
 import { inctagramService } from '@/services/inctagram.service'
 
@@ -24,6 +25,16 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
           return { url: `/v1/users/${arg}` }
         },
       }),
+      updateAvatarProfile: builder.mutation<ResponseUpdateAvatarProfile, { file: FormData }>({
+        invalidatesTags: ['getMyProfile'],
+        query: body => {
+          return {
+            body: body.file,
+            method: 'POST',
+            url: '/v1/users/profile/avatar',
+          }
+        },
+      }),
       updateProfile: builder.mutation<void, RequestUpdateProfile>({
         invalidatesTags: ['getMyProfile'],
         query: body => {
@@ -38,5 +49,9 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   },
 })
 
-export const { useGetMyProfileQuery, useGetUserProfileByUserNameQuery, useUpdateProfileMutation } =
-  inctagramUsersProfileService
+export const {
+  useGetMyProfileQuery,
+  useGetUserProfileByUserNameQuery,
+  useUpdateAvatarProfileMutation,
+  useUpdateProfileMutation,
+} = inctagramUsersProfileService
