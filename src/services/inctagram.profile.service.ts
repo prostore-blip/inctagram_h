@@ -9,6 +9,15 @@ import { inctagramService } from '@/services/inctagram.service'
 export const inctagramUsersProfileService = inctagramService.injectEndpoints({
   endpoints: builder => {
     return {
+      deleteAvatarProfile: builder.mutation<void, void>({
+        invalidatesTags: ['getMyProfile'],
+        query: _ => {
+          return {
+            method: 'DELETE',
+            url: '/v1/users/profile/avatar',
+          }
+        },
+      }),
       getMyProfile: builder.query<ResponseDataUserProfile, void>({
         providesTags: ['getMyProfile'],
         query: () => {
@@ -50,6 +59,7 @@ export const inctagramUsersProfileService = inctagramService.injectEndpoints({
 })
 
 export const {
+  useDeleteAvatarProfileMutation,
   useGetMyProfileQuery,
   useGetUserProfileByUserNameQuery,
   useUpdateAvatarProfileMutation,
