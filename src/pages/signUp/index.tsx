@@ -23,8 +23,6 @@ export function SignUp() {
       setRecaptchaLoading(true)
       const token = await executeRecaptcha('submit')
 
-      console.log('TOKEN', token)
-
       setRecaptchaToken(token)
     } catch (err) {
       console.error('Error getting recaptcha token:', err)
@@ -44,7 +42,6 @@ export function SignUp() {
       recaptcha: recaptchaToken,
     }
 
-    console.log(dataWithRecaptcha)
     singUp(dataWithRecaptcha)
   }
 
