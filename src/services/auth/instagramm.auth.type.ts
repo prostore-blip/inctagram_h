@@ -1,21 +1,19 @@
 import { string } from 'zod'
 
 export interface SignUpRequest {
-  email: string;
-  password: string;
-  userName: string;
-  
+  email: string
+  password: string
+  userName: string
 }
 
 export interface SignInRequest {
-  email: string;
-  password: string;
-  
+  email: string
+  password: string
 }
 export interface AuthGetResponse {
-  email: string;
-  userName: string;
-  userId: string;
+  email: string
+  userId: string
+  userName: string
 }
 //--------------------------------------------------------
 // export type Respones = {
