@@ -1,4 +1,4 @@
-export const labelsLine = (timeFrame: 'week' | 'month') => {
+export const labelsLine = (timeFrame: 'month' | 'week') => {
   return timeFrame === 'week'
     ? ['March 1', 'March 2', 'March 3', 'March 4', 'March 5', 'March 6', 'March 7']
     : [
@@ -37,36 +37,40 @@ export const labelsLine = (timeFrame: 'week' | 'month') => {
 }
 
 export const СommonChartDataset = (
-  statisticsVariant: 'like' | 'comments' | 'Publication views'
+  statisticsVariant: 'Publication views' | 'comments' | 'like'
 ) => {
+  let backgroundColor, borderColor
+
+  if (statisticsVariant === 'like') {
+    backgroundColor = '#cc1439'
+    borderColor = '#cc1439'
+  } else if (statisticsVariant === 'comments') {
+    backgroundColor = '#397DF6'
+    borderColor = '#397DF6'
+  } else {
+    backgroundColor = '#14CC70'
+    borderColor = '#14CC70'
+  }
+
   return {
-    backgroundColor:
-      statisticsVariant === 'like'
-        ? '#cc1439'
-        : statisticsVariant === 'comments'
-          ? '#397DF6'
-          : '#14CC70',
-    borderColor:
-      statisticsVariant === 'like'
-        ? '#cc1439'
-        : statisticsVariant === 'comments'
-          ? '#397DF6'
-          : '#14CC70',
+    backgroundColor,
+    borderColor,
     borderWidth: 1,
     pointRadius: 0,
   }
 }
 
-export const ChartOptions = (timeFrame: 'week' | 'month') => {
+export const ChartOptions = (timeFrame: 'month' | 'week') => {
   return {
-    responsive: true,
     maintainAspectRatio: false,
+    responsive: true,
     scales: {
       x: {
         grid: {
           display: false,
         },
         ticks: {
+          autoSkip: false,
           callback: (value: number | string) => {
             const labels =
               timeFrame === 'week'
@@ -104,9 +108,9 @@ export const ChartOptions = (timeFrame: 'week' | 'month') => {
                     '',
                     'March 31',
                   ]
+
             return labels[Number(value)]
           },
-          autoSkip: false,
           maxRotation: 0,
           minRotation: 0,
         },
@@ -115,16 +119,17 @@ export const ChartOptions = (timeFrame: 'week' | 'month') => {
         grid: {
           display: false,
         },
+        max: 1000,
+        min: 0,
         ticks: {
           callback: (value: number | string) => {
             if (typeof value === 'number' && [0, 50, 100, 300, 500, 1000].includes(value)) {
               return value
             }
+
             return ''
           },
         },
-        min: 0,
-        max: 1000,
       },
     },
   }

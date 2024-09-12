@@ -1,17 +1,20 @@
-import { Tabs, Typography } from '@chrizzo/ui-kit'
-import s from './statistics.module.scss'
 import { useEffect, useState } from 'react'
+import { Line } from 'react-chartjs-2'
+
+import { Tabs, Typography } from '@chrizzo/ui-kit'
 import {
+  CategoryScale,
   Chart,
   LineController,
   LineElement,
-  PointElement,
   LinearScale,
+  PointElement,
   Title,
   Tooltip,
-  CategoryScale,
 } from 'chart.js'
-import { Line } from 'react-chartjs-2'
+
+import s from './statistics.module.scss'
+
 import { ChartOptions, labelsLine, СommonChartDataset } from './chartConfig'
 
 Chart.register(
@@ -25,28 +28,28 @@ Chart.register(
 )
 
 type PropsLine = {
-  label: string
-  statisticsVariant: 'like' | 'comments' | 'Publication views'
   data?: string
+  label: string
+  statisticsVariant: 'Publication views' | 'comments' | 'like'
 }
 
 export const ChartLines = (props: PropsLine) => {
-  const { label, statisticsVariant, data } = props
+  const { data, label, statisticsVariant } = props
   const [chartData, setChartData] = useState<{
-    labels: string[]
     datasets: {
       backgroundColor: string
       borderColor: string
-      pointRadius: number
       borderWidth: number
       data: number[]
+      pointRadius: number
     }[]
+    labels: string[]
   } | null>(null)
-  const [timeFrame, setTimeFrame] = useState<'week' | 'month'>('week')
+  const [timeFrame, setTimeFrame] = useState<'month' | 'week'>('week')
+
   useEffect(() => {
     const fetchData = () => {
       setChartData({
-        labels: labelsLine(timeFrame),
         datasets: [
           {
             ...СommonChartDataset(statisticsVariant),
@@ -59,6 +62,7 @@ export const ChartLines = (props: PropsLine) => {
                   ],
           },
         ],
+        labels: labelsLine(timeFrame),
       })
     }
 
@@ -70,33 +74,35 @@ export const ChartLines = (props: PropsLine) => {
       setTimeFrame(value)
     }
   }
+
   console.log('timeFrame', timeFrame)
+
   return (
     <div className={s.Container}>
       <Typography className={s.topGrapgWrapper}>
-        <Typography className={s.describeTabl} variant="regular16">
+        <Typography className={s.describeTabl} variant={'regular16'}>
           {label}
         </Typography>
-        <Typography className={s.buttonWrapper} textAlign="end">
+        <Typography className={s.buttonWrapper} textAlign={'end'}>
           <Tabs
-            value={timeFrame}
-            tabs={[
-              { value: 'week', title: 'Week' },
-              { value: 'month', title: 'Month' },
-            ]}
-            variant={'blue'}
             onValueChange={handleTabChange}
+            tabs={[
+              { title: 'Week', value: 'week' },
+              { title: 'Month', value: 'month' },
+            ]}
+            value={timeFrame}
+            variant={'blue'}
           ></Tabs>
         </Typography>
       </Typography>
       <Typography className={s._typography_1swhg_1}>
         {chartData ? (
           <Line
+            className={s.statistics_Line__RBoUW}
+            data={chartData}
             options={{
               ...ChartOptions(timeFrame),
             }}
-            className={s.statistics_Line__RBoUW}
-            data={chartData}
           />
         ) : (
           <p>Loading...</p>
