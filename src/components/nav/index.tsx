@@ -1,5 +1,6 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
 import { ModalConfirmLogout } from '@/components/modalConfirmLogout'
+import { ModalAddPhotoForPost } from '@/components/modalCreatePost'
 import { PropsLink } from '@/components/nav/types'
 import { useLogoutMutation } from '@/services/inctagram.auth.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -14,7 +15,7 @@ const links: PropsLink[] = [
   {
     icon: <Home />,
     name: 'Home',
-    path: '/',
+    path: '/home',
   },
   {
     icon: <Create />,
@@ -95,9 +96,8 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
           const isStatisticsLink = link.name === 'Statistics'
           const shouldHide = isStatisticsLink && !isSpecialAccount
           const activeLink =
-            ((router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0) ||
-              (!router.pathname.slice(1).length && link.name === 'Home')) &&
-            Number(router.query.id) === myProfileId
+            router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0
+
           const hiddenStaticticsStyle = link.name === 'Statistics' && !data?.length
 
           return (
@@ -110,6 +110,26 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
               )}
               key={index}
             >
+              {link.name === 'Create' && (
+                <ModalAddPhotoForPost
+                  onSave={async (e: File | null) => {}}
+                  trigger={
+                    <Button
+                      as={link.isButton ? 'button' : Link}
+                      className={clsx(s.wrapper, activeLink && s.activeLink)}
+                      disabled={isLoading}
+                      href={link.path}
+                      variant={'text'}
+                    >
+                      {link.icon}
+                      <Typography as={'span'} variant={'regularMedium14'}>
+                        {link.name}
+                      </Typography>
+                    </Button>
+                  }
+                />
+              )}
+
               {link.name === 'Log Out' && (
                 <ModalConfirmLogout
                   callback={handleClick}
@@ -140,7 +160,7 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
                   </Typography>
                 </ModalConfirmLogout>
               )}
-              {link.name !== 'Log Out' && (
+              {link.name !== 'Log Out' && link.name !== 'Create' && (
                 <Button
                   as={link.isButton ? 'button' : Link}
                   className={clsx(s.wrapper, activeLink && s.activeLink)}

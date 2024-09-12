@@ -1,0 +1,70 @@
+.content {
+  width: 492px;
+}
+.open {
+  color: var(--color-accent-500);
+}
+.imageContainer {
+  position: relative;
+  align-items: center;
+  background-color: var(--color-dark-500);
+
+  display: flex;
+  height: 222px;
+  justify-content: center;
+  width: 222px;
+  overflow: hidden;
+}
+
+.errorBox {
+  background-color: var(--color-danger-900);
+  padding: 6px 24px;
+  border-radius: 2px;
+  border: 1px var(--color-danger-500) solid;
+  margin-bottom: 24px;
+  justify-content: center;
+  display: inline-flex;
+  width: 100%;
+  gap: 0.35rem;
+}
+
+.dialogFooter {
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  justify-content: flex-end;
+  .flexFiller {
+    flex-grow: 1;
+  }
+}
+
+.flexColumn {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 24px;
+  margin-top: 48px;
+}
+
+.closeButton {
+  color: var(--color-light-100);
+  padding: 0;
+}
+
+.saveButton {
+  margin-bottom: 36px;
+  margin-top: 36px;
+}
+
+.selectButton {
+  min-width: 219px;
+}
+.buttonsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 60px;
+  margin-bottom: 48px;
+}
