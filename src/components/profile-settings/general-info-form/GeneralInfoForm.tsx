@@ -1,5 +1,7 @@
+import { MouseEvent, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Calendar } from '@/assets/icons/calendar'
 import { Close } from '@/assets/icons/close'
 import { FormSelect } from '@/components/controll/FormSelect'
 import { FormTextArea } from '@/components/controll/FormTextArea'
@@ -44,29 +46,30 @@ export function GeneralInfoForm(props: Props) {
 
   const {
     control,
-    formState: { errors, isDirty, isSubmitting, isValidating },
+    formState: { errors, isDirty, isSubmitting, isValid, isValidating, validatingFields },
     handleSubmit,
     register,
+    setValue,
+    trigger,
   } = useForm<UserGeneralInfoData>({
     defaultValues: {
       aboutMe: props?.profile?.aboutMe ?? '',
       city: props?.profile?.city ?? '',
       country: props?.profile?.country ?? '',
-      dateOfBirth: props?.profile?.dateOfBirth.split('T')[0] ?? '',
+      dateOfBirth: props?.profile?.dateOfBirth?.split('T')[0].split('-').reverse().join('.') ?? '',
       firstName: props?.profile?.firstName ?? '',
       lastName: props?.profile?.lastName ?? '',
       userName: props?.profile?.userName ?? '',
     },
-    mode: 'onTouched',
+    mode: 'onChange',
     resolver: zodResolver(userGeneralInfoSchema),
   })
   const { router, t } = useTranslation()
-
   const makeRequest = async (data: any) => {
     const now = new Date()
     const currentTime = now.toISOString().split('T')[1].split('.')[0] + 'Z'
 
-    data.dateOfBirth = data.dateOfBirth + 'T' + currentTime
+    data.dateOfBirth = data.dateOfBirth.split('.').reverse().join('-') + 'T' + currentTime
 
     try {
       await updateProfile(data).unwrap()
@@ -101,7 +104,25 @@ export function GeneralInfoForm(props: Props) {
       )
     }
   }
-  const submitDisabled = isSubmitting || !isDirty || isValidating
+  const submitDisabled = isSubmitting || !isDirty || isValidating || !isValid
+
+  const ref = useRef<HTMLInputElement | null>(null)
+  const handleFocus = (e: MouseEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    if (ref.current) {
+      ref.current.showPicker()
+    }
+  }
+  const handleChanges = () => {
+    if (ref.current) {
+      if (ref.current.value) {
+        const dateToISO = ref.current.value.split('-').reverse().join('.')
+
+        setValue('dateOfBirth', dateToISO)
+        void trigger('dateOfBirth')
+      }
+    }
+  }
 
   return (
     <>
@@ -128,15 +149,33 @@ export function GeneralInfoForm(props: Props) {
           label={t.common.lastName}
           name={'lastName'}
         />
-        <div style={{ position: 'relative' }}>
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            position: 'relative',
+          }}
+        >
+          <FormInput
+            className={clsx(pageStyles.formItem, pageStyles.birthInput)}
+            control={control}
+            label={'Date Of Birth'}
+            name={'dateOfBirth'}
+            readOnly
+          />
+          <label htmlFor={'dateBirth'}>
+            <Calendar />
+          </label>
           <input
-            {...register('dateOfBirth')}
             className={pageStyles.dateInput}
             id={'dateBirth'}
             lang={router.locale}
+            onChange={handleChanges}
+            onClick={handleFocus}
+            ref={ref}
             type={'date'}
           />
-          <span>{errors.dateOfBirth?.message}</span>
         </div>
         <section className={clsx(pageStyles.locationSection, pageStyles.formItem)}>
           <FormSelect

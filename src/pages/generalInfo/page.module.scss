@@ -26,6 +26,19 @@
 
 .formItem {
   margin-bottom: 24px;
+  &.birthInput input {
+    width: auto;
+    outline: none;
+    cursor: default;
+    transition: none;
+    color: var(--color-light-100);
+  }
+  &.birthInput input:active {
+    outline: none;
+  }
+  &.birthInput input:hover {
+    outline: none;
+  }
 }
 
 .label {
@@ -56,11 +69,12 @@
 }
 
 .dateInput {
-  width: 100%;
+  position: absolute;
+  width: 0;
   //border: 2px solid red;
   padding-right: 12px;
-  height: 36px;
-  margin-bottom: 24px;
+  height: 0;
+  //margin-bottom: 24px;
   &::-webkit-calendar-picker-indicator {
     filter: invert(1);
   }
