@@ -121,7 +121,7 @@ const ModalkaPost = ({ post, showMore }: Props) => {
         <img
           alt={'avatar'}
           height={post?.images[0]?.height}
-          src={post?.images[0]?.url ?? defaultAva}
+          src={post?.images[0]?.url ?? defaultAva.src}
           width={post?.images[0]?.width}
         />
       </ModalkaTrigger>

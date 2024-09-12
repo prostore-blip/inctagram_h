@@ -47,29 +47,24 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
    * массив images поста для карусели
    */
   const imagesPostArray = p?.images.map(image => {
-    return (
-      <div className={s.emblaSlide} key={image.uploadId}>
-        <div
-          className={s.postImage}
-          data-showmore={showMore}
-          onClick={() => navigateToPublicUserProfile(p.id, p.ownerId)}
-        >
-          <img
-            alt={'image'}
-            height={image?.height}
-            src={image?.url ?? defaultAva}
-            width={image?.width}
-          />
-        </div>
-      </div>
-    )
+    return <img alt={'image'} key={image.uploadId} src={image?.url ?? defaultAva.src} />
   })
 
   return (
     <li className={s.post}>
       <div className={s.modalWr}>
         <div className={s.embla} ref={emblaRef}>
-          <div className={s.emblaContainer}>{imagesPostArray}</div>
+          <div className={s.emblaContainer}>
+            <div className={s.emblaSlide}>
+              <div
+                className={s.postImage}
+                data-showmore={showMore}
+                onClick={() => navigateToPublicUserProfile(p.id, p.ownerId)}
+              >
+                {p.images.length ? imagesPostArray : <img alt={'image'} src={defaultAva.src} />}
+              </div>
+            </div>
+          </div>
         </div>
         {!showMore && (
           <>
@@ -107,7 +102,7 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
         className={s.avaUserNameBlock}
         onClick={() => navigateToPublicUserProfile(undefined, p.ownerId)}
       >
-        <img alt={'ava'} height={36} src={p.avatarOwner ?? defaultAva} width={36} />
+        <img alt={'ava'} height={36} src={p.avatarOwner ?? defaultAva.src} width={36} />
         <Typography variant={'h3'}>{p.userName}</Typography>
       </div>
       <Typography className={s.date} variant={'small'}>
