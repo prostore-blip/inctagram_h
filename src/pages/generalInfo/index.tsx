@@ -41,7 +41,7 @@ export function GeneralInfo() {
       const formData = new FormData()
 
       setImage(file)
-      formData.append('avatar', file)
+      formData.append('file', file)
       updateAvatarProfile({ file: formData })
     }
   }
