@@ -111,3 +111,57 @@
 .close {
   padding: 0;
 }
+.wrapperDatePicker {
+  margin-bottom: 24px;
+}
+
+.titleDateOfBirth {
+  color: var(--color-light-900);
+}
+.titleErrorDateOfBirth {
+  color: var(--color-danger-500);
+  a {
+    text-decoration: underline;
+    color: var(--color-accent-700);
+  }
+}
+//DatePicker
+.datePicker[class*='MuiFormControl-root'] {
+  width: 100%;
+}
+
+.datePicker fieldset[class*='MuiOutlinedInput-notchedOutline'] {
+  border-color: var(--color-dark-100);
+  legend {
+    display: none;
+  }
+}
+.datePicker button {
+  padding: 0;
+}
+.datePicker [class*='Mui-focused'] fieldset[class*='MuiOutlinedInput-notchedOutline'] {
+  border-color: var(--color-accent-500);
+}
+
+.datePicker [class*='MuiInputBase-root']:hover:not([class*='Mui-focused']) {
+  fieldset[class*='MuiOutlinedInput-notchedOutline'] {
+    border-color: var(--color-light-900);
+  }
+}
+.datePicker [class*='MuiInputBase-root'] {
+  padding: 0 12px;
+}
+.datePicker [class*='MuiInputAdornment-root'] {
+  margin: 0;
+  width: 24px;
+}
+
+.datePicker input {
+  -webkit-text-fill-color: white;
+  padding: 0;
+  height: 36px;
+}
+
+.datePicker button {
+  color: var(--color-light-100);
+}

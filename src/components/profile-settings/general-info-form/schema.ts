@@ -55,7 +55,7 @@ export const userGeneralInfoSchema = z
       if (arg.dateOfBirth && diffYears(new Date(), d) < 13) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: 'A user under 13 cannot create a profile. Privacy Policy',
+          message: 'A user under 13 cannot create a profile.',
           path: ['dateOfBirth'],
         })
       }

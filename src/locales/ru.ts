@@ -75,6 +75,7 @@ export const ru = {
       generalInformation: 'Общая информация',
       imageSizeExceeded: 'Фото должно быть меньше 10 МБ!',
       myPayments: 'Мои платежи',
+      saveChangeButton: 'Сохранить изменения',
       selectYourCity: 'Выберите Ваш город',
       selectYourCityPlaceholder: 'Город',
       selectYourCountry: 'Выберите Вашу страну',
