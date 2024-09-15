@@ -21,7 +21,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import clsx from 'clsx'
 import dayjs, { Dayjs } from 'dayjs'
-import Link from 'next/link'
 import { toast } from 'sonner'
 
 import pageStyles from '@/pages/generalInfo/page.module.scss'
@@ -62,6 +61,7 @@ export function GeneralInfoForm(props: Props) {
   const {
     control,
     formState: { errors, isDirty, isSubmitting, isValidating },
+    getValues,
     handleSubmit,
     register,
     reset,
@@ -75,7 +75,7 @@ export function GeneralInfoForm(props: Props) {
   /**
    * хук интернационализации
    */
-  const { t } = useTranslation()
+  const { router, t } = useTranslation()
 
   /**
    * обработчик формы
@@ -97,6 +97,7 @@ export function GeneralInfoForm(props: Props) {
     setIsDirtyBirthDate(false)
     try {
       await updateProfile(data).unwrap()
+      localStorage.removeItem('settingProfile')
       /**
        * всплывашка
        */
@@ -160,6 +161,7 @@ export function GeneralInfoForm(props: Props) {
        */
       const formattedDate = v.format('DD.MM.YYYY')
 
+      localStorage.setItem('dataOfBirth', formattedDate)
       /**
        * передаём дату в форму
        */
@@ -174,6 +176,18 @@ export function GeneralInfoForm(props: Props) {
         }
       })
     }
+  }
+  /**
+   * обработчик навигации на страницу политики.
+   * Сохраняем в локалстрэдже данные из формы. Это нужно, если мы со страницы политики вернёмся
+   * назад на setting, то из сторэйджа подтянем данные и засунем их в поля формы. Так по ТЗ
+   */
+  const toPrivacyPolity = () => {
+    const getValuesForm = getValues()
+
+    localStorage.setItem('settingProfile', JSON.stringify(getValuesForm))
+
+    void router.push('/privacyPolicy')
   }
 
   /**
@@ -194,6 +208,38 @@ export function GeneralInfoForm(props: Props) {
       })
     }
   }, [props.profile])
+
+  /**
+   * вытягиваем из локалсторэйджа данные и сетаем их в поля формы. Это нужно, если мы со страницы
+   * политики вернулись назад на setting, то в форме должны быть ранее введённые данные. Так по ТЗ
+   */
+
+  useEffect(() => {
+    const qqq = localStorage.getItem('settingProfile')
+
+    if (qqq) {
+      const aaa = JSON.parse(qqq)
+
+      reset(aaa)
+    }
+  }, [])
+  /**
+   * Это логика передачи в Календарь дефолтного значения даты. При первом рендере данные будут из пропсов.
+   * Если ввели невалидную дату и потом перешли на страницу политики, то по возврату на страницу setting,
+   * мы долджны в каледарь передать ранее введённое значение. Берём его из локалсторэйджа. Если нет ни того,
+   * ни другого, то передаём null
+   */
+  const getDataBirthFromStorage = localStorage.getItem('dataOfBirth')
+
+  let defaultDateBirth
+
+  if (getDataBirthFromStorage) {
+    defaultDateBirth = dayjs(getDataBirthFromStorage.split('.').reverse().join('-'))
+  } else if (props.profile?.dateOfBirth) {
+    defaultDateBirth = dayjs(props?.profile?.dateOfBirth?.split('T')[0])
+  } else {
+    defaultDateBirth = null
+  }
 
   return (
     <>
@@ -227,11 +273,7 @@ export function GeneralInfoForm(props: Props) {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               className={pageStyles.datePicker}
-              defaultValue={
-                props?.profile?.dateOfBirth
-                  ? dayjs(props?.profile?.dateOfBirth?.split('T')[0])
-                  : null
-              }
+              defaultValue={defaultDateBirth}
               format={'DD.MM.YYYY'}
               name={name}
               onChange={handleChanges}
@@ -240,7 +282,8 @@ export function GeneralInfoForm(props: Props) {
           </LocalizationProvider>
           {errors?.dateOfBirth?.message && (
             <Typography className={pageStyles.titleErrorDateOfBirth} variant={'regular14'}>
-              {errors.dateOfBirth.message} <Link href={'/privacyPolicy'}>Privacy Policy</Link>
+              {errors.dateOfBirth.message}
+              <span onClick={toPrivacyPolity}>Privacy Policy</span>
             </Typography>
           )}
         </div>
