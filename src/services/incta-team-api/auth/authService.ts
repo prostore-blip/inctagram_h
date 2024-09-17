@@ -1,6 +1,6 @@
 import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
 import { SignUpFormData } from '@/components/auth/sign-up/schema'
-import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/auth/const'
+import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/common/const'
 import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
 import { SuccessfulRequestResult } from '@/types'
 

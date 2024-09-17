@@ -1,5 +1,5 @@
-import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/auth/const'
 import { isRefreshTokenResponse } from '@/services/incta-team-api/auth/instagram.auth.type'
+import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/common/const'
 import { isFetchBaseQueryError, isFetchBaseQueryErrorData } from '@/types'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { Mutex } from 'async-mutex'
