@@ -18,8 +18,6 @@ export const Layout: NextPage<PropsWithChildren<Props>> = ({ children, showNav =
   const { data, isFetching, isLoading } = useAuthGetQuery()
   const router = useRouter()
 
-  console.log('Layout ', data, isLoading, isFetching)
-
   // const style = data || isLoading ? '' : s.gridHaveOneCol
 
   // if (!data && !isFetching) {

@@ -6,14 +6,27 @@ import { Nav } from '@/components/nav'
 import { useAuthGetQuery } from '@/services'
 import { clsx } from 'clsx'
 import { NextPage } from 'next'
+import { Inter } from 'next/font/google'
 
 import s from '@/components/Layout/layout.module.scss'
 
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
+
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
+  // const { data, isFetching, isLoading } = useAuthMeQuery()
+  const { data, isFetching, isLoading } = useMeQuery()
+
   const { data, isFetching, isLoading } = useAuthGetQuery()
 
   return (
-    <div className={clsx(s.container, s.oneColumn, (data || isLoading) && s.twoColumns)}>
+    <div
+      className={clsx(
+        s.container,
+        s.oneColumn,
+        inter.className,
+        (data || isLoading) && s.twoColumns
+      )}
+    >
       {isLoading && (
         <>
           <header className={s.headerSkeleton}></header>

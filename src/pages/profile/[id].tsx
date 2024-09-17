@@ -8,7 +8,6 @@ import s from './userProfilePage.module.scss'
 function UserProfileDinamicPage() {
   const router = useRouter()
 
-  console.log('profile[id]')
   const { data, isFetching } = useGetUserProfileQuery()
 
   return (

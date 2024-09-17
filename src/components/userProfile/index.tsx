@@ -12,6 +12,7 @@ import s from './userProfile.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 import { ModalFollowers } from '../modalFollowers'
 import { useAuthGetQuery } from '@/services'
+import { ModalFollowers } from '../modal-followers'
 
 type Props = {
   userName: string | undefined
@@ -20,7 +21,6 @@ type Props = {
 export function UserProfile({ userName }: Props) {
   const router = useRouter()
 
-  console.log('userProfile')
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
@@ -96,26 +96,6 @@ export function UserProfile({ userName }: Props) {
         </section>
       </div>
       {/*<section className={s.cardsBlock}>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
       {/*  <div className={s.card}></div>*/}
       {/*</section>*/}
       <GetProfileUsers />
