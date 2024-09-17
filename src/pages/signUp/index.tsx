@@ -1,34 +1,31 @@
-import { useState } from 'react'
-
-import { PageWrapper, SingUp } from '@/components'
-import { useSingUpMutation } from '@/services'
+import { PageWrapper } from '@/components'
+import { SingUp } from '@/components/auth/sign-up'
+import { RECAPTCHA_KEY } from '@/const'
 import { useRouter } from 'next/router'
-import { useReCaptcha } from 'next-recaptcha-v3'
+import { ReCaptchaProvider } from 'next-recaptcha-v3'
 
 export function SignUp() {
-  const [singUp, { data, isLoading }] = useSingUpMutation()
+  // const [singUp, { data, isLoading }] = useSingUpMutation()
 
   const router = useRouter()
 
-  const register = async (formData: any) => {
-    try {
-      const response = await singUp(formData)
-
-      router.push('/profile')
-      console.log('Response from server:', response)
-    } catch (error) {
-      console.error('Error during registration:', error)
-    }
-  }
-
-  if (isLoading) {
-    return <div>Loading</div>
-  }
+  // const register = async (formData: any) => {
+  //   try {
+  //     const response = await singUp(formData)
+  //
+  //     router.push('/profile')
+  //     console.log('Response from server:', response)
+  //   } catch (error) {
+  //     console.error('Error during registration:', error)
+  //   }
+  // }
 
   return (
-    <PageWrapper>
-      <SingUp onSubmit={register} />
-    </PageWrapper>
+    <ReCaptchaProvider language={router.locale} reCaptchaKey={RECAPTCHA_KEY}>
+      <PageWrapper>
+        <SingUp />
+      </PageWrapper>
+    </ReCaptchaProvider>
   )
 }
 

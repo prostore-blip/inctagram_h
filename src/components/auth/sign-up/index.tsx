@@ -1,53 +1,80 @@
-import { useForm } from 'react-hook-form'
+import { FieldPath, useForm } from 'react-hook-form'
 
 import { SocialAuthButtons } from '@/components/auth'
+import { SignInFormData } from '@/components/auth/sign-in/logIn-schema'
 import { FormCheckbox } from '@/components/controll/formCheckbox'
 import { FormInput } from '@/components/controll/formTextField'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useSingUpMutation } from '@/services'
+import { isFormDataErrorResponse } from '@/services/incta-team-api/common/types'
+import { isFetchBaseQueryError } from '@/types'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { omit } from 'remeda'
-import { z } from 'zod'
+import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './singUp.module.scss'
 
-const signUpSchema = z
-  .object({
-    confirmPassword: z.string().min(3, 'Password has to be at least 3 characters long'),
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(3, 'Password has to be at least 3 characters long'),
-    rememberMe: z.boolean().default(false),
-    userName: z.string().min(3, 'Username has to be at least 3 characters long'),
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
-
-export type SignUpFormType = z.infer<typeof signUpSchema>
+import { SignUpFormData, signUpSchema } from './schema'
 
 type Props = {
-  onSubmit: (data: Omit<SignUpFormType, 'confirmPassword' | 'rememberMe'>) => void
+  onSubmit?: (data: Omit<SignUpFormData, 'confirmPassword' | 'rememberMe'>) => void
 }
 
 export const SingUp = (props: Props) => {
-  const {
-    control,
-    formState: { errors },
+  const [singUp, { data, isLoading }] = useSingUpMutation()
 
-    handleSubmit,
-  } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
-
-  const onHandleSubmit = handleSubmit(data => {
-    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
-
-    console.log('Filtered Data:', filteredData)
-    props.onSubmit(filteredData)
-  })
+  const { executeRecaptcha, loaded: recaptchaLoaded } = useReCaptcha()
 
   const { t } = useTranslation()
+
+  const {
+    control,
+    formState: { errors, isDirty, isSubmitting, isValid, isValidating },
+    handleSubmit,
+    setError,
+    setValue,
+    trigger,
+  } = useForm<SignUpFormData>({
+    defaultValues: {
+      acceptPolicies: false,
+      captchaToken: 'placeholder-to-not-disable-form',
+      confirmPassword: 'Ex4mple!!!',
+      email: 'voyager5874@gmail.com',
+      password: 'Ex4mple!!!',
+      userName: 'tester11',
+    },
+    resolver: zodResolver(signUpSchema),
+  })
+
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      const recaptcha = await executeRecaptcha('submit')
+
+      console.log({ recaptcha })
+      if (!recaptcha) {
+        throw new Error('no recaptcha')
+      }
+      setValue('captchaToken', recaptcha)
+      await trigger('captchaToken')
+
+      await singUp(data).unwrap()
+
+      //todo show toast?
+      //todo middleware for redirecting?
+    } catch (error) {
+      if (isFetchBaseQueryError(error) && isFormDataErrorResponse(error.data)) {
+        error.data.errorsMessages.forEach(field => {
+          setError(field.field as FieldPath<SignInFormData>, { message: field.message })
+        })
+      } else {
+        //todo show toast?
+        console.log(error)
+      }
+    }
+  }
+  const submitDisabled = !isDirty || !isValid || isValidating || isSubmitting
 
   return (
     <div className={s.wrapper}>
@@ -56,7 +83,7 @@ export const SingUp = (props: Props) => {
           {t.signUp.title}
         </Typography>
         <SocialAuthButtons googleLoginAndRegister={() => {}} />
-        <form onSubmit={onHandleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <DevTool control={control} />
           <div className={s.wrap}>
             <FormInput
@@ -92,6 +119,14 @@ export const SingUp = (props: Props) => {
               placeholder={'Confirm Password'}
               type={'password'}
             />
+            <FormInput
+              className={s.hidden}
+              control={control}
+              error={errors.captchaToken?.message}
+              hidden
+              label={'Captcha'}
+              name={'captchaToken'}
+            />
             <FormCheckbox
               control={control}
               label={
@@ -106,9 +141,9 @@ export const SingUp = (props: Props) => {
                   </Typography>
                 </Typography>
               }
-              name={'rememberMe'}
+              name={'acceptPolicies'}
             />
-            <Button className={s.SingUpButton} type={'submit'}>
+            <Button className={s.SingUpButton} disabled={submitDisabled} type={'submit'}>
               {t.signUp.signUp}
             </Button>
           </div>
@@ -123,5 +158,3 @@ export const SingUp = (props: Props) => {
     </div>
   )
 }
-const emailRegex =
-  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/

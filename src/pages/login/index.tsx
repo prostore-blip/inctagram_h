@@ -1,5 +1,7 @@
-import { GetLayout, LogIn, MailVerificationError, MailVerificationSuccess } from '@/components'
+import { GetLayout, MailVerificationError, MailVerificationSuccess } from '@/components'
 import { useRouter } from 'next/router'
+import { ReCaptchaProvider } from 'next-recaptcha-v3'
+import { LogIn } from '@/components/auth/sign-in'
 
 export function SignIn() {
   const router = useRouter()
@@ -8,12 +10,16 @@ export function SignIn() {
 
   return (
     <>
-      {emailSuccess && <MailVerificationSuccess />}
-      {emailError && <MailVerificationError email={''} />}
-      {!emailSuccess && !emailError && <LogIn />}
+      <ReCaptchaProvider
+        language={router.locale}
+        reCaptchaKey={'6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P'}
+      >
+        {emailSuccess && <MailVerificationSuccess />}
+        {emailError && <MailVerificationError email={''} />}
+        {!emailSuccess && !emailError && <LogIn />}
+      </ReCaptchaProvider>
     </>
   )
 }
 
-// SignIn.getLayout = GetLayout
 export default SignIn
