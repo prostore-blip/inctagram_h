@@ -47,7 +47,6 @@ export const baseQueryWithReauth: BaseQueryFn<
           extraOptions
         )
 
-        console.log({ res })
         //todo use http only cookies? (can't be read via js client side -> api route)
         if (isRefreshTokenResponse(res)) {
           localStorage.setItem('accessToken', res.data.accessToken)

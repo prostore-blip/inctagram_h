@@ -52,7 +52,6 @@ export const SingUp = (props: Props) => {
     try {
       const recaptcha = await executeRecaptcha('submit')
 
-      console.log({ recaptcha })
       if (!recaptcha) {
         throw new Error('no recaptcha')
       }
@@ -70,7 +69,7 @@ export const SingUp = (props: Props) => {
         })
       } else {
         //todo show toast?
-        console.log(error)
+        console.warn(error)
       }
     }
   }

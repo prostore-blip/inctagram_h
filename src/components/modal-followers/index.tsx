@@ -10,9 +10,7 @@ import {
 } from '@/components/modal'
 import { FollowersUsersType, SearchInputValueType } from '@/components/modal-followers/types'
 import { ModalConfirm } from '@/components/modalConfirm'
-import { SearchInputValueType } from '@/components/modalFollowers/types'
-import { useAuthGetQuery } from '@/services'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useAuthMeQuery } from '@/services'
 import {
   useDeleteFolowerFromFolowersMutation,
   useFollowToUserMutation,
@@ -49,7 +47,7 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
   /**
    * хук RTKQ. проверка залогинен или нет
    */
-  const { data: authMeData } = useAuthGetQuery()
+  const { data: authMeData } = useAuthMeQuery()
   /**
    * хук RTKQ. запрос за подписчиками. params - это query-параметры, username используется, как uri.
    * skip - пока модальное окно подписчиков не открыто, не делаем запрос

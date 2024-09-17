@@ -72,7 +72,8 @@ export function LogIn() {
           setError(field.field as FieldPath<SignInFormData>, { message: field.message })
         })
       } else {
-        console.log(error)
+        //todo show toast?
+        console.warn(error)
       }
     }
   }

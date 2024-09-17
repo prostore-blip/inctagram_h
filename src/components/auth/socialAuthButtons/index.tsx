@@ -8,9 +8,7 @@ type Props = {
 }
 
 export const SocialAuthButtons = ({ googleLoginAndRegister }: Props) => {
-  const githubLoginAndRegister = () => {
-    
-  }
+  const githubLoginAndRegister = () => {}
 
   return (
     <div className={s.icons}>
