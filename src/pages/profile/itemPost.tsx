@@ -47,24 +47,24 @@ export const ItemPost = ({ navigateToPublicUserProfile, post: p }: Props) => {
    * массив images поста для карусели
    */
   const imagesPostArray = p?.images.map(image => {
-    return <img alt={'image'} key={image.uploadId} src={image?.url ?? defaultAva.src} />
+    return (
+      <div className={s.emblaSlide} key={image.uploadId}>
+        <div
+          className={s.postImage}
+          data-showmore={showMore}
+          onClick={() => navigateToPublicUserProfile(p.id, p.ownerId)}
+        >
+          <img alt={'image'} src={image?.url ?? defaultAva.src} />
+        </div>
+      </div>
+    )
   })
 
   return (
     <li className={s.post}>
       <div className={s.modalWr}>
         <div className={s.embla} ref={emblaRef}>
-          <div className={s.emblaContainer}>
-            <div className={s.emblaSlide}>
-              <div
-                className={s.postImage}
-                data-showmore={showMore}
-                onClick={() => navigateToPublicUserProfile(p.id, p.ownerId)}
-              >
-                {p.images.length ? imagesPostArray : <img alt={'image'} src={defaultAva.src} />}
-              </div>
-            </div>
-          </div>
+          <div className={s.emblaContainer}>{imagesPostArray}</div>
         </div>
         {!showMore && (
           <>
