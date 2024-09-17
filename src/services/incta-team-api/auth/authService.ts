@@ -1,4 +1,5 @@
 import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
+import { SignUpFormData } from '@/components/auth/sign-up/schema'
 import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/auth/const'
 import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
 import { SuccessfulRequestResult } from '@/types'
@@ -22,7 +23,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
         query: body => ({
           body,
           method: 'POST',
-          url: '/auth/registration-confirmation',
+          url: '/v1/auth/registration-confirmation',
         }),
       }),
 
@@ -84,10 +85,10 @@ export const authService = inctaTeamApiService.injectEndpoints({
         },
       }),
       // }),
-      singUp: builder.mutation<any, SignUpRequest>({
+      singUp: builder.mutation<any, SignUpFormData>({
         //invalidate fires up related queries do we need /me ?
         // invalidatesTags: ['ME'],
-        query: ({ captchaToken, ...body }) => ({
+        query: ({ acceptPolicies, captchaToken, confirmPassword, ...body }) => ({
           body,
           headers: {
             captchaToken: `${captchaToken}`,

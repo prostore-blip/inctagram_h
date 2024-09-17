@@ -50,7 +50,6 @@ export const baseQueryWithReauth: BaseQueryFn<
           extraOptions
         )
 
-        console.log({ res })
         //todo use http only cookies? (can't be read via js client side -> api route)
         //or some session manager?
         if (isRefreshTokenResponse(res)) {

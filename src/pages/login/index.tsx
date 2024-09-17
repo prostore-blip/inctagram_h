@@ -1,7 +1,8 @@
-import { GetLayout, MailVerificationError, MailVerificationSuccess } from '@/components'
+import { MailVerificationError, MailVerificationSuccess } from '@/components'
+import { LogIn } from '@/components/auth/sign-in'
+import { RECAPTCHA_KEY } from '@/const'
 import { useRouter } from 'next/router'
 import { ReCaptchaProvider } from 'next-recaptcha-v3'
-import { LogIn } from '@/components/auth/sign-in'
 
 export function SignIn() {
   const router = useRouter()
@@ -10,10 +11,7 @@ export function SignIn() {
 
   return (
     <>
-      <ReCaptchaProvider
-        language={router.locale}
-        reCaptchaKey={'6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P'}
-      >
+      <ReCaptchaProvider language={router.locale} reCaptchaKey={RECAPTCHA_KEY}>
         {emailSuccess && <MailVerificationSuccess />}
         {emailError && <MailVerificationError email={''} />}
         {!emailSuccess && !emailError && <LogIn />}
