@@ -40,10 +40,10 @@ export const SingUp = (props: Props) => {
     defaultValues: {
       acceptPolicies: false,
       captchaToken: 'placeholder-to-not-disable-form',
-      confirmPassword: 'Ex4mple!!!',
-      email: 'voyager5874@gmail.com',
-      password: 'Ex4mple!!!',
-      userName: 'tester11',
+      confirmPassword: '',
+      email: '',
+      password: '',
+      userName: '',
     },
     resolver: zodResolver(signUpSchema),
   })
@@ -55,10 +55,10 @@ export const SingUp = (props: Props) => {
       if (!recaptcha) {
         throw new Error('no recaptcha')
       }
-      setValue('captchaToken', recaptcha)
-      await trigger('captchaToken')
+      // setValue('captchaToken', recaptcha)
+      // await trigger('captchaToken')
 
-      await singUp(data).unwrap()
+      await singUp({ ...data, captchaToken: recaptcha }).unwrap()
 
       //todo show toast?
       //todo middleware for redirecting?

@@ -58,10 +58,13 @@ export function LogIn() {
       if (!recaptcha) {
         throw new Error('no recaptcha')
       }
-      setValue('captchaToken', recaptcha)
-      await trigger('captchaToken')
+      //todo remove form field? or make separate functions as in forgotPassword form
 
-      await login(data).unwrap()
+      // setValue('captchaToken', recaptcha)
+      // await trigger('captchaToken')
+      //data already has placeholder token and won't be updated with setValue
+
+      await login({ ...data, captchaToken: recaptcha }).unwrap()
 
       //todo show toast?
       //todo middleware for redirecting?

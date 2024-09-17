@@ -35,8 +35,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
           localStorage.removeItem(ACCESS_TOKEN_STORAGE_NAME)
           dispatch(authService.util.resetApiState())
         },
-        query: params => ({
-          body: params,
+        query: () => ({
           method: 'POST',
           url: '/v1/auth/logout',
         }),
