@@ -13,7 +13,6 @@ import s from '@/components/Layout/layout.module.scss'
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
-  // const { data, isFetching, isLoading } = useAuthMeQuery()
   const { data, isFetching, isLoading } = useAuthMeQuery()
 
   return (
@@ -36,7 +35,6 @@ export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
         <>
           <Header isAuthMe={!!data} />
           {data && <Nav isSpecialAccount />}
-          {/*{<Nav isSpecialAccount />}*/}
           <Main>{children}</Main>
         </>
       )}
