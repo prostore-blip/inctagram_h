@@ -30,7 +30,9 @@ export const authService = inctaTeamApiService.injectEndpoints({
       logout: builder.mutation<void, void>({
         //todo purge localstorage
         async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-          await queryFulfilled
+          //maybe custom queryFn will suit here more
+          //throwing error 401 but seems to work (removes refresh token from cookies)
+          // await queryFulfilled //the below code won't get executed with this
 
           localStorage.removeItem(ACCESS_TOKEN_STORAGE_NAME)
           dispatch(authService.util.resetApiState())

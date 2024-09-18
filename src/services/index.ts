@@ -1,1 +1,1 @@
-export * from '@/services/incta-team-api/auth/authService'
+export * from '@/services/incta-team-api/auth/auth-service'
