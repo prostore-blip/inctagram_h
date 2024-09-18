@@ -21,3 +21,6 @@ export function SignIn() {
 }
 
 export default SignIn
+
+//todo dig about hiding recaptcha widget
+//https://developers.google.com/recaptcha/docs/faq?hl=ru#id-like-to-hide-the-recaptcha-badge.-what-is-allowed

@@ -51,9 +51,9 @@ export const baseQueryWithReauth: BaseQueryFn<
         )
 
         //todo use http only cookies? (can't be read via js client side -> api route)
-        //or some session manager?
+        //or some session manager (next-auth/auth.js)?
         if (isRefreshTokenResponse(res)) {
-          localStorage.setItem('accessToken', res.data.accessToken)
+          localStorage.setItem(ACCESS_TOKEN_STORAGE_NAME, res.data.accessToken)
           result = await baseQuery(args, api, extraOptions)
         }
         if (!res.data) {
