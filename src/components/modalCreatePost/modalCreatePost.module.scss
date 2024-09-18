@@ -1,5 +1,10 @@
 .content {
-  width: 492px;
+  max-width: 492px;
+  height: 594px;
+  width: 100%;
+  &.widthBig {
+    max-width: 972px;
+  }
 }
 .open {
   color: var(--color-accent-500);
@@ -28,16 +33,6 @@
   gap: 0.35rem;
 }
 
-.dialogFooter {
-  padding-left: 24px;
-  padding-right: 24px;
-  display: flex;
-  justify-content: flex-end;
-  .flexFiller {
-    flex-grow: 1;
-  }
-}
-
 .flexColumn {
   align-items: center;
   display: flex;
@@ -48,16 +43,10 @@
   margin-top: 48px;
 }
 
-.closeButton {
+button.closeButton {
   color: var(--color-light-100);
   padding: 0;
 }
-
-.saveButton {
-  margin-bottom: 36px;
-  margin-top: 36px;
-}
-
 .selectButton {
   min-width: 219px;
 }
@@ -67,4 +56,120 @@
   gap: 24px;
   margin-top: 60px;
   margin-bottom: 48px;
+}
+
+.embla {
+  height: 100%;
+  overflow: hidden;
+  .emblaContainer {
+    height: 100%;
+    display: flex;
+
+    .emblaSlide {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+  }
+}
+
+div.cardPost {
+  padding: 0;
+  height: 594px;
+  display: flex;
+  flex-direction: row;
+  border-color: var(--color-dark-100);
+  justify-content: space-between;
+  max-width: 972px;
+  width: 100%;
+}
+
+.postImageContent {
+  flex-basis: 50%;
+  height: 100%;
+  position: relative;
+
+  .postImage {
+    position: relative;
+    height: 100%;
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .prevModalButton {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12px;
+    display: none;
+  }
+
+  .nextModalButton {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+    display: none;
+  }
+
+  &:hover .prevModalButton,
+  &:hover .nextModalButton {
+    display: block;
+  }
+
+  &:hover .dotes {
+    display: flex;
+  }
+
+  .dotes {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    gap: 12px;
+
+    .dote {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-light-100);
+
+      &.activeDot {
+        background: var(--color-accent-500);
+      }
+    }
+  }
+}
+.form {
+  flex-basis: 50%;
+  padding-left: 24px;
+  padding-right: 24px;
+  .avaUserNameBlock {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 12px 0;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+  .textAreaWrapper {
+    .textArea {
+      height: 120px;
+      resize: none;
+      width: 100%;
+      color: var(--color-light-100);
+      background-color: var(--color-dark-500);
+      border-radius: 2px;
+      border: 1px solid var(--color-dark-100);
+      outline: none;
+      &::placeholder {
+        color: var(--color-light-900);
+      }
+    }
+  }
 }

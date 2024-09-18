@@ -16,6 +16,8 @@
     "@formkit/tempo": "^0.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@mui/x-date-pickers": "^7.17.0",
+    "@pqina/pintura": "^8.87.0",
+    "@pqina/react-pintura": "^9.0.3",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
     "@reduxjs/toolkit": "^2.2.6",
