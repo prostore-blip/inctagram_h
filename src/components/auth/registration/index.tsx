@@ -1,13 +1,16 @@
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { SocialAuthButtons } from '@/components/auth'
 import { FormCheckbox } from '@/components/controll/formCheckbox'
 import { FormInput } from '@/components/controll/formTextField'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useSingUpMutation } from '@/services'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { omit } from 'remeda'
 import { z } from 'zod'
 
@@ -28,26 +31,62 @@ const signUpSchema = z
 
 export type SignUpFormType = z.infer<typeof signUpSchema>
 
-type Props = {
-  onSubmit: (data: Omit<SignUpFormType, 'confirmPassword' | 'rememberMe'>) => void
-}
-
-export const SingUp = (props: Props) => {
+export const SingUp = () => {
   const {
     control,
     formState: { errors },
-
     handleSubmit,
   } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
 
-  const onHandleSubmit = handleSubmit(data => {
+  const [singUp, { data, isLoading }] = useSingUpMutation()
+  const router = useRouter()
+
+  const [recaptchaToken, setRecaptchaToken] = useState<null | string>(null)
+
+  useEffect(() => {
+    window.grecaptcha.ready(() => {
+      const recaptchaKey = process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY
+
+      console.log(recaptchaKey)
+      if (recaptchaKey) {
+        window.grecaptcha.execute(recaptchaKey, { action: 'submit' }).then(token => {
+          console.log('reCAPTCHA token:', token)
+          setRecaptchaToken(token)
+        })
+      } else {
+        console.error('reCAPTCHA key is not defined')
+      }
+    })
+  }, [])
+
+  const onHandleSubmit = handleSubmit(async data => {
     const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
 
-    console.log('Filtered Data:', filteredData)
-    props.onSubmit(filteredData)
+    try {
+      if (!recaptchaToken) {
+        throw new Error('reCAPTCHA is not ready or token is missing')
+      }
+
+      const formDataWithToken = {
+        ...filteredData,
+        recaptchaToken,
+      }
+
+      console.log(formDataWithToken)
+      const response = await singUp(formDataWithToken)
+
+      router.push('/profile')
+      console.log('Response from server:', response)
+    } catch (error) {
+      console.error('Error during registration:', error)
+    }
   })
 
   const { t } = useTranslation()
+
+  if (isLoading) {
+    return <div>Loading</div>
+  }
 
   return (
     <div className={s.wrapper}>

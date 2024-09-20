@@ -9,7 +9,9 @@ const baseQuery = fetchBaseQuery({
   baseUrl: 'https://incta.team/api/v1/',
   credentials: 'include',
   prepareHeaders: headers => {
-    headers.set('Authorization', `Bearer 6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P`)
+    const token = localStorage.getItem('token')
+
+    headers.set('Authorization', `Bearer ${token}`)
 
     return headers
   },
@@ -32,7 +34,7 @@ export const baseQueryWithReauth: BaseQueryFn<
           {
             credentials: 'include',
             method: 'POST',
-            url: '/v1/auth/update-tokens',
+            url: '/auth/refresh-token',
           },
           api,
           extraOptions
