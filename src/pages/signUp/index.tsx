@@ -1,9 +1,8 @@
-import { useState } from 'react'
-
-import { PageWrapper, SingUp } from '@/components'
-import { useSingUpMutation } from '@/services'
+import { PageWrapper } from '@/components'
+import { SingUp } from '@/components/auth/sign-up'
+import { RECAPTCHA_KEY } from '@/const'
 import { useRouter } from 'next/router'
-import { useReCaptcha } from 'next-recaptcha-v3'
+import { ReCaptchaProvider } from 'next-recaptcha-v3'
 
 export function SignUp() {
   return (

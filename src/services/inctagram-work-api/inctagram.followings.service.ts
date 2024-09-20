@@ -3,10 +3,10 @@ import {
   RequestForFollowersUsers,
   RequestType,
   UsersType,
-} from '@/components/modalFollowers/types'
-import { inctagramService } from '@/services/inctagram.service'
+} from '@/components/modal-followers/types'
+import { inctagramWorkApiService } from '@/services/inctagram-work-api/inctagram.service'
 
-export const inctagramUsersFollowingsService = inctagramService.injectEndpoints({
+export const inctagramUsersFollowingsService = inctagramWorkApiService.injectEndpoints({
   endpoints: builder => {
     return {
       deleteFolowerFromFolowers: builder.mutation<void, number>({

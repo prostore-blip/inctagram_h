@@ -4,7 +4,6 @@ import React, { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
 
 import { LayoutNew } from '@/components/Layout/layoutNew'
-import { useTranslation } from '@/hooks/useTranslation'
 import { NextPage } from 'next'
 
 import '../styles/index.scss'
@@ -22,8 +21,6 @@ type AppPropsWithLayout = {
 } & AppProps
 
 export default function App({ Component, ...rest }: AppPropsWithLayout) {
-  const { router } = useTranslation()
-
   const { props, store } = wrapper.useWrappedStore(rest)
   const getLayout = Component.getLayout ?? (page => page)
 
