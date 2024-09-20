@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useGetProfileUsersQuery } from '@/services/inctagram.followings.service'
+import { useGetProfileUsersQuery } from '@/services/inctagram-work-api/inctagram.followings.service'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 

@@ -41,7 +41,7 @@ export const SingUp = () => {
   const [singUp, { data, isLoading }] = useSingUpMutation()
   const router = useRouter()
 
-  const [recaptchaToken, setRecaptchaToken] = useState<null | string>(null)
+  const [captchaToken, setCaptchaToken] = useState<null | string>(null)
 
   useEffect(() => {
     window.grecaptcha.ready(() => {
@@ -51,7 +51,7 @@ export const SingUp = () => {
       if (recaptchaKey) {
         window.grecaptcha.execute(recaptchaKey, { action: 'submit' }).then(token => {
           console.log('reCAPTCHA token:', token)
-          setRecaptchaToken(token)
+          setCaptchaToken(token)
         })
       } else {
         console.error('reCAPTCHA key is not defined')
@@ -63,19 +63,18 @@ export const SingUp = () => {
     const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
 
     try {
-      if (!recaptchaToken) {
+      if (!captchaToken) {
         throw new Error('reCAPTCHA is not ready or token is missing')
       }
 
       const formDataWithToken = {
         ...filteredData,
-        recaptchaToken,
+        captchaToken,
       }
 
-      console.log(formDataWithToken)
       const response = await singUp(formDataWithToken)
 
-      router.push('/profile')
+      router.push('/login')
       console.log('Response from server:', response)
     } catch (error) {
       console.error('Error during registration:', error)

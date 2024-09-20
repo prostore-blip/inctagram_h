@@ -1,8 +1,10 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
+import { ModalFollowers } from '@/components/modal-followers'
 import { ModalFollowing } from '@/components/modalFollowing'
 import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
-import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
-import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
+import { useAuthMeQuery } from '@/services'
+import { useGetUserProfileByUserIdQuery } from '@/services/inctagram-work-api/inctagram.profile.service'
+import { useGetMySubscriptionsQuery } from '@/services/inctagram-work-api/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -10,8 +12,6 @@ import { useRouter } from 'next/router'
 import s from './userProfile.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
-import { ModalFollowers } from '../modalFollowers'
-import { useAuthGetQuery } from '@/services'
 
 type Props = {
   userName: string | undefined
@@ -20,7 +20,6 @@ type Props = {
 export function UserProfile({ userName }: Props) {
   const router = useRouter()
 
-  console.log('userProfile')
   /**
    * запрос на сервер за профилем юзера по имени, чтобы забрать число followers
    */
@@ -35,7 +34,7 @@ export function UserProfile({ userName }: Props) {
   /**
    * проверка залогинен или нет
    */
-  const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthGetQuery()
+  const { data: authMeData, isFetching: isFetchingAuthMe } = useAuthMeQuery()
 
   /**
    * открыть настройки
@@ -96,26 +95,6 @@ export function UserProfile({ userName }: Props) {
         </section>
       </div>
       {/*<section className={s.cardsBlock}>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
-      {/*  <div className={s.card}></div>*/}
       {/*  <div className={s.card}></div>*/}
       {/*</section>*/}
       <GetProfileUsers />

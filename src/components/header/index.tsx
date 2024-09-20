@@ -82,6 +82,8 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
+    //todo check this twice
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /**
@@ -113,8 +115,8 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
   return (
     <header className={s.header}>
       <div className={s.wrapper}>
-        <Typography variant={'large'}>
-          <Link href={'/'}>Inctagram</Link>
+        <Typography as={Link} href={'/'} variant={'large'}>
+          Inctagram
         </Typography>
         <div className={s.buttonsBlock}>
           {windowWidth > 450 ? (
