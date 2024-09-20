@@ -2,42 +2,24 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Close } from '@/assets/icons/close'
-import { FormSelect } from '@/components/controll/FormSelect'
 import { FormTextArea } from '@/components/controll/FormTextArea'
-import { FormInput } from '@/components/controll/formTextField'
+import { DatePIckerForProfileSettings } from '@/components/profile-settings/general-info-form/DatePIckerForProfileSettings'
+import { FormInputGroup } from '@/components/profile-settings/general-info-form/FormInputGroup'
+import { SelectBlock } from '@/components/profile-settings/general-info-form/SelectBlock'
 import {
   UserGeneralInfoData,
   userGeneralInfoSchema,
 } from '@/components/profile-settings/general-info-form/schema'
-import { SelectItem } from '@/components/uikit-temp-replacements/select/Select'
 import { useTranslation } from '@/hooks/useTranslation'
 import { ResponseDataUserProfile } from '@/pages/profile/types'
 import { useUpdateProfileMutation } from '@/services/inctagram.profile.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import clsx from 'clsx'
 import dayjs, { Dayjs } from 'dayjs'
 import { toast } from 'sonner'
 
 import pageStyles from '@/pages/generalInfo/page.module.scss'
-
-const countries = [
-  { title: 'Country1', value: 'country1' },
-  { title: 'Country2', value: 'country2' },
-  { title: 'Country3', value: 'country3' },
-  { title: 'DemoCountry', value: 'DemoCountry' },
-]
-
-const cities = [
-  { title: 'City1', value: 'city1' },
-  { title: 'City2', value: 'city2' },
-  { title: 'City3', value: 'city3' },
-  { title: 'DemoCity', value: 'DemoCity' },
-]
 
 type Props = {
   profile: ResponseDataUserProfile | undefined
@@ -245,76 +227,15 @@ export function GeneralInfoForm(props: Props) {
     <>
       <DevTool control={control} />
       <form className={pageStyles.form} onSubmit={handleSubmit(makeRequest)}>
-        <FormInput
-          className={pageStyles.formItem}
-          control={control}
-          error={errors.userName?.message}
-          label={t.common.username}
-          name={'userName'}
+        <FormInputGroup control={control} errors={errors} />
+        <DatePIckerForProfileSettings
+          defaultValue={defaultDateBirth}
+          errors={errors}
+          name={name}
+          onChange={handleChanges}
+          onClick={toPrivacyPolity}
         />
-        <FormInput
-          className={pageStyles.formItem}
-          control={control}
-          error={errors.firstName?.message}
-          label={t.common.firstName}
-          name={'firstName'}
-        />
-        <FormInput
-          className={pageStyles.formItem}
-          control={control}
-          error={errors.lastName?.message}
-          label={t.common.lastName}
-          name={'lastName'}
-        />
-        <div className={pageStyles.wrapperDatePicker}>
-          <Typography className={pageStyles.titleDateOfBirth} variant={'regular14'}>
-            {t.profile.settings.birthDate}
-          </Typography>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              className={pageStyles.datePicker}
-              defaultValue={defaultDateBirth}
-              format={'DD.MM.YYYY'}
-              name={name}
-              onChange={handleChanges}
-              slotProps={{ textField: { inputProps: { readOnly: true } } }}
-            />
-          </LocalizationProvider>
-          {errors?.dateOfBirth?.message && (
-            <Typography className={pageStyles.titleErrorDateOfBirth} variant={'regular14'}>
-              {errors.dateOfBirth.message}
-              <span onClick={toPrivacyPolity}>Privacy Policy</span>
-            </Typography>
-          )}
-        </div>
-        <section className={clsx(pageStyles.locationSection, pageStyles.formItem)}>
-          <FormSelect
-            control={control}
-            fullWidth
-            label={t.profile.settings.selectYourCountry}
-            name={'country'}
-            placeholder={t.profile.settings.selectYourCountryPlaceholder}
-          >
-            {countries.map(item => (
-              <SelectItem key={item.value + item.title} value={item.value}>
-                {item.title}
-              </SelectItem>
-            ))}
-          </FormSelect>
-          <FormSelect
-            control={control}
-            fullWidth
-            label={t.profile.settings.selectYourCity}
-            name={'city'}
-            placeholder={t.profile.settings.selectYourCityPlaceholder}
-          >
-            {cities.map(item => (
-              <SelectItem key={item.value + item.title} value={item.value}>
-                {item.title}
-              </SelectItem>
-            ))}
-          </FormSelect>
-        </section>
+        <SelectBlock control={control} />
         <FormTextArea
           className={pageStyles.aboutMe}
           control={control}
@@ -322,7 +243,6 @@ export function GeneralInfoForm(props: Props) {
           name={'aboutMe'}
           placeholder={t.profile.settings.aboutMePlaceholder}
         />
-
         <Button className={pageStyles.submitButton} disabled={submitDisabled} type={'submit'}>
           {t.profile.settings.saveChangeButton}
         </Button>

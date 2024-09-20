@@ -5,11 +5,11 @@ import { DeleteAvatar } from '@/assets/icons/deleteAvatar'
 import { ImageIcon } from '@/assets/icons/image-icon'
 import { ModalConfirmDeleteAvatar } from '@/components/modalConfirmDeleteAvatar'
 import { AvatarDialog } from '@/components/profile-settings/avatar-dialog/AvatarDialog'
+import { ImageWrapper } from '@/components/uikit-temp-replacements/avatar/ImageWrapper'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useDeleteAvatarProfileMutation } from '@/services/inctagram.profile.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import { clsx } from 'clsx'
-import Image from 'next/image'
 
 import s from './avatarSelector.module.scss'
 
@@ -115,26 +115,8 @@ export function AvatarSelector({ initialValue, onValueChange, ...restProps }: Im
                 </Typography>
               </ModalConfirmDeleteAvatar>
             )}
-            {savedImage && (
-              <Image
-                alt={'profile image'}
-                className={clsx(s.round)}
-                fill
-                sizes={'192px'}
-                src={savedImage}
-                style={{ objectFit: 'cover' }}
-              />
-            )}
-            {!savedImage && preview && (
-              <Image
-                alt={'profile image'}
-                className={clsx(s.round)}
-                fill
-                sizes={'192px'}
-                src={preview}
-                style={{ objectFit: 'cover' }}
-              />
-            )}
+            {savedImage && <ImageWrapper src={savedImage} />}
+            {!savedImage && preview && <ImageWrapper src={preview} />}
           </div>
         </div>
         <Button onClick={openSelectDialog} type={'button'} variant={'outline'}>
