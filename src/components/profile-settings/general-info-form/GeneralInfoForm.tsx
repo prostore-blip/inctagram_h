@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Close } from '@/assets/icons/close'
 import { FormTextArea } from '@/components/controll/FormTextArea'
+import { Toast } from '@/components/profile-settings'
 import { DatePIckerForProfileSettings } from '@/components/profile-settings/general-info-form/DatePIckerForProfileSettings'
 import { FormInputGroup } from '@/components/profile-settings/general-info-form/FormInputGroup'
 import { SelectBlock } from '@/components/profile-settings/general-info-form/SelectBlock'
@@ -83,38 +84,18 @@ export function GeneralInfoForm(props: Props) {
       /**
        * всплывашка
        */
-      toast.custom(
-        t => (
-          <div className={pageStyles.toastWrapper}>
-            <Typography variant={'regular16'}>Your settings are saved</Typography>{' '}
-            <Button className={pageStyles.close} onClick={() => toast.dismiss(t)} variant={'text'}>
-              <Close />
-            </Button>
-          </div>
-        ),
-        {
-          className: pageStyles.succesToast,
-          duration: Infinity,
-        }
-      )
+      toast.custom(jsx => <Toast jsx={jsx} title={t.profile.settings.toast.success} />, {
+        className: pageStyles.succesToast,
+        duration: Infinity,
+      })
     } catch (error) {
       //todo set fields errors
       /**
        * всплывашка
        */
-      toast.custom(
-        t => (
-          <div className={pageStyles.toastWrapper}>
-            <Typography variant={'regular16'}>Error! Server is not available</Typography>{' '}
-            <Button className={pageStyles.close} onClick={() => toast.dismiss(t)} variant={'text'}>
-              <Close />
-            </Button>
-          </div>
-        ),
-        {
-          className: pageStyles.errorToast,
-        }
-      )
+      toast.custom(jsx => <Toast jsx={jsx} title={t.profile.settings.toast.error} />, {
+        className: pageStyles.errorToast,
+      })
     }
   }
   /**
@@ -197,12 +178,12 @@ export function GeneralInfoForm(props: Props) {
    */
 
   useEffect(() => {
-    const qqq = localStorage.getItem('settingProfile')
+    const savedDataFromForm = localStorage.getItem('settingProfile')
 
-    if (qqq) {
-      const aaa = JSON.parse(qqq)
+    if (savedDataFromForm) {
+      const parsedSavedDataFromForm = JSON.parse(savedDataFromForm)
 
-      reset(aaa)
+      reset(parsedSavedDataFromForm)
     }
   }, [])
   /**

@@ -5,3 +5,4 @@ export { FormInputGroup } from '@/components/profile-settings/general-info-form/
 export { SelectBlock } from '@/components/profile-settings/general-info-form/SelectBlock'
 export { cities } from '@/components/profile-settings/general-info-form/SelectBlock'
 export { countries } from '@/components/profile-settings/general-info-form/SelectBlock'
+export { Toast } from '@/components/profile-settings/general-info-form/Toast'

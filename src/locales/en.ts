@@ -81,6 +81,10 @@ export const en: LocaleType = {
       selectYourCityPlaceholder: 'City',
       selectYourCountry: 'Choose your country',
       selectYourCountryPlaceholder: 'Country',
+      toast: {
+        error: 'Error! Server is not available',
+        success: 'Your settings are saved',
+      },
       wrongFileFormat: 'Error! The format of the uploaded photo must be \nPNG and JPEG',
     },
   },

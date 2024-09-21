@@ -80,6 +80,10 @@ export const ru = {
       selectYourCityPlaceholder: 'Город',
       selectYourCountry: 'Выберите Вашу страну',
       selectYourCountryPlaceholder: 'Страна',
+      toast: {
+        error: 'Ошибка! Сервер недоступен',
+        success: 'Ваши настройки успешно сохранены',
+      },
       wrongFileFormat: 'Поддеживаются только изображения \nPNG и JPG',
     },
   },
