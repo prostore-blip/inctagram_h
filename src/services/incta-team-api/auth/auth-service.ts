@@ -91,11 +91,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
         query: params => ({
           body: params,
           method: 'POST',
-<<<<<<< HEAD
           url: '/v1/auth/signup',
-=======
-          url: '/auth/signup',
->>>>>>> 5379ec216aa90cabc4a5697ee55ea10582573261
         }),
       }),
       // login: builder.mutation<any, any>({

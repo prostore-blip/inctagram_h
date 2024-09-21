@@ -11,6 +11,7 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useReCaptcha } from 'next-recaptcha-v3'
 import { omit } from 'remeda'
 import { z } from 'zod'
 
@@ -38,30 +39,28 @@ export const SingUp = () => {
     handleSubmit,
   } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
 
-  const [singUp, { data, isLoading }] = useSingUpMutation()
+  const [singUp, { data, isError, isLoading }] = useSingUpMutation()
+  const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
   const router = useRouter()
 
   const [captchaToken, setCaptchaToken] = useState<null | string>(null)
 
-  useEffect(() => {
-    window.grecaptcha.ready(() => {
-      const recaptchaKey = process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY
+  const getRecaptchaToken = async () => {
+    if (!recaptchaReady) {
+      return
+    }
+    try {
+      const token = await executeRecaptcha('submit')
 
-      console.log(recaptchaKey)
-      if (recaptchaKey) {
-        window.grecaptcha.execute(recaptchaKey, { action: 'submit' }).then(token => {
-          console.log('reCAPTCHA token:', token)
-          setCaptchaToken(token)
-        })
-      } else {
-        console.error('reCAPTCHA key is not defined')
-      }
-    })
-  }, [])
-
+      setCaptchaToken(token)
+    } catch (err) {
+      console.error('Error during reCAPTCHA execution:', err)
+    }
+  }
   const onHandleSubmit = handleSubmit(async data => {
     const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
 
+    getRecaptchaToken()
     try {
       if (!captchaToken) {
         throw new Error('reCAPTCHA is not ready or token is missing')
@@ -74,7 +73,14 @@ export const SingUp = () => {
 
       const response = await singUp(formDataWithToken)
 
-      router.push('/login')
+      if (response?.error) {
+        console.error('Error during registration:', errors)
+
+        return
+      } else {
+        router.push('/login')
+      }
+
       console.log('Response from server:', response)
     } catch (error) {
       console.error('Error during registration:', error)
@@ -161,5 +167,6 @@ export const SingUp = () => {
     </div>
   )
 }
+
 const emailRegex =
   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
