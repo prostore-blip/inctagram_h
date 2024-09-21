@@ -14,6 +14,7 @@ export const inctagramPublicPostsService = inctagramService.injectEndpoints({
         },
       }),
       getPostsByUserId: builder.query<ResponsePostsByUsedId, RequestToPostsByUserId>({
+        providesTags: ['getPostsByUserId'],
         query: args => {
           return {
             params: args.params,

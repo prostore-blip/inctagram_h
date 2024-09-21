@@ -1,6 +1,6 @@
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
 import { ModalConfirmLogout } from '@/components/modalConfirmLogout'
-import { ModalAddPhotoForPost } from '@/components/modalCreatePost'
+import { ModalCreatePost } from '@/components/modalCreatePost'
 import { PropsLink } from '@/components/nav/types'
 import { useLogoutMutation } from '@/services/inctagram.auth.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
@@ -111,8 +111,7 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
               key={index}
             >
               {link.name === 'Create' && (
-                <ModalAddPhotoForPost
-                  onSave={async (e: File | null) => {}}
+                <ModalCreatePost
                   trigger={
                     <Button
                       as={link.isButton ? 'button' : Link}

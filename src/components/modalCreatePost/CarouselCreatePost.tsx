@@ -2,6 +2,7 @@ import React from 'react'
 
 import { NextCarousel, PrevCarousel } from '@/assets/icons'
 import { useDotButton } from '@/hooks/useDotCarouselButton'
+import { ResponseCreateImagesPost } from '@/services/types'
 import { Button } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -12,9 +13,9 @@ import s from '@/components/modalCreatePost/modalCreatePost.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type CarouselProps = {
-  src: null | string
+  imagesPost: ResponseCreateImagesPost | undefined
 }
-export const CarouselCreatePost = ({ src }: CarouselProps) => {
+export const CarouselCreatePost = ({ imagesPost }: CarouselProps) => {
   /**
    * хук из библиотеки карусели для контента модалки (там, где большое изображение нужно прокручивать)
    */
@@ -31,17 +32,15 @@ export const CarouselCreatePost = ({ src }: CarouselProps) => {
   /**
    * массив images поста для карусели
    */
-  const imagesPostArray = Array(5)
-    .fill(null)
-    .map((_, i) => {
-      return (
-        <div className={s.emblaSlide} key={i}>
-          <div className={s.postImage}>
-            <Image alt={'image'} fill priority src={src ?? defaultAva.src} />
-          </div>
+  const imagesPostArray = imagesPost?.images?.map(image => {
+    return (
+      <div className={s.emblaSlide} key={image.uploadId}>
+        <div className={s.postImage}>
+          <Image alt={'image'} fill priority src={image.url ?? defaultAva.src} />
         </div>
-      )
-    })
+      </div>
+    )
+  })
 
   return (
     <div className={s.postImageContent}>
