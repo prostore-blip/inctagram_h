@@ -100,7 +100,7 @@ export const SingUp = () => {
           {t.signUp.title}
         </Typography>
         <SocialAuthButtons googleLoginAndRegister={() => {}} />
-        <form onSubmit={onHandleSubmit}>
+        <form data-badge={'inline'} onSubmit={onHandleSubmit}>
           <DevTool control={control} />
           <div className={s.wrap}>
             <FormInput
