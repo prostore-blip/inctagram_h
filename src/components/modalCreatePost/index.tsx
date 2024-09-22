@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ReactNode, useRef, useState } from 'react'
 
 import { ModalkaTrigger } from '@/components/modal'
+import { ModalCloseCreatePost } from '@/components/modalCloseCreatePost'
 import { CarouselCreatePost } from '@/components/modalCreatePost/CarouselCreatePost'
 import { FormCreatePost } from '@/components/modalCreatePost/FormCreatePost'
 import { LoadImageFromPCBlock } from '@/components/modalCreatePost/LoadImageFromPCBlock'
@@ -40,7 +41,7 @@ export type AvatarSelectionDialogProps = {
 
 export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialogProps) {
   /**
-   * стейт контроля открытия/закрытия модалки
+   * стейт контроля открытия/закрытия модалки создания поста
    */
   const [openModal, setOpenModal] = useState(false)
   /**
@@ -57,17 +58,28 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
    */
   const [imageError, setImageError] = useState<null | string>(null)
   /**
+   * показать модалку подтверждения закрытия основной модалки создания поста. Если на
+   * этапе показа формы с описанием поста мы тыкаем вне границ модалки, то срабатывает этот стейт (true) и
+   * открывает модалку с подтвержением закрытия
+   */
+  const [isShowModalConfirmCloseModalCreatePost, setIsShowModalConfirmCloseModalCreatePost] =
+    useState(false)
+  /**
+   * стейт перехода к форме поста после загрузки картинок поста
+   */
+  const [toLoadForm, setToLoadForm] = useState(false)
+  /**
    * интернационализация
    */
   const { t } = useTranslation()
 
   /**
-   * отправка на сервер картинок поста
+   * хук RTKQ отправки на сервер описания поста
    */
   const [createPost] = useCreatePostMutation()
 
   /**
-   * отправка на сервер картинок поста
+   * хук RTKQ отправки на сервер картинок поста
    */
   const [createImagesPost, { data: imagesPost }] = useCreateImagesPostMutation()
   /**
@@ -115,11 +127,16 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
     }
     inputRef.current.click()
   }
-
   /**
-   * стейт перехода к форме поста после загрузки картинок поста
+   * Хелпер очистки стейтов при закрыти модалки создания поста
    */
-  const [toLoadForm, setToLoadForm] = useState(false)
+  const clearStatesCreatePost = () => {
+    preview && URL.revokeObjectURL(preview)
+    imageError && setImageError(null)
+    setPreview(null)
+    setToLoadForm(false)
+    setOpenModal(false)
+  }
   /**
    * Обработчик открытия/закрытия модалки создания поста. Если закрываем модалку, то очищаем все стейты,
    * чтобы при повторном открытии не подтягивалось ранее загруженная картинка
@@ -127,10 +144,9 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
    */
   const openModalHandler = (open: boolean) => {
     if (!open) {
-      preview && URL.revokeObjectURL(preview)
-      imageError && setImageError(null)
-      setPreview(null)
-      setToLoadForm(false)
+      clearStatesCreatePost()
+
+      return
     }
     setOpenModal(open)
   }
@@ -162,10 +178,7 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
       }
 
       await createPost(post)
-      preview && URL.revokeObjectURL(preview)
-      setPreview(null)
-      setToLoadForm(false)
-      setOpenModal(false)
+      clearStatesCreatePost()
     }
   }
 
@@ -177,7 +190,12 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
         </ModalkaTrigger>
         <DialogContent
           className={clsx(s.content, preview && toLoadForm && s.widthBig)}
-          onInteractOutside={event => event.preventDefault()}
+          onInteractOutside={event => {
+            event.preventDefault()
+            if (preview && toLoadForm) {
+              setIsShowModalConfirmCloseModalCreatePost(true)
+            }
+          }}
         >
           <DialogHeader>
             <DialogTitle asChild>
@@ -194,6 +212,18 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
                   <CloseIcon />
                 </Button>
               </DialogClose>
+            )}
+            {isShowModalConfirmCloseModalCreatePost && (
+              <ModalCloseCreatePost
+                clearParentStates={clearStatesCreatePost}
+                showModal={setIsShowModalConfirmCloseModalCreatePost}
+                title={'Close'}
+              >
+                <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
+                  Do you really want to close the creation of a publication? <br /> If you close
+                  everything will be deleted
+                </Typography>
+              </ModalCloseCreatePost>
             )}
             {preview && toLoadForm && (
               <Button className={s.publisheButton} form={'submitPostForm'} variant={'text'}>

@@ -158,6 +158,9 @@ div.cardPost {
     }
   }
   .textAreaWrapper {
+    p[class*='transparent'] {
+      display: none;
+    }
     .textArea {
       height: 120px;
       resize: none;
@@ -170,6 +173,10 @@ div.cardPost {
       &::placeholder {
         color: var(--color-light-900);
       }
+    }
+    .countDescriptionPost {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }

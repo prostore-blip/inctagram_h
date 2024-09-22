@@ -53,7 +53,7 @@ export const FormCreatePost = ({ submitForm }: SSProps) => {
           name={'descriptionPost'}
           placeholder={'Description post'}
         />
-        <p>{textAreaValue?.length ?? 0}/500</p>
+        <p className={s.countDescriptionPost}>{textAreaValue?.length ?? 0}/500</p>
       </div>
     </form>
   )
