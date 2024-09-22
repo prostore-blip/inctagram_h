@@ -5,7 +5,7 @@ import { SocialAuthButtons } from '@/components/auth'
 import { FormCheckbox } from '@/components/controll/formCheckbox'
 import { FormInput } from '@/components/controll/formTextField'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useSingUpMutation } from '@/services'
+import { useSignUpMutation } from '@/services'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,53 +17,31 @@ import { z } from 'zod'
 
 import s from './singUp.module.scss'
 
-const signUpSchema = z
-  .object({
-    confirmPassword: z.string().min(3, 'Password has to be at least 3 characters long'),
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(3, 'Password has to be at least 3 characters long'),
-    rememberMe: z.boolean().default(false),
-    userName: z.string().min(3, 'Username has to be at least 3 characters long'),
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
+import { SignUpFormType, signUpSchema } from './schema'
 
-export type SignUpFormType = z.infer<typeof signUpSchema>
-
-export const SingUp = () => {
+export const SingUpComponent = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
 
-  const [singUp, { data, isError, isLoading }] = useSingUpMutation()
+  const [singUp, { data, isError, isLoading }] = useSignUpMutation()
   const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
   const router = useRouter()
 
-  const [captchaToken, setCaptchaToken] = useState<null | string>(null)
+  const onFormSubmit = handleSubmit(async data => {
+    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
 
-  const getRecaptchaToken = async () => {
     if (!recaptchaReady) {
       return
     }
-    try {
-      const token = await executeRecaptcha('submit')
 
-      setCaptchaToken(token)
-    } catch (err) {
-      console.error('Error during reCAPTCHA execution:', err)
-    }
-  }
-  const onHandleSubmit = handleSubmit(async data => {
-    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
-
-    getRecaptchaToken()
     try {
+      const captchaToken = await executeRecaptcha('submit')
+
       if (!captchaToken) {
-        throw new Error('reCAPTCHA is not ready or token is missing')
+        return
       }
 
       const formDataWithToken = {
@@ -74,16 +52,12 @@ export const SingUp = () => {
       const response = await singUp(formDataWithToken)
 
       if (response?.error) {
-        console.error('Error during registration:', errors)
-
         return
-      } else {
-        router.push('/login')
       }
 
-      console.log('Response from server:', response)
+      router.push('/login')
     } catch (error) {
-      console.error('Error during registration:', error)
+      // Обработка ошибок, если необходимо
     }
   })
 
@@ -100,7 +74,7 @@ export const SingUp = () => {
           {t.signUp.title}
         </Typography>
         <SocialAuthButtons googleLoginAndRegister={() => {}} />
-        <form data-badge={'inline'} onSubmit={onHandleSubmit}>
+        <form data-badge={'inline'} onSubmit={onFormSubmit}>
           <DevTool control={control} />
           <div className={s.wrap}>
             <FormInput

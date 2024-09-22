@@ -1,5 +1,4 @@
 import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
-import { SignUpFormData } from '@/components/auth/sign-up/schema'
 import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/common/const'
 import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
 import { SuccessfulRequestResult } from '@/types'
@@ -86,7 +85,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
         },
       }),
       // }),
-      singUp: builder.mutation<any, SignUpRequest>({
+      signUp: builder.mutation<any, SignUpRequest>({
         invalidatesTags: ['login'],
         query: params => ({
           body: params,
@@ -121,5 +120,5 @@ export const {
   useResetPasswordMutation,
   useSignInMutation,
   // useSingInMutation,
-  useSingUpMutation,
+  useSignUpMutation,
 } = authService

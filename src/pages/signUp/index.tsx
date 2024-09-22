@@ -1,5 +1,4 @@
-import { PageWrapper } from '@/components'
-import { SingUp } from '@/components/auth/sign-up'
+import { PageWrapper, SingUpComponent } from '@/components'
 import { RECAPTCHA_KEY } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useRouter } from 'next/router'
@@ -14,7 +13,7 @@ export function SignUp() {
       reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
     >
       <PageWrapper>
-        <SingUp />
+        <SingUpComponent />
       </PageWrapper>
     </ReCaptchaProvider>
   )
