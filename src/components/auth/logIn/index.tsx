@@ -51,7 +51,7 @@ export function LogIn() {
         void router.push(`/profile`)
       })
       .catch(() => {
-        void router.push('/signUp')
+        // void router.push('/signUp')
       })
   }
 
