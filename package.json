@@ -11,7 +11,7 @@
     "lint": "eslint src --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input"
   },
   "dependencies": {
-    "@chrizzo/ui-kit": "latest",
+    "@chrizzo/ui-kit": "^0.0.20",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@reduxjs/toolkit": "^2.2.6",
