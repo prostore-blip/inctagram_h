@@ -140,6 +140,7 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
             <></>
           )}
           <Select
+            className={s.select}
             defaultValue={defaultLocale}
             items={itemsForSelect}
             onValueChange={onChangeLanguageHandler}
