@@ -10,12 +10,12 @@ import {
 } from '@/components/modal'
 import { FollowersUsersType, SearchInputValueType } from '@/components/modal-followers/types'
 import { ModalConfirm } from '@/components/modalConfirm'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useAuthMeQuery } from '@/services'
 import {
   useDeleteFolowerFromFolowersMutation,
   useFollowToUserMutation,
   useGetFollowersUsersQuery,
-} from '@/services/inctagram.followings.service'
+} from '@/services/inctagram-work-api/inctagram.followings.service'
 import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 

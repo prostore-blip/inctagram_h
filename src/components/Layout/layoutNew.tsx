@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import { Header } from '@/components/header'
 import { Main } from '@/components/main'
 import { Nav } from '@/components/nav'
-import { useMeQuery } from '@/services/inctagram.auth.service'
+import { useAuthMeQuery } from '@/services'
 import { clsx } from 'clsx'
 import { NextPage } from 'next'
 import { Inter } from 'next/font/google'
@@ -13,8 +13,7 @@ import s from '@/components/Layout/layout.module.scss'
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
-  // const { data, isFetching, isLoading } = useAuthMeQuery()
-  const { data, isFetching, isLoading } = useMeQuery()
+  const { data, isFetching, isLoading } = useAuthMeQuery()
 
   return (
     <div

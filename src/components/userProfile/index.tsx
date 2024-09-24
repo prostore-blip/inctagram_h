@@ -1,9 +1,10 @@
 import { PaidAccount } from '@/assets/icons/paidAccount'
+import { ModalFollowers } from '@/components/modal-followers'
 import { ModalFollowing } from '@/components/modalFollowing'
 import { GetProfileUsers } from '@/components/userProfile/getprofileUsers'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
-import { useGetUserProfileByUserIdQuery } from '@/services/inctagram.profile.service'
-import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
+import { useAuthMeQuery } from '@/services'
+import { useGetUserProfileByUserIdQuery } from '@/services/inctagram-work-api/inctagram.profile.service'
+import { useGetMySubscriptionsQuery } from '@/services/inctagram-work-api/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -11,7 +12,6 @@ import { useRouter } from 'next/router'
 import s from './userProfile.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
-import { ModalFollowers } from '../modal-followers'
 
 type Props = {
   userName: string | undefined
