@@ -1,13 +1,13 @@
-import { ResponseDataUserProfile, ResponseDataUserProfileByUserName } from '@/pages/profile/types'
-import { inctagramService } from '@/services/inctagram.service'
+import { inctagramWorkApiService } from '@/services/inctagram-work-api/inctagram.service'
+import { ResponseDataUserProfile, ResponseDataUserProfileByUserName } from '@/types/user-data'
 
-export const inctagramUsersProfileService = inctagramService.injectEndpoints({
+export const inctagramUsersProfileService = inctagramWorkApiService.injectEndpoints({
   endpoints: builder => {
     return {
       getUserProfile: builder.query<ResponseDataUserProfile, void>({
         // providesTags: ['login'],
         query: () => {
-          return { url: '/v1/users/profile' }
+          return { url: '/v1/users' }
         },
       }),
       getUserProfileByUserId: builder.query<ResponseDataUserProfileByUserName, string>({

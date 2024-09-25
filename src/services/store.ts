@@ -1,15 +1,20 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import { inctagramService } from '@/services/inctagram.service'
+import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
+import { inctagramWorkApiService } from '@/services/inctagram-work-api/inctagram.service'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
 
 const makeStore = () =>
   configureStore({
     devTools: true,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(inctagramService.middleware),
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware()
+        .concat(inctaTeamApiService.middleware)
+        .concat(inctagramWorkApiService.middleware),
     reducer: {
-      [inctagramService.reducerPath]: inctagramService.reducer,
+      [inctaTeamApiService.reducerPath]: inctaTeamApiService.reducer,
+      [inctagramWorkApiService.reducerPath]: inctagramWorkApiService.reducer,
     },
   })
 

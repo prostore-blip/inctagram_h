@@ -9,7 +9,7 @@ export function ForgotPassword() {
   return (
     <ReCaptchaProvider
       language={router.locale}
-      reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY}
+      reCaptchaKey={'6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P'}
     >
       <PageWrapper>
         <ForgotPasswordForm />

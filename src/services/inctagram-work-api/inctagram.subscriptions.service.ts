@@ -1,6 +1,6 @@
-import { inctagramService } from '@/services/inctagram.service'
+import { inctagramWorkApiService } from '@/services/inctagram-work-api/inctagram.service'
 
-export const inctagramUserSubscriptionsService = inctagramService.injectEndpoints({
+export const inctagramUserSubscriptionsService = inctagramWorkApiService.injectEndpoints({
   endpoints: builder => {
     return {
       getMySubscriptions: builder.query<any, void>({

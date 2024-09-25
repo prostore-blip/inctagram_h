@@ -8,14 +8,14 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
+import { FollowersUsersType, SearchInputValueType } from '@/components/modal-followers/types'
 import { ModalConfirm } from '@/components/modalConfirm'
-import { SearchInputValueType } from '@/components/modalFollowers/types'
-import { useAuthMeQuery } from '@/services/inctagram.auth.service'
+import { useAuthMeQuery } from '@/services'
 import {
   useDeleteFolowerFromFolowersMutation,
   useFollowToUserMutation,
   useGetFollowersUsersQuery,
-} from '@/services/inctagram.followings.service'
+} from '@/services/inctagram-work-api/inctagram.followings.service'
 import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 
@@ -108,49 +108,6 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
   /**
    * формируем массив подписчиков с данных с сервера
    */
-  const followers = useMemo(() => {
-    return data?.items?.map(f => {
-      return (
-        <li key={f.id}>
-          <Image
-            alt={'small-avatar'}
-            className={s.image}
-            height={36}
-            src={f.avatars[0]?.url ?? defaultAva}
-            width={36}
-          />
-          <div className={s.followButtonsBlock}>
-            {!f.isFollowing && (
-              <Button
-                className={s.followButton}
-                onClick={() => {
-                  toFollowUser(f.userId)
-                }}
-                variant={'primary'}
-              >
-                Follow
-              </Button>
-            )}
-            <ModalConfirm
-              callback={unfollowUser}
-              title={'Delete Following'}
-              titleButtonTrigger={'Delete'}
-              user={f}
-              variantTriggerButton={'secondary'}
-            >
-              <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
-                Do you really want to delete a Following `&quot;`
-                <Typography as={'span'} className={s.userName} variant={'h3'}>
-                  {f.userName}
-                </Typography>
-                `&quot;`?
-              </Typography>
-            </ModalConfirm>
-          </div>
-        </li>
-      )
-    })
-  }, [data])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
@@ -176,9 +133,67 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
             type={'search'}
             value={inputValue.search}
           />
-          <ul className={s.followersWrapper}>{!isFetchingGetFollowers && followers}</ul>
+          <ul className={s.followersWrapper}>
+            {data?.items.length && (
+              <Followers data={data} toFollowUser={toFollowUser} unfollowUser={unfollowUser} />
+            )}
+          </ul>
         </Card>
       </ModalkaContent>
     </Modalka>
   )
 })
+
+//todo make a component
+//fix types or probably just move the callbacks inside
+function Followers({
+  data,
+  toFollowUser,
+  unfollowUser,
+}: {
+  data: { items: FollowersUsersType[] }
+  toFollowUser: Function
+  unfollowUser: Function
+}) {
+  return data?.items?.map(f => {
+    return (
+      <li key={f.id}>
+        <Image
+          alt={'small-avatar'}
+          className={s.image}
+          height={36}
+          src={f.avatars[0]?.url ?? defaultAva}
+          width={36}
+        />
+        <div className={s.followButtonsBlock}>
+          {!f.isFollowing && (
+            <Button
+              className={s.followButton}
+              onClick={() => {
+                toFollowUser(f.userId)
+              }}
+              variant={'primary'}
+            >
+              Follow
+            </Button>
+          )}
+          <ModalConfirm
+            callback={unfollowUser as any}
+            title={'Delete Following'}
+            titleButtonTrigger={'Delete'}
+            user={f}
+            variantTriggerButton={'secondary'}
+          >
+            <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
+              Do you really want to delete a Following `&quot;`
+              <Typography as={'span'} className={s.userName} variant={'h3'}>
+                {f.userName}
+              </Typography>
+              `&quot;`?
+            </Typography>
+          </ModalConfirm>
+        </div>
+      </li>
+    )
+  })
+}

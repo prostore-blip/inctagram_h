@@ -27,34 +27,32 @@ export const DropDownHeader = memo(() => {
   /**
    * обработчик навигации + закрытие модального окна dropDown
    */
-  const getToProfileSettingsHandler = useCallback(() => {
+  const getToProfileSettingsHandler = () => {
     router.push('/profile')
     setOpen(false)
-  }, [])
+  }
 
   /**
    * обработчик навигации + закрытие модального окна dropDown
    */
-  const getToStatisticsHandler = useCallback(() => {
+  const getToStatisticsHandler = () => {
     router.push('/statistics')
     setOpen(false)
-  }, [])
+  }
 
-  /**
-   * обработчик навигации + закрытие модального окна dropDown
-   */
-  const getToFavoritesHandler = useCallback(() => {
+  //todo find out if useCallback is necessary
+  const getToFavoritesHandler = () => {
     router.push('/favorites')
     setOpen(false)
-  }, [])
+  }
 
   /**
    * обработчик вылогинивания + закрытие модального окна dropDown
    */
-  const logOutHandler = useCallback(() => {
+  const logOutHandler = () => {
     //TODO здесь логика вылогинивания
     setOpen(false)
-  }, [])
+  }
 
   return (
     <>

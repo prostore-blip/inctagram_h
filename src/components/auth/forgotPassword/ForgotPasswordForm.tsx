@@ -5,7 +5,7 @@ import { RecaptchaLogo } from '@/assets/image/recaptchaLogo'
 import { FormInput } from '@/components/controll/formTextField'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
+import { usePasswordRecoveryMutation } from '@/services'
 import { isUnsuccessfulRequestResult } from '@/types'
 import { Button, Card, Checkbox, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
@@ -19,7 +19,7 @@ import s from './forgotPasswordForm.module.scss'
 import { ForgotPasswordRequestData, forgotPasswordFormSchema } from './schema'
 
 export const ForgotPasswordForm = () => {
-  const [forgotPassword, { error, isLoading, isSuccess }] = useForgotPasswordMutation()
+  const [forgotPassword, { error, isLoading, isSuccess }] = usePasswordRecoveryMutation()
   //there is no field in RTKQ or useForm hooks which is not changing after a new request
   const [emailSent, setEmailSent] = useState(false)
 
