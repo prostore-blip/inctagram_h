@@ -87,8 +87,11 @@ export const authService = inctaTeamApiService.injectEndpoints({
       // }),
       signUp: builder.mutation<any, SignUpRequest>({
         invalidatesTags: ['login'],
-        query: params => ({
-          body: params,
+        query: ({ captchaToken, ...body }) => ({
+          body,
+          headers: {
+            captchaToken: `${captchaToken}`,
+          },
           method: 'POST',
           url: '/v1/auth/signup',
         }),

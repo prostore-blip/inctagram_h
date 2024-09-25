@@ -31,11 +31,10 @@ export const SingUpComponent = () => {
   const router = useRouter()
 
   const onFormSubmit = handleSubmit(async data => {
-    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
-
     if (!recaptchaReady) {
       return
     }
+    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
 
     try {
       const captchaToken = await executeRecaptcha('submit')
@@ -51,7 +50,9 @@ export const SingUpComponent = () => {
 
       const response = await singUp(formDataWithToken)
 
-      if (response?.error) {
+      if (response) {
+        console.log(response?.error)
+
         return
       }
 
