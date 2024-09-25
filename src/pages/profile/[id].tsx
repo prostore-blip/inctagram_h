@@ -1,6 +1,6 @@
 import { GetLayout, PageWrapper } from '@/components'
 import { UserProfile } from '@/components/userProfile'
-import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
+import { useGetUserProfileQuery } from '@/services/inctagram-work-api/inctagram.profile.service'
 import { useRouter } from 'next/router'
 
 import s from './userProfilePage.module.scss'
@@ -8,7 +8,6 @@ import s from './userProfilePage.module.scss'
 function UserProfileDinamicPage() {
   const router = useRouter()
 
-  console.log('profile[id]')
   const { data, isFetching } = useGetUserProfileQuery()
 
   return (

@@ -1,6 +1,9 @@
+import { useMemo } from 'react'
+
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
-import { PropsLink } from '@/components/nav/types'
-import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
+import { MainNavigationItem } from '@/components/nav/types'
+import { useLogoutMutation } from '@/services'
+import { useGetMySubscriptionsQuery } from '@/services/inctagram-work-api/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -8,68 +11,67 @@ import { useRouter } from 'next/router'
 
 import s from './nav.module.scss'
 
-const links: PropsLink[] = [
-  {
-    icon: <Home />,
-    name: 'Home',
-    path: '/',
-  },
-  {
-    icon: <Create />,
-    isButton: true,
-    name: 'Create',
-    path: '/create',
-  },
-  {
-    icon: <Person />,
-    name: 'My Profile',
-    path: '/profile',
-  },
-  {
-    icon: <Message />,
-    name: 'Messenger',
-    path: '/messenger',
-  },
-  {
-    icon: <Search />,
-    name: 'Search',
-    path: '/search',
-  },
-  {
-    icon: <TrendingUp />,
-    name: 'Statistics',
-    path: '/statistics',
-  },
-  {
-    icon: <Bookmark />,
-    name: 'Favorites',
-    path: '/favorites',
-  },
-  {
-    icon: <LogOut />,
-    isButton: true,
-    name: 'Log Out',
-    path: '/logout',
-  },
-]
-
 type Props = {
   isSpecialAccount?: boolean
 }
 
 export const Nav = ({ isSpecialAccount = false }: Props) => {
   const router = useRouter()
+  const [logout] = useLogoutMutation()
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
   const { data } = useGetMySubscriptionsQuery()
 
-  const handleClick = (isButton?: boolean) => {
-    if (isButton) {
-      alert(9)
-    }
-  }
+  const links: MainNavigationItem[] = useMemo(
+    () => [
+      {
+        icon: <Home />,
+        name: 'Home',
+        path: '/',
+      },
+      {
+        icon: <Create />,
+        name: 'Create',
+        path: '/create',
+      },
+      {
+        icon: <Person />,
+        name: 'My Profile',
+        path: '/profile',
+      },
+      {
+        icon: <Message />,
+        name: 'Messenger',
+        path: '/messenger',
+      },
+      {
+        icon: <Search />,
+        name: 'Search',
+        path: '/search',
+      },
+      {
+        icon: <TrendingUp />,
+        name: 'Statistics',
+        path: '/statistics',
+      },
+      {
+        icon: <Bookmark />,
+        name: 'Favorites',
+        path: '/favorites',
+      },
+      {
+        action: logout,
+        icon: <LogOut />,
+        name: 'Log Out',
+        //it is possible to create a page with useEffect
+        // path: '/logout',
+      },
+    ],
+    []
+  )
 
+  //todo there is layout examples in shadcn
   return (
     <nav className={s.navWrapper}>
       <ul className={s.navList}>
@@ -77,8 +79,9 @@ export const Nav = ({ isSpecialAccount = false }: Props) => {
           const isStatisticsLink = link.name === 'Statistics'
           const shouldHide = isStatisticsLink && !isSpecialAccount
           const activeLink =
-            (router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0) ||
-            !router.pathname.slice(1).length
+            link?.path && link.path.length > 2
+              ? router.pathname.startsWith(link.path)
+              : link.path === router.pathname //undefined !== string
           const hiddenStaticticsStyle = link.name === 'Statistics' && !data?.length
 
           return (
@@ -91,18 +94,31 @@ export const Nav = ({ isSpecialAccount = false }: Props) => {
               )}
               key={index}
             >
-              <Button
-                as={link.isButton ? 'button' : Link}
-                className={clsx(s.wrapper, activeLink && s.activeLink)}
-                href={link.path}
-                onClick={() => handleClick(link.isButton)}
-                variant={'text'}
-              >
-                {link.icon}
-                <Typography as={'span'} variant={'regularMedium14'}>
-                  {link.name}
-                </Typography>
-              </Button>
+              {link.action && (
+                <Button
+                  className={clsx(s.wrapper, activeLink && s.activeLink)}
+                  onClick={link.action}
+                  variant={'text'}
+                >
+                  {link.icon}
+                  <Typography as={'span'} variant={'regularMedium14'}>
+                    {link.name}
+                  </Typography>
+                </Button>
+              )}
+              {link.path && (
+                <Button
+                  as={Link}
+                  className={clsx(s.wrapper, activeLink && s.activeLink)}
+                  href={link.path}
+                  variant={'text'}
+                >
+                  {link.icon}
+                  <Typography as={'span'} variant={'regularMedium14'}>
+                    {link.name}
+                  </Typography>
+                </Button>
+              )}
             </li>
           )
         })}

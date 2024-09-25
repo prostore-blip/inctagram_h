@@ -8,7 +8,7 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
-import { FollowersUsersType } from '@/components/modalFollowers/types'
+import { FollowersUsersType } from '@/components/modal-followers/types'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 

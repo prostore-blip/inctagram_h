@@ -1,13 +1,13 @@
 .container {
-  height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr;
+  height: 100dvh;
 }
 
 .headerSkeleton {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  //height: 61px;
+  grid-column: 1 / 3;
+
+  
   height: calc(var(--header-height) + 1px);
   background: var(--color-light-900);
 }
@@ -18,8 +18,8 @@
 }
 
 .mainSkeleton {
-  text-align: center;
   font-size: 100px;
+  text-align: center;
   background: #474849;
 }
 
@@ -31,4 +31,4 @@
   grid-template-columns: 220px 1fr;
 }
 
-//todo use colors from the _colors.scss or add more to it
+

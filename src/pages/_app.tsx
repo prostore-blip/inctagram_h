@@ -10,7 +10,7 @@ import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/dist/style.css'
 
-import { wrapper } from '../../store'
+import { wrapper } from '../services/store'
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
@@ -21,7 +21,6 @@ type AppPropsWithLayout = {
 } & AppProps
 
 export default function App({ Component, ...rest }: AppPropsWithLayout) {
-  console.log('app')
   const { props, store } = wrapper.useWrappedStore(rest)
   const getLayout = Component.getLayout ?? (page => page)
 

@@ -15,22 +15,22 @@ export const GoogleIcon = ({ height, width, ...props }: SVGProps<SVGSVGElement>)
           <rect
             fill={'white'}
             fillOpacity={'0'}
-            height={'35.000000'}
+            height={'36.000000'}
             id={'google-svgrepo-com 1'}
             rx={'-0.500000'}
             transform={'translate(0.500000 0.500000)'}
-            width={'35.000000'}
+            width={'36.000000'}
           />
         </clipPath>
       </defs>
       <rect
         fill={'#FFFFFF'}
         fillOpacity={'0'}
-        height={'35.000000'}
+        height={'36.000000'}
         id={'google-svgrepo-com 1'}
         rx={'-0.500000'}
         transform={'translate(0.500000 0.500000)'}
-        width={'35.000000'}
+        width={'36.000000'}
       />
       <g clipPath={'url(#clip3663_9633)'}>
         <path
