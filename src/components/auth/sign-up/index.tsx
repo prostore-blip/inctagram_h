@@ -39,6 +39,7 @@ export const SingUpComponent = () => {
     try {
       const captchaToken = await executeRecaptcha('submit')
 
+      console.log(3)
       if (!captchaToken) {
         return
       }
@@ -50,15 +51,14 @@ export const SingUpComponent = () => {
 
       const response = await singUp(formDataWithToken)
 
-      if (response) {
-        console.log(response?.error)
-
+      console.log(4)
+      if (response?.error) {
         return
       }
 
       router.push('/login')
     } catch (error) {
-      // Обработка ошибок, если необходимо
+      alert('An error occurred. Please try again later.')
     }
   })
 
