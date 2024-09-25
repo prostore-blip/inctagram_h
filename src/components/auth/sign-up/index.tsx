@@ -71,7 +71,7 @@ export const SingUpComponent = () => {
   return (
     <div className={s.wrapper}>
       <Card className={s.card} variant={'dark500'}>
-        <Typography className={s.title} textAlign={'center'} variant={'h1'}>
+        <Typography as={'h1'} className={s.title} textAlign={'center'} variant={'h1'}>
           {t.signUp.title}
         </Typography>
         <SocialAuthButtons googleLoginAndRegister={() => {}} />
