@@ -106,7 +106,7 @@ export const ForgotPasswordForm = () => {
   //todo replace native dialog with component
   //todo translation with dynamic values
   return (
-    <div className={s.wrapper}>
+    <>
       <DevTool control={control} />
       <dialog
         className={clsx(showSuccessDialog && s.dialog)}
@@ -190,7 +190,7 @@ export const ForgotPasswordForm = () => {
           onClick={getRecaptchaToken}
         />
       </Card>
-    </div>
+    </>
   )
 }
 

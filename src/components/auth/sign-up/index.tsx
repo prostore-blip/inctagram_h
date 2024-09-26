@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { SocialAuthButtons } from '@/components/auth'
@@ -13,7 +12,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useReCaptcha } from 'next-recaptcha-v3'
 import { omit } from 'remeda'
-import { z } from 'zod'
 
 import s from './singUp.module.scss'
 
@@ -22,7 +20,7 @@ import { SignUpFormType, signUpSchema } from './schema'
 export const SingUpComponent = () => {
   const {
     control,
-    formState: { errors },
+    formState: { errors, isDirty, isSubmitting, isValid, isValidating },
     handleSubmit,
   } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
 
@@ -39,7 +37,7 @@ export const SingUpComponent = () => {
     try {
       const captchaToken = await executeRecaptcha('submit')
 
-      console.log(3)
+      //todo show toast
       if (!captchaToken) {
         return
       }
@@ -51,25 +49,25 @@ export const SingUpComponent = () => {
 
       const response = await singUp(formDataWithToken)
 
-      console.log(4)
+      //todo show toast
       if (response?.error) {
         return
       }
 
-      router.push('/login')
+      // await router.push('/login')
     } catch (error) {
+      //todo show toast
       alert('An error occurred. Please try again later.')
     }
   })
 
   const { t } = useTranslation()
 
-  if (isLoading) {
-    return <div>Loading</div>
-  }
+  const submitDisabled = !isDirty || !isValid || isValidating || isSubmitting
+  const busy = isSubmitting || isLoading
 
   return (
-    <div className={s.wrapper}>
+    <>
       <Card className={s.card} variant={'dark500'}>
         <Typography as={'h1'} className={s.title} textAlign={'center'} variant={'h1'}>
           {t.signUp.title}
@@ -127,8 +125,9 @@ export const SingUpComponent = () => {
               }
               name={'acceptTerms'}
             />
-            <Button className={s.SingUpButton} type={'submit'}>
-              {t.signUp.signUp}
+            <Button className={s.SingUpButton} disabled={submitDisabled} type={'submit'}>
+              {!busy && t.signUp.signUp}
+              {busy && 'Loading...'}
             </Button>
           </div>
         </form>
@@ -139,9 +138,6 @@ export const SingUpComponent = () => {
           {t.signUp.signInButton}
         </Button>
       </Card>
-    </div>
+    </>
   )
 }
-
-const emailRegex =
-  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/

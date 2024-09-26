@@ -1,21 +1,14 @@
-import { GetLayout, PageWrapper } from '@/components'
+import { ReactNode } from 'react'
+
 import { ForgotPasswordForm } from '@/components/auth'
-import { useTranslation } from '@/hooks/useTranslation'
-import { ReCaptchaProvider } from 'next-recaptcha-v3'
+import { AuthLayout } from '@/components/layouts/AuthLayout'
 
-export function ForgotPassword() {
-  const { router } = useTranslation()
-
-  return (
-    <ReCaptchaProvider
-      language={router.locale}
-      reCaptchaKey={'6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P'}
-    >
-      <PageWrapper>
-        <ForgotPasswordForm />
-      </PageWrapper>
-    </ReCaptchaProvider>
-  )
+export function ForgotPasswordPage() {
+  return <ForgotPasswordForm />
 }
-ForgotPassword.getLayout = GetLayout
-export default ForgotPassword
+
+ForgotPasswordPage.getLayout = function getLayout(page: ReactNode) {
+  return <AuthLayout>{page}</AuthLayout>
+}
+
+export default ForgotPasswordPage
