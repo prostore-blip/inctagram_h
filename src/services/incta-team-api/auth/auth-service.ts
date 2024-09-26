@@ -14,6 +14,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
   endpoints: builder => {
     return {
       authMe: builder.query<MeResponse, void>({
+        providesTags: ['ME'],
         query: () => {
           return { url: '/v1/auth/me' }
         },
@@ -84,9 +85,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
           }
         },
       }),
-      // }),
-      signUp: builder.mutation<any, SignUpRequest>({
-        invalidatesTags: ['login'],
+      signUp: builder.mutation<void, SignUpRequest>({
         query: ({ captchaToken, ...body }) => ({
           body,
           headers: {
@@ -96,21 +95,6 @@ export const authService = inctaTeamApiService.injectEndpoints({
           url: '/v1/auth/signup',
         }),
       }),
-      // login: builder.mutation<any, any>({
-      //   async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-      //     const res = await queryFulfilled
-
-      //     localStorage.setItem('token', res.data.accessToken)
-      //     dispatch(inctagramAuthService.util.invalidateTags(['login']))
-      //   },
-      //   query: params => {
-      //     return {
-      //       body: params,
-      //       method: 'POST',
-      //       url: '/v1/auth/login',
-      //     }
-      //   },
-      // }),
     }
   },
 })
