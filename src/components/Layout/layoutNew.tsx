@@ -35,7 +35,7 @@ export const LayoutNew: NextPage<PropsWithChildren> = ({ children }) => {
         <>
           <Header isAuthMe={!!data} />
           {data && <Nav isSpecialAccount />}
-          <Main>{children}</Main>
+          <Main isAuthMe={!!data}>{children}</Main>
         </>
       )}
     </div>

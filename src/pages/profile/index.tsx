@@ -27,5 +27,5 @@ function UserProfileWrapper() {
 }
 
 // UserProfileWrapper.getLayout = GetNavLayout
-UserProfileWrapper.getLayout = GetLayout
+// UserProfileWrapper.getLayout = GetLayout
 export default UserProfileWrapper

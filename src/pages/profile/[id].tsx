@@ -8,13 +8,13 @@ import s from './userProfilePage.module.scss'
 function UserProfileDinamicPage() {
   const router = useRouter()
 
-  const { data, isFetching } = useGetUserProfileQuery()
+  // const { data, isFetching } = useGetUserProfileQuery()
 
   return (
     <PageWrapper>
       <div className={s.overflowedContainer}>
         <div className={s.mainCntainer}>
-          {!isFetching && <UserProfile userName={data?.userName} />}
+          <UserProfile />
         </div>
       </div>
     </PageWrapper>
@@ -22,5 +22,5 @@ function UserProfileDinamicPage() {
 }
 
 // UserProfileDinamicPage.getLayout = GetNavLayout
-UserProfileDinamicPage.getLayout = GetLayout
+// UserProfileDinamicPage.getLayout = GetLayout
 export default UserProfileDinamicPage
