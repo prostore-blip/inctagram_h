@@ -8,16 +8,15 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
-import { FollowersUsersType, SearchInputValueType } from '@/components/modal-followers/types'
+import { SearchInputValueType } from '@/components/modal-followers/types'
 import { ModalConfirm } from '@/components/modalConfirm'
-import { useAuthMeQuery } from '@/services'
 import {
-  useDeleteFolowerFromFolowersMutation,
   useFollowToUserMutation,
   useGetFollowersUsersQuery,
-} from '@/services/inctagram-work-api/inctagram.followings.service'
+} from '@/services/incta-team-api/followings/followings-service'
 import { Button, Card, TextField, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import s from './modalFollowers.module.scss'
 
@@ -26,9 +25,17 @@ import defaultAva from '../../../public/defaultAva.jpg'
 type Props = {
   className?: string
   followersCount?: number | string
+  myProfileId: string | undefined
+  userName: string | undefined
 }
 
-export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) => {
+export const ModalFollowers: FC<Props> = memo(({ followersCount, myProfileId, userName }) => {
+  /**
+   * вытягиваем id юзера из URL
+   */
+  const {
+    query: { id },
+  } = useRouter()
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -45,17 +52,13 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
   })
 
   /**
-   * хук RTKQ. проверка залогинен или нет
-   */
-  const { data: authMeData } = useAuthMeQuery()
-  /**
    * хук RTKQ. запрос за подписчиками. params - это query-параметры, username используется, как uri.
    * skip - пока модальное окно подписчиков не открыто, не делаем запрос
    */
   const { data, isFetching: isFetchingGetFollowers } = useGetFollowersUsersQuery(
     {
       params: { search: inputValue.textFromDebounceInput },
-      username: authMeData?.userName,
+      username: userName,
     },
     { skip: !open }
   )
@@ -66,7 +69,7 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
   /**
    * хук RTKQ. Убрать юзера из подписчиков
    */
-  const [unfollow] = useDeleteFolowerFromFolowersMutation()
+  // const [unfollow] = useDeleteFolowerFromFolowersMutation()
   /**
    * номер таймера из функции задержки посыла текста из инпута на сервер
    */
@@ -89,35 +92,84 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
   )
   /**
    * коллбэк для подписки на юзера
-   * @param selectedUserId - id юзера, на которого хотим подпсаться
+   * @param selectedUserId - id юзера, на которого хотим подписаться
    */
-  const toFollowUser = (selectedUserId: number) => {
+  const toFollowUser = (selectedUserId: string) => {
     followingToUser({ selectedUserId }).unwrap()
+    alert('подписался')
   }
   /**
    * коллбэк для отподписки на юзера
-   * @param selectedUserId - id юзера, на которого хотим подпсаться
+   * @param selectedUserId - id юзера, от которого хотим отписаться
    * @param setFn - set-функция из модалки подтверждения отписки. Когда запрос отписки на сервер успешен,
    * то закрываем модалку подтверждения
    */
-  const unfollowUser = (selectedUserId: number, setFn: any) => {
-    unfollow(selectedUserId)
-      .unwrap()
-      .then(() => setFn(false))
+  const unfollowUser = (selectedUserId: string, setFn: any) => {
+    // unfollow(selectedUserId)
+    //   .unwrap()
+    //   .then(() => setFn(false))
+    alert('отписался')
   }
   /**
    * формируем массив подписчиков с данных с сервера
    */
+  const followers = useMemo(() => {
+    return data?.items?.map((f: any) => {
+      return (
+        <li className={s.li} key={f.id}>
+          <div className={s.avaAndUserNameBlock}>
+            <Image
+              alt={'small-avatar'}
+              className={s.image}
+              height={36}
+              // src={f.avatars[0]?.url ?? defaultAva}
+              src={defaultAva}
+              width={36}
+            />
+            <Typography variant={'regular16'}> {f.userName}</Typography>
+          </div>
+          <div className={s.followButtonsBlock}>
+            {!f.isFollowing && (
+              <Button
+                className={s.followButton}
+                onClick={() => {
+                  toFollowUser(f.userId)
+                }}
+                variant={'primary'}
+              >
+                Follow
+              </Button>
+            )}
+            <ModalConfirm
+              callback={unfollowUser}
+              title={'Delete Following'}
+              titleButtonTrigger={'Delete'}
+              user={f}
+              variantTriggerButton={'secondary'}
+            >
+              <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
+                Do you really want to delete a Following `&quot;`
+                <Typography as={'span'} className={s.userName} variant={'h3'}>
+                  {f.userName}
+                </Typography>
+                `&quot;`?
+              </Typography>
+            </ModalConfirm>
+          </div>
+        </li>
+      )
+    })
+  }, [data])
 
   return (
-    <Modalka onOpenChange={setOpen} open={open}>
+    <Modalka onOpenChange={setOpen} open={myProfileId === id ? open : false}>
       <ModalkaTrigger asChild>
         <div className={s.followers}>
           <Typography variant={'regularBold14'}>{followersCount}</Typography>
           <Typography variant={'regular14'}>Followers</Typography>
         </div>
       </ModalkaTrigger>
-      <ModalkaContent aria-describedby={'open viewport followers'} className={s.content}>
+      <ModalkaContent aria-describedby={undefined} className={s.content}>
         <ModalkaTitle className={s.title}>
           <Typography variant={'h1'}>{followersCount} Followers</Typography>
           <ModalkaButtonCancel asChild>
@@ -133,67 +185,9 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
             type={'search'}
             value={inputValue.search}
           />
-          <ul className={s.followersWrapper}>
-            {data?.items.length && (
-              <Followers data={data} toFollowUser={toFollowUser} unfollowUser={unfollowUser} />
-            )}
-          </ul>
+          <ul className={s.followersWrapper}>{!isFetchingGetFollowers && followers}</ul>
         </Card>
       </ModalkaContent>
     </Modalka>
   )
 })
-
-//todo make a component
-//fix types or probably just move the callbacks inside
-function Followers({
-  data,
-  toFollowUser,
-  unfollowUser,
-}: {
-  data: { items: FollowersUsersType[] }
-  toFollowUser: Function
-  unfollowUser: Function
-}) {
-  return data?.items?.map(f => {
-    return (
-      <li key={f.id}>
-        <Image
-          alt={'small-avatar'}
-          className={s.image}
-          height={36}
-          src={f.avatars[0]?.url ?? defaultAva}
-          width={36}
-        />
-        <div className={s.followButtonsBlock}>
-          {!f.isFollowing && (
-            <Button
-              className={s.followButton}
-              onClick={() => {
-                toFollowUser(f.userId)
-              }}
-              variant={'primary'}
-            >
-              Follow
-            </Button>
-          )}
-          <ModalConfirm
-            callback={unfollowUser as any}
-            title={'Delete Following'}
-            titleButtonTrigger={'Delete'}
-            user={f}
-            variantTriggerButton={'secondary'}
-          >
-            <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
-              Do you really want to delete a Following `&quot;`
-              <Typography as={'span'} className={s.userName} variant={'h3'}>
-                {f.userName}
-              </Typography>
-              `&quot;`?
-            </Typography>
-          </ModalConfirm>
-        </div>
-      </li>
-    )
-  })
-}
