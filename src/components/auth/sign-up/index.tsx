@@ -34,7 +34,7 @@ export const SingUpComponent = () => {
     if (!recaptchaReady) {
       return
     }
-    const filteredData = omit(data, ['confirmPassword', 'rememberMe'])
+    const filteredData = omit(data, ['confirmPassword', 'acceptTerms'])
 
     try {
       const captchaToken = await executeRecaptcha('submit')
@@ -125,7 +125,7 @@ export const SingUpComponent = () => {
                   </Typography>
                 </Typography>
               }
-              name={'rememberMe'}
+              name={'acceptTerms'}
             />
             <Button className={s.SingUpButton} type={'submit'}>
               {t.signUp.signUp}
