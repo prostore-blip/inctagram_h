@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect } from 'react'
 
-import { GetLayout, GetNavLayout, HeadMeta, Layout, PageWrapper } from '@/components'
+import { HeadMeta } from '@/components'
+import { BaseLayout } from '@/components/layouts/BaseLayout'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useRouter } from 'next/router'
 
@@ -19,12 +20,15 @@ export function PublicPage() {
 
   //-------------------------------------------------------------------------
   return (
-    <PageWrapper>
+    <div>
       <HeadMeta title={'Inctagram'} />
       {t.publicPage.title}
-    </PageWrapper>
+    </div>
   )
 }
 
-PublicPage.getLayout = GetLayout
+PublicPage.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
+}
+
 export default PublicPage

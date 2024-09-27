@@ -1,6 +1,6 @@
 import { FieldPath, useForm } from 'react-hook-form'
 
-import { PageWrapper, SocialAuthButtons } from '@/components'
+import { SocialAuthButtons } from '@/components'
 import { FormInput } from '@/components/controll/formTextField'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useSignInMutation } from '@/services'
@@ -18,7 +18,7 @@ import s from './logIn.module.scss'
 
 import { SignInFormData, logInSchema } from './logIn-schema'
 
-export function LogIn() {
+export function SignInForm() {
   const [login, { error }] = useSignInMutation()
   //error state from the hook is somewhat always behind the current render so
   // it could be used instead of catch but useEffect is probably would be needed
@@ -84,50 +84,48 @@ export function LogIn() {
   const submitDisabled = !isDirty || !isValid || isValidating || isSubmitting
 
   return (
-    <PageWrapper>
-      <div className={s.wrapper}>
-        <DevTool control={control} />
-        <Card className={s.card} variant={'dark500'}>
-          <Typography className={s.title} variant={'h1'}>
-            {t.signIn.title}
+    <>
+      <DevTool control={control} />
+      <Card className={s.card} variant={'dark500'}>
+        <Typography className={s.title} variant={'h1'}>
+          {t.signIn.title}
+        </Typography>
+        <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
+        <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+          <FormInput
+            control={control}
+            label={t.signIn.emailTitle}
+            name={'email'}
+            placeholder={'Inctagram@gmail.com'}
+          />
+          <FormInput
+            control={control}
+            label={t.signIn.passTitle}
+            name={'password'}
+            placeholder={'******'}
+            type={'password'}
+          />
+          <FormInput
+            className={s.hidden}
+            control={control}
+            hidden
+            label={t.signIn.passTitle}
+            name={'captchaToken'}
+          />
+          <Typography className={s.forgot} variant={'regular14'}>
+            <Link href={'/forgotPassword'}>{t.signIn.forgotPass}</Link>
           </Typography>
-          <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
-          <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-            <FormInput
-              control={control}
-              label={t.signIn.emailTitle}
-              name={'email'}
-              placeholder={'Inctagram@gmail.com'}
-            />
-            <FormInput
-              control={control}
-              label={t.signIn.passTitle}
-              name={'password'}
-              placeholder={'******'}
-              type={'password'}
-            />
-            <FormInput
-              className={s.hidden}
-              control={control}
-              hidden
-              label={t.signIn.passTitle}
-              name={'captchaToken'}
-            />
-            <Typography className={s.forgot} variant={'regular14'}>
-              <Link href={'/forgotPassword'}>{t.signIn.forgotPass}</Link>
-            </Typography>
 
-            <Button disabled={submitDisabled} fullWidth type={'submit'}>
-              <Typography variant={'h3'}>{t.signIn.signInButton}</Typography>
-              {isSubmitting && <span className={clsx(s.loader)} />}
-            </Button>
-          </form>
-          <span className={s.dontHaveAccout}>{t.signIn.dontHaveAcc}</span>
-          <Button as={Link} href={'/signUp'} variant={'text'}>
-            <Typography variant={'h3'}>{t.signIn.signUp}</Typography>
+          <Button disabled={submitDisabled} fullWidth type={'submit'}>
+            <Typography variant={'h3'}>{t.signIn.signInButton}</Typography>
+            {isSubmitting && <span className={clsx(s.loader)} />}
           </Button>
-        </Card>
-      </div>
-    </PageWrapper>
+        </form>
+        <span className={s.dontHaveAccout}>{t.signIn.dontHaveAcc}</span>
+        <Button as={Link} href={'/signUp'} variant={'text'}>
+          <Typography variant={'h3'}>{t.signIn.signUp}</Typography>
+        </Button>
+      </Card>
+    </>
   )
 }
