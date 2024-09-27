@@ -2,6 +2,7 @@ import { FC, memo, useCallback, useMemo, useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
 import { SearchInputValueType } from '@/components/ModalFollowers/types'
+import { useDebounceFollowers } from '@/components/ModalFollowers/useDebounceFollowers'
 import {
   Modalka,
   ModalkaButtonCancel,
@@ -71,26 +72,12 @@ export const ModalFollowers: FC<Props> = memo(({ followersCount, myProfileId, us
    * хук RTKQ. Убрать юзера из подписчиков
    */
   const [unfollow] = useDeleteFolowerFromFolowersMutation()
-  /**
-   * номер таймера из функции задержки посыла текста из инпута на сервер
-   */
-  const [timerId, setTimerId] = useState<number | undefined>(undefined)
+
   /**
    * функция задержки посыла текста из инпута на сервер (debounce)
    * @param inputData - текст из инпута
    */
-  const onChangeInputValue = useCallback(
-    (inputData: string) => {
-      setInputValue(prev => ({ ...prev, search: inputData }))
-      clearTimeout(timerId)
-      const idTimer = setTimeout(() => {
-        setInputValue(prev => ({ ...prev, textFromDebounceInput: inputData }))
-      }, 1500)
-
-      setTimerId(+idTimer)
-    },
-    [timerId]
-  )
+  const onChangeInputValue = useDebounceFollowers(setInputValue)
   /**
    * коллбэк для подписки на юзера
    * @param selectedUserId - id юзера, на которого хотим подпсаться
