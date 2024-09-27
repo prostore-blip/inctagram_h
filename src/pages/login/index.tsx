@@ -1,26 +1,26 @@
-import { MailVerificationError, MailVerificationSuccess } from '@/components'
-import { LogIn } from '@/components/auth/sign-in'
-import { RECAPTCHA_KEY } from '@/const'
-import { useRouter } from 'next/router'
-import { ReCaptchaProvider } from 'next-recaptcha-v3'
+import { ReactNode } from 'react'
 
-export function SignIn() {
+import { MailVerificationError, MailVerificationSuccess } from '@/components'
+import { SignInForm } from '@/components/auth/sign-in'
+import { AuthLayout } from '@/components/layouts/AuthLayout'
+import { useRouter } from 'next/router'
+
+export function SignInPage() {
   const router = useRouter()
   const { 'email-verification-failed': emailError, 'email-verification-success': emailSuccess } =
     router.query
 
   return (
     <>
-      <ReCaptchaProvider language={router.locale} reCaptchaKey={RECAPTCHA_KEY}>
-        {emailSuccess && <MailVerificationSuccess />}
-        {emailError && <MailVerificationError email={''} />}
-        {!emailSuccess && !emailError && <LogIn />}
-      </ReCaptchaProvider>
+      {emailSuccess && <MailVerificationSuccess />}
+      {emailError && <MailVerificationError email={''} />}
+      {!emailSuccess && !emailError && <SignInForm />}
     </>
   )
 }
 
-export default SignIn
+SignInPage.getLayout = function getLayout(page: ReactNode) {
+  return <AuthLayout>{page}</AuthLayout>
+}
 
-//todo dig about hiding recaptcha widget
-//https://developers.google.com/recaptcha/docs/faq?hl=ru#id-like-to-hide-the-recaptcha-badge.-what-is-allowed
+export default SignInPage

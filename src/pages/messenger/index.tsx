@@ -1,13 +1,17 @@
-import { GetNavLayout, PageWrapper } from '@/components'
+import { ReactNode } from 'react'
+
+import { BaseLayout } from '@/components/layouts/BaseLayout'
 import { LoginNavigate } from '@/hoc/LoginNavigate'
 
 export function Messenger() {
   return (
     <LoginNavigate>
-      <PageWrapper>Messenger</PageWrapper>
+      <>Messenger</>
     </LoginNavigate>
   )
 }
 
-Messenger.getLayout = GetNavLayout
+Messenger.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
+}
 export default Messenger
