@@ -53,7 +53,11 @@ export const ModalConfirm = ({
           <Typography variant={'h3'}>{titleButtonTrigger}</Typography>
         </Button>
       </ModalTrigger>
-      <ModalContent aria-describedby={undefined} className={s.content}>
+      <ModalContent
+        aria-describedby={undefined}
+        className={s.content}
+        onInteractOutside={e => e.preventDefault()}
+      >
         <ModalTitle className={s.title}>
           <Typography variant={'h1'}>{title}</Typography>
           <ModalButtonCancel asChild>

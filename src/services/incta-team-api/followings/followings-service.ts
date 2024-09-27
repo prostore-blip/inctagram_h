@@ -1,6 +1,20 @@
 import { RequestForFollowersUsers } from '@/services/incta-team-api/followings/types'
 import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
-
+export type FollowerItem = {
+  avatars: {
+    createdAt: string
+    fileSize: number
+    height: number
+    url: string
+    width: number
+  }[]
+  createdAt: string
+  id: string
+  isFollowedBy: boolean
+  isFollowing: boolean
+  userId: string
+  userName: string
+}
 const mockDataGetFollowers = {
   items: [
     {
