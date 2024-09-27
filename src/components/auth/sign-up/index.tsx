@@ -22,7 +22,7 @@ export const SingUpComponent = () => {
     control,
     formState: { errors, isDirty, isSubmitting, isValid, isValidating },
     handleSubmit,
-  } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema) })
+  } = useForm<SignUpFormType>({ resolver: zodResolver(signUpSchema), mode: 'onTouched',})
 
   const [singUp, { data, isError, isLoading }] = useSignUpMutation()
   const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
