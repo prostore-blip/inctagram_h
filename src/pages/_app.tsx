@@ -4,8 +4,11 @@ import React, { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
 
 import { wrapper } from '@/services/store'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 import { NextPage } from 'next'
 
+TimeAgo.addDefaultLocale(en)
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/dist/style.css'

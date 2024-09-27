@@ -33,8 +33,28 @@ export type Post = {
   image: string
   userId: string
 }
+export type Comment = {
+  answerCount: number
+  content: string
+  createdAt: string
+  from: {
+    avatars: {}[]
+    id: string
+    username: string
+  }
+  id: string
+  isLiked: boolean
+  likeCount: number
+  postId: string
+}
 
-const commentsMock = {
+type CommentsMockType = {
+  items: Comment[]
+  pageSize: number
+  totalCount: number
+}
+
+const commentsMock: CommentsMockType = {
   items: [
     {
       answerCount: 0,

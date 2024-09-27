@@ -1,12 +1,12 @@
 import React from 'react'
 
-import ModalPost from '@/components/userProfile/getPostUser/modalPosts'
+import ModalPost from '@/components/userProfile/posts-user/ModalPosts'
 import { useGetPostsByUserIdQuery } from '@/services/incta-team-api/posts/posts-service'
 import { useRouter } from 'next/router'
 
 import s from '@/components/userProfile/userProfile.module.scss'
 
-export const GetPostsUser = ({ userId, userName }: { userId: string; userName: string }) => {
+export const PostsUser = ({ userId, userName }: { userId: string; userName: string }) => {
   const router = useRouter()
   /**
    * запрос на сервер за постами юзера
