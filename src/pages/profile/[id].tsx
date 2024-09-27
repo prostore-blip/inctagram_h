@@ -15,7 +15,8 @@ function UserProfileDinamicPage() {
   return (
     <div className={s.overflowedContainer}>
       <div className={s.mainCntainer}>
-        {!isFetching && <UserProfile userName={data?.userName} />}
+        {/*{!isFetching && <UserProfile userName={data?.userName} />}*/}
+        <UserProfile />
       </div>
     </div>
   )

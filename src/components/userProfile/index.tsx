@@ -1,5 +1,5 @@
+import { PostsUser } from '@/components/userProfile/posts-user'
 import { ModalFollowers } from '@/components/modal-followers'
-import { GetPostsUser } from '@/components/userProfile/getPostUser'
 import { useGetProfileQuery } from '@/services/incta-team-api/profile/profile-service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
@@ -63,7 +63,7 @@ export function UserProfile({}: Props) {
           </article>
         </section>
       </div>
-      <GetPostsUser
+      <PostsUser
         userId={isFetching ? 'data.id' : data.id}
         userName={isFetching ? 'data.userName' : data.userName}
       />
