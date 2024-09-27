@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import ReactTimeAgo from 'react-time-ago'
+import React, { useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
 import { NextCarousel } from '@/assets/icons/nextCarousel'
 import { PrevCarousel } from '@/assets/icons/prevCarousel'
 import {
-  Modalka,
-  ModalkaButtonCancel,
-  ModalkaContent,
-  ModalkaTitle,
-  ModalkaTrigger,
+  Modal,
+  ModalButtonCancel,
+  ModalContent,
+  ModalTitle,
+  ModalTrigger,
 } from '@/components/modal'
 import { DateTimeFormatOptions } from '@/components/userProfile/getPostUser/types'
 import { useDotButton } from '@/hooks/useDotCarousel'
@@ -30,7 +29,7 @@ type Props = {
   userName: string
 }
 
-const ModalkaPost = ({ post, showMore, userName }: Props) => {
+const ModalPost = ({ post, showMore, userName }: Props) => {
   const router = useRouter()
   const queryParams = router.query
 
@@ -115,18 +114,18 @@ const ModalkaPost = ({ post, showMore, userName }: Props) => {
   // }, [open])
 
   return (
-    <Modalka onOpenChange={setOpen} open={open}>
-      <ModalkaTrigger asChild>
+    <Modal onOpenChange={setOpen} open={open}>
+      <ModalTrigger asChild>
         <Image alt={'avatar'} height={228} src={defaultAva} width={234} />
-      </ModalkaTrigger>
-      <ModalkaContent aria-describedby={undefined} className={s.contentPost}>
-        <ModalkaTitle className={s.title}>
-          <ModalkaButtonCancel asChild>
+      </ModalTrigger>
+      <ModalContent aria-describedby={undefined} className={s.contentPost}>
+        <ModalTitle className={s.title}>
+          <ModalButtonCancel asChild>
             <Button variant={'text'}>
               <Close />
             </Button>
-          </ModalkaButtonCancel>
-        </ModalkaTitle>
+          </ModalButtonCancel>
+        </ModalTitle>
         <Card className={s.card} variant={'dark300'}>
           <div className={s.postImageContent}>
             <div className={s.embla} ref={emblaRefBig}>
@@ -207,9 +206,9 @@ const ModalkaPost = ({ post, showMore, userName }: Props) => {
             </div>
           </div>
         </Card>
-      </ModalkaContent>
-    </Modalka>
+      </ModalContent>
+    </Modal>
   )
 }
 
-export default ModalkaPost
+export default ModalPost

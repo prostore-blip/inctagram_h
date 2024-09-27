@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ModalkaPost from '@/components/userProfile/getPostUser/modalPosts'
+import ModalPost from '@/components/userProfile/getPostUser/modalPosts'
 import { useGetPostsByUserIdQuery } from '@/services/incta-team-api/posts/posts-service'
 import { useRouter } from 'next/router'
 
@@ -15,7 +15,6 @@ export const GetPostsUser = ({ userId, userName }: { userId: string; userName: s
     id: userId,
   })
 
-  console.log('post', data)
   if (isFetching) {
     return <div>....LOADING...</div>
   }
@@ -24,7 +23,7 @@ export const GetPostsUser = ({ userId, userName }: { userId: string; userName: s
     return (
       <li className={s.card} key={u.id} onClick={() => {}}>
         <div>
-          <ModalkaPost post={u} showMore={false} userName={userName} />
+          <ModalPost post={u} showMore={false} userName={userName} />
         </div>
       </li>
     )
