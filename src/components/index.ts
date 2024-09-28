@@ -1,5 +1,4 @@
 export * from './auth'
 export * from './headMeta'
 export * from './header'
-export * from './main'
 export * from './nav'

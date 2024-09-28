@@ -1,14 +1,9 @@
 import { ReactNode } from 'react'
 
 import { BaseLayout } from '@/components/layouts/BaseLayout'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
 
 export function Messenger() {
-  return (
-    <LoginNavigate>
-      <>Messenger</>
-    </LoginNavigate>
-  )
+  return <>Messenger</>
 }
 
 Messenger.getLayout = function getLayout(page: ReactNode) {

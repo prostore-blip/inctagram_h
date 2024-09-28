@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { Header, Main, Nav } from '@/components'
+import { Header, Nav } from '@/components'
 import { useAuthMeQuery } from '@/services'
 import { clsx } from 'clsx'
 import { NextPage } from 'next'
