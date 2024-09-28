@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactTimeAgo from 'react-time-ago'
 
+import { PostComment } from '@/components/userProfile/posts-user/PostComment'
 import { Comment } from '@/services/incta-team-api/posts/posts-service'
 import { Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
@@ -24,28 +24,7 @@ export const PostComments = ({ comments = [], createdPostDate, userName }: Props
       <hr className={s.hr} />
       <ul className={s.commentsUl}>
         {comments?.map((c: any) => {
-          /**
-           * дата создания комментария
-           */
-          const dateAgo = new Date(c.createdAt)
-
-          return (
-            <li className={s.commentWr} key={c.id}>
-              <img alt={'ava'} height={36} src={defaultAva.src} width={36} />
-              <div className={s.commentBlock}>
-                <Typography as={'span'} variant={'regular14'}>
-                  <Typography as={'span'} variant={'regularBold14'}>
-                    {c.from.username}{' '}
-                  </Typography>
-                  {c.content}
-                </Typography>
-                <Typography className={s.date} variant={'small'}>
-                  <ReactTimeAgo date={dateAgo} />
-                  {/*{c.createdAt}*/}
-                </Typography>
-              </div>
-            </li>
-          )
+          return <PostComment comment={c} key={c.id} />
         })}
       </ul>
       <hr className={s.hr} />
