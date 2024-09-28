@@ -4,6 +4,10 @@
   flex-direction: column;
   gap: 24px;
   position: relative;
+
+  .addAvaButton {
+    min-width: 196px;
+  }
 }
 
 .imageContainer {

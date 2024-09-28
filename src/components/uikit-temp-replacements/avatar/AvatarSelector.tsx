@@ -119,7 +119,12 @@ export function AvatarSelector({ initialValue, onValueChange, ...restProps }: Im
             {!savedImage && preview && <ImageWrapper src={preview} />}
           </div>
         </div>
-        <Button onClick={openSelectDialog} type={'button'} variant={'outline'}>
+        <Button
+          className={s.addAvaButton}
+          onClick={openSelectDialog}
+          type={'button'}
+          variant={'outline'}
+        >
           {t.profile.settings.addProfilePhoto}
         </Button>
       </div>
