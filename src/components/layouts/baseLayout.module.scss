@@ -5,6 +5,10 @@
 }
 .mainContent {
   min-height: calc(100dvh - var(--header-height) - 2px);
+  &.marginAuto {
+    padding-left: 130px;
+    padding-right: 90px;
+  }
 }
 
 .headerSkeleton {
