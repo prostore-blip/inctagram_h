@@ -5,14 +5,14 @@ import { toast } from 'sonner'
 import pageStyles from '@/pages/generalInfo/page.module.scss'
 
 type Props = {
-  jsx: number | string
+  onDismiss: () => void
   title: string
 }
-export const Toast = ({ jsx, title }: Props) => {
+export const Toast = ({ onDismiss, title }: Props) => {
   return (
     <div className={pageStyles.toastWrapper}>
       <Typography variant={'regular16'}>{title}</Typography>
-      <Button className={pageStyles.close} onClick={() => toast.dismiss(jsx)} variant={'text'}>
+      <Button className={pageStyles.close} onClick={onDismiss} variant={'text'}>
         <Close />
       </Button>
     </div>

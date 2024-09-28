@@ -84,18 +84,28 @@ export function GeneralInfoForm(props: Props) {
       /**
        * всплывашка
        */
-      toast.custom(jsx => <Toast jsx={jsx} title={t.profile.settings.toast.success} />, {
-        className: pageStyles.succesToast,
-        duration: Infinity,
-      })
+      toast.custom(
+        jsx => (
+          <Toast onDismiss={() => toast.dismiss(jsx)} title={t.profile.settings.toast.success} />
+        ),
+        {
+          className: pageStyles.succesToast,
+          duration: Infinity,
+        }
+      )
     } catch (error) {
       //todo set fields errors
       /**
        * всплывашка
        */
-      toast.custom(jsx => <Toast jsx={jsx} title={t.profile.settings.toast.error} />, {
-        className: pageStyles.errorToast,
-      })
+      toast.custom(
+        jsx => (
+          <Toast onDismiss={() => toast.dismiss(jsx)} title={t.profile.settings.toast.error} />
+        ),
+        {
+          className: pageStyles.errorToast,
+        }
+      )
     }
   }
   /**
