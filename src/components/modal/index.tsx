@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, FC, ReactNode, forwardRef, memo } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, memo } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
@@ -6,13 +6,7 @@ import clsx from 'clsx'
 import s from './modal.module.scss'
 
 export const Modal = memo((props: ComponentPropsWithoutRef<typeof Dialog.Root>) => {
-  const { children, onOpenChange, open } = props
-
-  return (
-    <Dialog.Root onOpenChange={onOpenChange} open={open}>
-      {children}
-    </Dialog.Root>
-  )
+  return <Dialog.Root {...props} />
 })
 
 export type OwnerModalTriggerProps = {
