@@ -1,12 +1,12 @@
-import { FC, memo, useCallback, useMemo, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
 import {
-  Modalka,
-  ModalkaButtonCancel,
-  ModalkaContent,
-  ModalkaTitle,
-  ModalkaTrigger,
+  Modal,
+  ModalButtonCancel,
+  ModalContent,
+  ModalTitle,
+  ModalTrigger,
 } from '@/components/modal'
 import { FollowersUsersType, SearchInputValueType } from '@/components/modal-followers/types'
 import { ModalConfirm } from '@/components/modalConfirm'
@@ -28,7 +28,7 @@ type Props = {
   followersCount?: number | string
 }
 
-export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) => {
+export const ModalFollowers = memo(({ className, followersCount }: Props) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,
@@ -110,22 +110,22 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
    */
 
   return (
-    <Modalka onOpenChange={setOpen} open={open}>
-      <ModalkaTrigger asChild>
+    <Modal onOpenChange={setOpen} open={open}>
+      <ModalTrigger asChild>
         <div className={s.followers}>
           <Typography variant={'regularBold14'}>{followersCount}</Typography>
           <Typography variant={'regular14'}>Followers</Typography>
         </div>
-      </ModalkaTrigger>
-      <ModalkaContent aria-describedby={'open viewport followers'} className={s.content}>
-        <ModalkaTitle className={s.title}>
+      </ModalTrigger>
+      <ModalContent aria-describedby={undefined} className={s.content}>
+        <ModalTitle className={s.title}>
           <Typography variant={'h1'}>{followersCount} Followers</Typography>
-          <ModalkaButtonCancel asChild>
+          <ModalButtonCancel asChild>
             <Button className={s.close} variant={'text'}>
               <Close />
             </Button>
-          </ModalkaButtonCancel>
-        </ModalkaTitle>
+          </ModalButtonCancel>
+        </ModalTitle>
         <Card className={s.card} maxWidth={'644px'} variant={'dark300'}>
           <TextField
             onValueChange={onChangeInputValue}
@@ -139,8 +139,8 @@ export const ModalFollowers: FC<Props> = memo(({ className, followersCount }) =>
             )}
           </ul>
         </Card>
-      </ModalkaContent>
-    </Modalka>
+      </ModalContent>
+    </Modal>
   )
 })
 
