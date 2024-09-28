@@ -1,5 +1,5 @@
-import { PostsUser } from '@/components/userProfile/posts-user'
 import { ModalFollowers } from '@/components/modal-followers'
+import { PostsUser } from '@/components/userProfile/posts-user'
 import { useGetProfileQuery } from '@/services/incta-team-api/profile/profile-service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
