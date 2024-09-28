@@ -8,13 +8,7 @@ import s from './modal.module.scss'
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const Modal = memo((props: ComponentPropsWithoutRef<typeof Dialog.Root>) => {
-  const { children, onOpenChange, open } = props
-
-  return (
-    <Dialog.Root onOpenChange={onOpenChange} open={open}>
-      {children}
-    </Dialog.Root>
-  )
+  return <Dialog.Root {...props} />
 })
 
 export type OwnerModalTriggerProps = {
