@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react'
+import { memo, useState } from 'react'
 
 import { Close } from '@/assets/icons/close'
 import {
@@ -25,7 +25,7 @@ type Props = {
   userName: string | undefined
 }
 
-export const ModalFollowers: FC<Props> = memo(({ followersCount, myProfileId, userName }) => {
+export const ModalFollowers = memo(({ followersCount, myProfileId, userName }: Props) => {
   /**
    * вытягиваем id юзера из URL
    */
