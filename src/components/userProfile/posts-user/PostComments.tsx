@@ -23,7 +23,7 @@ export const PostComments = ({ comments = [], createdPostDate, userName }: Props
       </div>
       <hr className={s.hr} />
       <ul className={s.commentsUl}>
-        {comments?.map((c: any) => {
+        {comments?.map(c => {
           return <PostComment comment={c} key={c.id} />
         })}
       </ul>
