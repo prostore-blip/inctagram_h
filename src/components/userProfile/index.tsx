@@ -8,12 +8,7 @@ import s from './userProfile.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
 
-type Props = {
-  dataProfile?: any
-  myProfileId?: null | number
-}
-
-export function UserProfile({}: Props) {
+export function UserProfile({}) {
   const router = useRouter()
   /**
    * запрос на сервер за профилем юзера по id
