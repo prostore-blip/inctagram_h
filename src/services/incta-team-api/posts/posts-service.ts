@@ -3,27 +3,27 @@ import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service
 const mockDataGetPostsByUserId = [
   {
     description: 'This is a description of the post',
-    id: '1234-abcd-5678-efgh',
+    id: 'a11',
     image: 'https://example.com/image.jpg',
-    userId: 'abcd-1234-efgh-5678',
+    userId: 'a1',
   },
   {
     description: 'This is a description of the post',
-    id: '1234-abcd-5678-efgh',
+    id: 'a12',
     image: 'https://example.com/image.jpg',
-    userId: 'abcd-1234-efgh-5678',
+    userId: 'a2',
   },
   {
     description: 'This is a description of the post',
-    id: '1234-abcd-5678-efgh',
+    id: 'a13',
     image: 'https://example.com/image.jpg',
-    userId: 'abcd-1234-efgh-5678',
+    userId: 'a3',
   },
   {
     description: 'This is a description of the post',
-    id: '1234-abcd-5678-efgh',
+    id: 'a14',
     image: 'https://example.com/image.jpg',
-    userId: 'abcd-1234-efgh-5678',
+    userId: 'a4',
   },
 ]
 

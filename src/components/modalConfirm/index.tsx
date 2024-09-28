@@ -17,7 +17,7 @@ import s from './modalConfirm.module.scss'
 import defaultAva from '../../../public/defaultAva.jpg'
 
 type Props = {
-  callback: (userId: number, setFn: any) => void
+  callback: (userId: string, setFn: any) => void
   children: ReactNode
   title: string
   titleButtonTrigger: string
@@ -53,7 +53,11 @@ export const ModalConfirm = ({
           <Typography variant={'h3'}>{titleButtonTrigger}</Typography>
         </Button>
       </ModalTrigger>
-      <ModalContent aria-describedby={undefined} className={s.content}>
+      <ModalContent
+        aria-describedby={undefined}
+        className={s.content}
+        onInteractOutside={e => e.preventDefault()}
+      >
         <ModalTitle className={s.title}>
           <Typography variant={'h1'}>{title}</Typography>
           <ModalButtonCancel asChild>
@@ -68,7 +72,8 @@ export const ModalConfirm = ({
               alt={'small-avatar'}
               className={s.image}
               height={36}
-              src={user.avatars[0]?.url ?? defaultAva}
+              // src={user.avatars[0]?.url ?? defaultAva}
+              src={defaultAva}
               width={36}
             />
             {children}

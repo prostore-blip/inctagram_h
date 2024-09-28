@@ -1,7 +1,3 @@
-export type SearchInputValueType = {
-  search: string
-  textFromDebounceInput: string
-}
 type AvatarFollowingUser = {
   createdAt: string
   fileSize: number
@@ -9,7 +5,7 @@ type AvatarFollowingUser = {
   url: string
   width: number
 }
-export type UsersQueryParamsType = {
+type UsersQueryParamsType = {
   cursor?: number
   pageNumber?: number
   pageSize?: number
@@ -32,17 +28,12 @@ export type RequestType<T> = {
 type CommonItemType = {
   avatars: AvatarFollowingUser[]
   createdAt: string
-  id: string
+  id: number
   userName: string
 }
 
 export interface FollowersUsersType extends CommonItemType {
   isFollowedBy: boolean
   isFollowing: boolean
-  userId: string
-}
-
-export interface UsersType extends CommonItemType {
-  firstname: string
-  lastname: string
+  userId: number
 }

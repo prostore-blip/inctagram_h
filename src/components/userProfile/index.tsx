@@ -1,4 +1,5 @@
 import { PostsUser } from '@/components/userProfile/posts-user'
+import { ModalFollowers } from '@/components/modal-followers'
 import { useGetProfileQuery } from '@/services/incta-team-api/profile/profile-service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
@@ -40,10 +41,7 @@ export function UserProfile({}) {
               <Typography variant={'regularBold14'}>1000</Typography>
               <Typography variant={'regular14'}>Following</Typography>
             </div>
-            <div className={s.following}>
-              <Typography variant={'regularBold14'}>1000</Typography>
-              <Typography variant={'regular14'}>Followers</Typography>
-            </div>
+            <ModalFollowers followersCount={700} myProfileId={data?.id} userName={data?.userName} />
             <div className={s.publications}>
               <Typography variant={'regularBold14'}>1000</Typography>
               <Typography variant={'regular14'}>Publications</Typography>

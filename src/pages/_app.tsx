@@ -9,9 +9,13 @@ import en from 'javascript-time-ago/locale/en'
 import { NextPage } from 'next'
 
 TimeAgo.addDefaultLocale(en)
+import { Inter } from 'next/font/google'
+import Head from 'next/head'
+
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/dist/style.css'
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
@@ -25,5 +29,16 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
   const { props, store } = wrapper.useWrappedStore(rest)
   const getLayout = Component.getLayout ?? (page => page)
 
-  return <Provider store={store}>{getLayout(<Component {...props} />)}</Provider>
+  return (
+    <Provider store={store}>
+      <Head>
+        <style>{`
+          body {
+            font-family: ${inter.style.fontFamily};
+          }
+        `}</style>
+      </Head>
+      {getLayout(<Component {...props} />)}
+    </Provider>
+  )
 }

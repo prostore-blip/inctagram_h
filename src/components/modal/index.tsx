@@ -2,8 +2,10 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, memo } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
+import { Inter } from 'next/font/google'
 
 import s from './modal.module.scss'
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const Modal = memo((props: ComponentPropsWithoutRef<typeof Dialog.Root>) => {
   return <Dialog.Root {...props} />
@@ -21,7 +23,7 @@ export const ModalTrigger = memo(
     const { asChild, children } = props
 
     return (
-      <Dialog.Trigger asChild={asChild} ref={ref}>
+      <Dialog.Trigger asChild={asChild} className={inter.className} ref={ref}>
         {children}
       </Dialog.Trigger>
     )
@@ -44,7 +46,7 @@ export const ModalContent = memo(
         <Dialog.Overlay className={s.overlay} />
         <Dialog.Content
           asChild={asChild}
-          className={clsx(s.content, className)}
+          className={clsx(s.content, className, inter.className)}
           ref={ref}
           {...rest}
         >
