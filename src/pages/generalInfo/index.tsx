@@ -26,13 +26,13 @@ const tabsList: TabType[] = [
 export function GeneralInfo() {
   const { data, isFetching } = useGetMyProfileQuery()
 
-  const [updateAvatarProfile, { isLoading }] = useUpdateAvatarProfileMutation()
+  const [updateAvatarProfile] = useUpdateAvatarProfileMutation()
 
   const [currentTab, setCurrentTab] = useState(tabsList[0].value)
 
-  const { router, t } = useTranslation()
+  const { t } = useTranslation()
 
-  const [image, setImage] = useState<File | null>(null)
+  const [_, setImage] = useState<File | null>(null)
 
   const handleImageSelection = (file: File | null) => {
     //todo call mutation hook
@@ -47,7 +47,7 @@ export function GeneralInfo() {
   }
 
   const getTabName = (value: string) => {
-    const key = value as keyof typeof t.profile.settings
+    const key = value as keyof Omit<typeof t.profile.settings, 'toast'>
 
     return t.profile.settings[key]
   }
