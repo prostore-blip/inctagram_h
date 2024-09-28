@@ -1,21 +1,33 @@
 .content {
   max-width: 492px;
   width: 100%;
-  max-height: 536px;
-  height: 100%;
+  //max-height: 564px;
+  //height: 100%;
 }
 
 .imageContainer {
   align-items: center;
   background-color: var(--color-dark-500);
+  //background-color: red;
   border-radius: 2px;
   display: flex;
-  height: 340px;
+
+  height: 228px;
   justify-content: center;
-  width: 332px;
+
+  width: 222px;
   overflow: hidden;
+  margin-top: 48px;
   // different for save and select ??
   //margin-bottom: 60px;
+  &.marginTopHidden {
+    margin-top: 0;
+  }
+  &.isPreview {
+    height: 340px;
+    width: 332px;
+    margin-top: 4px;
+  }
   .imageWr {
     position: relative;
     border-radius: 50%;
@@ -74,11 +86,11 @@
 }
 
 .saveButton {
-  margin-bottom: 36px;
+  margin-bottom: 35px;
   margin-top: 36px;
 }
 
 .selectButton {
-  margin-bottom: 48px;
+  margin-bottom: 107px;
   margin-top: 60px;
 }

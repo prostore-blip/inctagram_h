@@ -5,6 +5,7 @@ import { useTranslation } from '@/hooks/useTranslation'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import { DialogProps } from '@radix-ui/react-dialog'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import clsx from 'clsx'
 import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
 import Image from 'next/image'
 
@@ -138,7 +139,13 @@ export function AvatarDialog({ onOpenChange, onSave, ...props }: AvatarSelection
               <Typography variant={'regular14'}>{imageError}</Typography>
             </div>
           )}
-          <div className={s.imageContainer}>
+          <div
+            className={clsx(
+              s.imageContainer,
+              imageError && s.marginTopHidden,
+              preview && s.isPreview
+            )}
+          >
             {!preview && <ImageIcon size={36} />}
             {preview && (
               <div className={s.imageWr}>
