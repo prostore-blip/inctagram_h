@@ -77,11 +77,11 @@ export const Followers = ({ items = [] }: Props) => {
             variantTriggerButton={'secondary'}
           >
             <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
-              Do you really want to delete a Following `&quot;`
+              Do you really want to delete a Following &quot;
               <Typography as={'span'} className={s.userName} variant={'h3'}>
                 {f.userName}
               </Typography>
-              `&quot;`?
+              &quot;?
             </Typography>
           </ModalConfirm>
         </div>
