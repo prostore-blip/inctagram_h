@@ -141,14 +141,16 @@ export function AvatarDialog({ onOpenChange, onSave, ...props }: AvatarSelection
           <div className={s.imageContainer}>
             {!preview && <ImageIcon size={36} />}
             {preview && (
-              <Image
-                alt={'profile image'}
-                fill
-                onError={handleImageError}
-                sizes={'300px'}
-                src={preview}
-                style={{ objectFit: 'cover' }}
-              />
+              <div className={s.imageWr}>
+                <Image
+                  alt={'profile image'}
+                  fill
+                  onError={handleImageError}
+                  sizes={'300px'}
+                  src={preview}
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
             )}
           </div>
           {!preview && (

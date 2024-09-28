@@ -1,19 +1,29 @@
 .content {
-  width: 492px;
+  max-width: 492px;
+  width: 100%;
+  max-height: 536px;
+  height: 100%;
 }
 
 .imageContainer {
-  position: relative;
   align-items: center;
   background-color: var(--color-dark-500);
-
+  border-radius: 2px;
   display: flex;
-  height: 222px;
+  height: 340px;
   justify-content: center;
-  width: 222px;
+  width: 332px;
   overflow: hidden;
   // different for save and select ??
   //margin-bottom: 60px;
+  .imageWr {
+    position: relative;
+    border-radius: 50%;
+    width: 316px;
+    height: 316px;
+    background-color: blue;
+    overflow: hidden;
+  }
 }
 
 .errorBox {
