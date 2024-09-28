@@ -27,7 +27,7 @@ type Props = {
   followingCount?: number | string
 }
 
-export const ModalFollowing: FC<Props> = memo(({ className, followingCount }) => {
+export const ModalFollowing = memo(({ className, followingCount }: Props) => {
   /**
    * хук useState для управления open/close AlertDialog.Root. Нужен для того,
    * чтобы модалка закрывалась после передачи на сервер данных из формы,

@@ -5,13 +5,7 @@ import clsx from 'clsx'
 
 import s from './modal.module.scss'
 
-type OwnerModalProps = {
-  children: ReactNode
-  onOpenChange: (open: boolean) => void
-  open: boolean
-}
-
-export const Modal: FC<OwnerModalProps> = memo(props => {
+export const Modal = memo((props: ComponentPropsWithoutRef<typeof Dialog.Root>) => {
   const { children, onOpenChange, open } = props
 
   return (
