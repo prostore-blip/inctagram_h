@@ -1,6 +1,18 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  common: {
+    cancel: 'Cancel',
+    email: 'Email',
+    firstName: 'Name',
+    lastName: 'Last name',
+    password: 'Password',
+    save: 'Save',
+    selectFromComputer: 'Select from computer',
+    signIn: 'Sign in',
+    signOut: 'Sign out',
+    username: 'Username',
+  },
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -27,6 +39,7 @@ export const en: LocaleType = {
       title: 'Create new password',
       tooSmallError: 'Password has to be at least 6 characters long',
     },
+
     startPage: {
       backToSignIn: 'Back to Sign-in page',
       emailNotFound: "User with this email doesn't exist",
@@ -47,6 +60,43 @@ export const en: LocaleType = {
   header: {
     signInButton: 'Log In',
     signUpButton: 'Sign up',
+  },
+  modal: {
+    modalConfirmButtons: {
+      no: 'No',
+      yes: 'Yes',
+    },
+  },
+  profile: {
+    avatar: {
+      deletePhotoModalDescription: 'Are you sure you want to delete the photo?',
+      deletePhotoModalTitle: 'Delete Photo',
+    },
+    common: {
+      saveChanges: 'Save changes',
+    },
+    settings: {
+      aboutMe: 'About me',
+      aboutMePlaceholder: 'Tell about yourself',
+      accountManagement: 'Account management',
+      addProfilePhoto: 'Add profile photo',
+      birthDate: 'Date of birth',
+      birthDatePlaceholder: 'mm.dd.YYYY',
+      devices: 'Devices',
+      generalInformation: 'General information',
+      imageSizeExceeded: 'Photo size must be less than 10 MB!',
+      myPayments: 'My payments',
+      saveChangeButton: 'Save change',
+      selectYourCity: 'Choose your city',
+      selectYourCityPlaceholder: 'City',
+      selectYourCountry: 'Choose your country',
+      selectYourCountryPlaceholder: 'Country',
+      toast: {
+        error: 'Error! Server is not available',
+        success: 'Your settings are saved',
+      },
+      wrongFileFormat: 'Error! The format of the uploaded photo must be \nPNG and JPEG',
+    },
   },
   publicPage: {
     title: 'Public Page',
