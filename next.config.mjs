@@ -15,6 +15,7 @@ const nextConfig = {
         ],
     },
     reactStrictMode: true,
+    transpilePackages: ['@pqina/pintura', '@pqina/react-pintura'],
     webpack(config) {
         // Найти существующее правило, которое обрабатывает импорты SVG
         const fileLoaderRule = config.module.rules.find((rule) =>
