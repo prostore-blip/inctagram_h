@@ -16,7 +16,7 @@ import s from './modalConfirmLogout.module.scss'
 type Props = {
   callback: (isButton?: boolean, linkName?: string) => void
   children: ReactNode
-  link: PropsLink
+  link?: PropsLink
   title: string
   variantTriggerButton: ReactNode
 }
@@ -38,13 +38,13 @@ export const ModalConfirmLogout = ({
    * имя кнопки и флаш, является ли ссылка кнопкой
    */
   const logoutHandler = () => {
-    callback(link.isButton, link.name)
+    callback(link?.isButton, link?.name)
   }
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>{variantTriggerButton}</ModalkaTrigger>
-      <ModalkaContent aria-describedby={'open viewport followers'} className={s.content}>
+      <ModalkaContent aria-describedby={undefined} className={s.content}>
         <ModalkaTitle className={s.title}>
           <Typography variant={'h1'}>{title}</Typography>
           <ModalkaButtonCancel asChild>

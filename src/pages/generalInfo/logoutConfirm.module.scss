@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 0;
+  color: var(--color-light-100);
+  white-space: nowrap;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.activeLink {
+    color: var(--color-accent-500);
+  }
+
+  svg {
+    fill: currentcolor;
+  }
+  span {
+    color: inherit;
+  }
+}
