@@ -1,8 +1,9 @@
-@mixin avaUserNameBlock {
+@mixin ava-user-name-block {
   display: flex;
   gap: 12px;
   align-items: center;
   margin: 12px 0;
+
   img {
     border-radius: 50%;
   }
@@ -12,40 +13,44 @@
   color: var(--color-light-900);
 }
 
-@mixin carouselButton {
+@mixin carousel-button {
   all: unset;
+
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
   display: none;
 }
 
 .postsWrapper {
-  list-style: none;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+
   max-width: 972px;
   margin: 0 auto;
 
+  list-style: none;
+
   .post {
     aspect-ratio: 0.598;
-    max-height: 391px;
-    height: 100%;
-    max-width: 234px;
     width: 100%;
+    max-width: 234px;
+    height: 100%;
+    max-height: 391px;
 
     .modalWr {
       position: relative;
 
       .postImage {
-        width: 100%;
         aspect-ratio: 1;
+        width: 100%;
         transition: all linear 0.2s;
 
         &[data-showmore='true'] {
-          transition: all linear 0.2s;
           aspect-ratio: 2;
+          transition: all linear 0.2s;
         }
 
         img {
@@ -56,17 +61,22 @@
       }
 
       .prevButton {
-        @include carouselButton;
+        @include carousel-button;
+
         left: 8px;
       }
+
       .nextButton {
-        @include carouselButton;
+        @include carousel-button;
+
         right: 8px;
       }
+
       &:hover .prevButton,
       &:hover .nextButton {
         display: block;
       }
+
       &:hover .dots {
         display: flex;
       }
@@ -76,13 +86,16 @@
         bottom: 11px;
         left: 50%;
         transform: translateX(-50%);
+
         display: none;
         gap: 8px;
+
         .dot {
           width: 6px;
           height: 6px;
-          border-radius: 50%;
           background: var(--color-light-100);
+          border-radius: 50%;
+
           &.activeDot {
             background: var(--color-accent-500);
           }
@@ -91,21 +104,24 @@
     }
 
     .avaUserNameBlock {
-      @include avaUserNameBlock;
+      @include ava-user-name-block;
     }
 
     .date {
       margin-bottom: 3px;
+
       @include date;
     }
 
     .description {
+      float: left;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-      float: left;
+      -webkit-line-clamp: 3;
+
       word-break: break-all;
+
       &[data-showmore='true'] {
         -webkit-line-clamp: 6;
       }
@@ -114,21 +130,22 @@
 }
 
 .overflowedContainer {
-  height: calc(100vh - 61px);
   overflow: hidden;
+  height: calc(100vh - 61px);
 }
 
 .mainCntainer {
-  height: 100%;
   overflow: auto;
+  height: 100%;
   padding-top: 24px;
 
   .countUsersBlock {
-    height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     max-width: 972px;
+    height: 72px;
     margin: 0 auto 36px;
     padding: 0 24px;
 
@@ -138,21 +155,19 @@
   }
 }
 
-.showMore {
-}
-
 .contentPost {
-  //max-width: 972px;
-  max-width: 1114px;
-  width: 100%;
   top: 84px;
+  width: 100%;
+
+  // max-width: 972px;
+  max-width: 1114px;
   padding-right: 42px;
 
   .title {
     position: relative;
+    width: calc(100% + 42px);
     height: 36px;
     text-align: right;
-    width: calc(100% + 42px);
 
     & > button {
       padding: 0;
@@ -160,70 +175,86 @@
   }
 
   .card {
-    padding: 0;
-    height: 562px;
     display: flex;
     flex-direction: row;
-    max-width: inherit;
+
     width: 100%;
+    max-width: inherit;
+    height: 562px;
+    padding: 0;
+
     border-color: var(--color-dark-100);
 
     .postImageContent {
+      position: relative;
       flex: 1 1 490px;
       width: 100%;
       height: 100%;
-      position: relative;
 
       .postImage {
         height: 100%;
       }
+
       .embla {
         height: 100%;
+
         .emblaContainer {
           height: 100%;
         }
       }
 
       img {
-        object-fit: cover;
         width: 100%;
         height: 100%;
+        object-fit: cover;
       }
+
       .prevModalButton {
         all: unset;
+
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
         left: 12px;
+        transform: translateY(-50%);
+
         display: none;
       }
+
       .nextModalButton {
         all: unset;
+
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
         right: 12px;
+        transform: translateY(-50%);
+
         display: none;
       }
+
       &:hover .prevModalButton,
       &:hover .nextModalButton {
         display: block;
       }
+
       &:hover .dotes {
         display: flex;
       }
+
       .dotes {
         position: absolute;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
+
         display: none;
         gap: 12px;
+
         .dote {
           width: 8px;
           height: 8px;
-          border-radius: 50%;
           background: var(--color-light-100);
+          border-radius: 50%;
+
           &.activeDot {
             background: var(--color-accent-500);
           }
@@ -232,28 +263,31 @@
     }
 
     .commentsWr {
-      flex: 1 1 480px;
       display: flex;
+      flex: 1 1 480px;
       flex-direction: column;
 
       .avaUserNameBlock {
-        @include avaUserNameBlock;
+        @include ava-user-name-block;
+
         padding-left: 24px;
       }
 
       .hr {
         width: 100%;
-        border-bottom: 1px solid var(--color-dark-100);
+
         border-top: none;
-        border-left: none;
         border-right: none;
+        border-bottom: 1px solid var(--color-dark-100);
+        border-left: none;
       }
 
       .commentsUl {
-        padding-left: 24px;
-        padding-top: 16px;
         flex-grow: 1;
-        //background: red;
+        padding-top: 16px;
+        padding-left: 24px;
+
+        // background: red;
         list-style: none;
 
         .commentWr {
@@ -261,15 +295,15 @@
           gap: 12px;
 
           img {
-            border-radius: 50%;
             margin-top: 8px;
+            border-radius: 50%;
           }
 
           .commentBlock {
             display: flex;
             flex-direction: column;
-            margin-bottom: 15px;
             gap: 5px;
+            margin-bottom: 15px;
 
             .date {
               @include date;
@@ -279,8 +313,8 @@
       }
 
       .likesBlock {
-        padding-left: 24px;
         height: 83px;
+        padding-left: 24px;
 
         .date {
           @include date;
@@ -292,6 +326,7 @@
 
 .embla {
   overflow: hidden;
+
   .emblaContainer {
     display: flex;
 

@@ -70,16 +70,14 @@ export function AvatarSelector({ initialValue, onValueChange, ...restProps }: Im
     setShowDialog(open)
   }
 
-  const clearAvatar = () => {
-    onValueChange(null)
-    saveImage(null)
-  }
-
   const deleteAvatar = (setFn: Function) => {
     deleteAvatarProfile()
       .unwrap()
       .then(() => {
         setFn(false)
+        onValueChange(null)
+        saveImage(null)
+        setPreview(null)
       })
   }
 
@@ -92,32 +90,25 @@ export function AvatarSelector({ initialValue, onValueChange, ...restProps }: Im
         open={showDialog}
       />
       <div className={s.container}>
-        <div style={{ position: 'relative' }}>
-          {savedImage && (
-            <Button className={clsx(s.clearButton)} onClick={clearAvatar} type={'button'}>
-              <Close />
-            </Button>
+        <div className={clsx(s.imageContainer)}>
+          {!savedImage && <ImageIcon size={36} />}
+          {(savedImage || preview) && (
+            <ModalConfirmDeleteAvatar
+              callback={deleteAvatar}
+              title={'Delete Photo'}
+              variantTriggerButton={
+                <Button className={s.deleteAva} variant={'text'}>
+                  <DeleteAvatar />
+                </Button>
+              }
+            >
+              <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
+                Are you sure you want to delete the photo?
+              </Typography>
+            </ModalConfirmDeleteAvatar>
           )}
-          <div className={clsx(s.imageContainer)}>
-            {!savedImage && <ImageIcon size={36} />}
-            {(savedImage || preview) && (
-              <ModalConfirmDeleteAvatar
-                callback={deleteAvatar}
-                title={'Delete Photo'}
-                variantTriggerButton={
-                  <Button className={s.deleteAva} variant={'text'}>
-                    <DeleteAvatar />
-                  </Button>
-                }
-              >
-                <Typography as={'span'} className={s.questionConfirm} variant={'regular16'}>
-                  Are you sure you want to delete the photo?
-                </Typography>
-              </ModalConfirmDeleteAvatar>
-            )}
-            {savedImage && <ImageWrapper src={savedImage} />}
-            {!savedImage && preview && <ImageWrapper src={preview} />}
-          </div>
+          {savedImage && <ImageWrapper src={savedImage} />}
+          {!savedImage && preview && <ImageWrapper src={preview} />}
         </div>
         <Button
           className={s.addAvaButton}
