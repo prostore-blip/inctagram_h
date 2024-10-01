@@ -23,6 +23,23 @@
   display: none;
 }
 
+.embla {
+  overflow: hidden;
+
+  .emblaContainer {
+    display: flex;
+
+    .emblaSlide {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+  }
+}
+
+.date {
+  @include date;
+}
+
 .postsWrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -32,100 +49,100 @@
   margin: 0 auto;
 
   list-style: none;
+}
 
-  .post {
-    aspect-ratio: 0.598;
+.post {
+  aspect-ratio: 0.598;
+  width: 100%;
+  max-width: 234px;
+  height: 100%;
+  max-height: 391px;
+
+  .avaUserNameBlock {
+    @include ava-user-name-block;
+  }
+
+  .date {
+    margin-bottom: 3px;
+
+    @include date;
+  }
+}
+
+.prevButton {
+  @include carousel-button;
+
+  left: 8px;
+}
+
+.nextButton {
+  @include carousel-button;
+
+  right: 8px;
+}
+
+.dots {
+  position: absolute;
+  bottom: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: none;
+  gap: 8px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-light-100);
+    border-radius: 50%;
+
+    &.activeDot {
+      background: var(--color-accent-500);
+    }
+  }
+}
+
+.modalWr {
+  position: relative;
+
+  &:hover .prevButton,
+  &:hover .nextButton {
+    display: block;
+  }
+
+  &:hover .dots {
+    display: flex;
+  }
+}
+
+.postImage {
+  aspect-ratio: 1;
+  width: 100%;
+  transition: all linear 0.2s;
+
+  &[data-showmore='true'] {
+    aspect-ratio: 2;
+    transition: all linear 0.2s;
+  }
+
+  & img {
     width: 100%;
-    max-width: 234px;
     height: 100%;
-    max-height: 391px;
+    object-fit: cover;
+  }
+}
 
-    .modalWr {
-      position: relative;
+.description {
+  float: left;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 
-      .postImage {
-        aspect-ratio: 1;
-        width: 100%;
-        transition: all linear 0.2s;
+  word-break: break-all;
 
-        &[data-showmore='true'] {
-          aspect-ratio: 2;
-          transition: all linear 0.2s;
-        }
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-
-      .prevButton {
-        @include carousel-button;
-
-        left: 8px;
-      }
-
-      .nextButton {
-        @include carousel-button;
-
-        right: 8px;
-      }
-
-      &:hover .prevButton,
-      &:hover .nextButton {
-        display: block;
-      }
-
-      &:hover .dots {
-        display: flex;
-      }
-
-      .dots {
-        position: absolute;
-        bottom: 11px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        display: none;
-        gap: 8px;
-
-        .dot {
-          width: 6px;
-          height: 6px;
-          background: var(--color-light-100);
-          border-radius: 50%;
-
-          &.activeDot {
-            background: var(--color-accent-500);
-          }
-        }
-      }
-    }
-
-    .avaUserNameBlock {
-      @include ava-user-name-block;
-    }
-
-    .date {
-      margin-bottom: 3px;
-
-      @include date;
-    }
-
-    .description {
-      float: left;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-
-      word-break: break-all;
-
-      &[data-showmore='true'] {
-        -webkit-line-clamp: 6;
-      }
-    }
+  &[data-showmore='true'] {
+    -webkit-line-clamp: 6;
   }
 }
 
@@ -163,17 +180,6 @@
   max-width: 1114px;
   padding-right: 42px;
 
-  .title {
-    position: relative;
-    width: calc(100% + 42px);
-    height: 36px;
-    text-align: right;
-
-    & > button {
-      padding: 0;
-    }
-  }
-
   .card {
     display: flex;
     flex-direction: row;
@@ -184,83 +190,6 @@
     padding: 0;
 
     border-color: var(--color-dark-100);
-
-    .postImageContent {
-      position: relative;
-      flex: 1 1 490px;
-      width: 100%;
-      height: 100%;
-
-      .postImage {
-        height: 100%;
-      }
-
-      .embla {
-        height: 100%;
-
-        .emblaContainer {
-          height: 100%;
-        }
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .prevModalButton {
-        all: unset;
-
-        position: absolute;
-        top: 50%;
-        left: 12px;
-        transform: translateY(-50%);
-
-        display: none;
-      }
-
-      .nextModalButton {
-        all: unset;
-
-        position: absolute;
-        top: 50%;
-        right: 12px;
-        transform: translateY(-50%);
-
-        display: none;
-      }
-
-      &:hover .prevModalButton,
-      &:hover .nextModalButton {
-        display: block;
-      }
-
-      &:hover .dotes {
-        display: flex;
-      }
-
-      .dotes {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-
-        display: none;
-        gap: 12px;
-
-        .dote {
-          width: 8px;
-          height: 8px;
-          background: var(--color-light-100);
-          border-radius: 50%;
-
-          &.activeDot {
-            background: var(--color-accent-500);
-          }
-        }
-      }
-    }
 
     .commentsWr {
       display: flex;
@@ -294,7 +223,7 @@
           display: flex;
           gap: 12px;
 
-          img {
+          & img {
             margin-top: 8px;
             border-radius: 50%;
           }
@@ -315,24 +244,95 @@
       .likesBlock {
         height: 83px;
         padding-left: 24px;
-
-        .date {
-          @include date;
-        }
       }
     }
   }
 }
 
-.embla {
-  overflow: hidden;
+.postImageContent {
+  position: relative;
+  flex: 1 1 490px;
+  width: 100%;
+  height: 100%;
 
-  .emblaContainer {
-    display: flex;
+  .postImage {
+    height: 100%;
+  }
 
-    .emblaSlide {
-      flex: 0 0 100%;
-      min-width: 0;
+  .embla {
+    height: 100%;
+
+    .emblaContainer {
+      height: 100%;
     }
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .prevModalButton {
+    all: unset;
+
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+
+    display: none;
+  }
+
+  .nextModalButton {
+    all: unset;
+
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+
+    display: none;
+  }
+
+  &:hover .prevModalButton,
+  &:hover .nextModalButton {
+    display: block;
+  }
+
+  .dotes {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: none;
+    gap: 12px;
+
+    .dote {
+      width: 8px;
+      height: 8px;
+      background: var(--color-light-100);
+      border-radius: 50%;
+
+      &.activeDot {
+        background: var(--color-accent-500);
+      }
+    }
+  }
+
+  &:hover .dotes {
+    display: flex;
+  }
+}
+
+.title {
+  position: relative;
+  width: calc(100% + 42px);
+  height: 36px;
+  text-align: right;
+
+  & > button {
+    padding: 0;
   }
 }
