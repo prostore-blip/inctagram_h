@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Close } from '@/assets/icons/close'
 import { FormTextArea } from '@/components/controll/FormTextArea'
+import { ResponseDataUserProfile } from '@/components/posts/types'
 import { Toast } from '@/components/profile-settings'
 import { DatePIckerForProfileSettings } from '@/components/profile-settings/general-info-form/DatePIckerForProfileSettings'
 import { FormInputGroup } from '@/components/profile-settings/general-info-form/FormInputGroup'
@@ -12,7 +13,6 @@ import {
   userGeneralInfoSchema,
 } from '@/components/profile-settings/general-info-form/schema'
 import { useTranslation } from '@/hooks/useTranslation'
-import { ResponseDataUserProfile } from '@/pages/profile/types'
 import { useUpdateProfileMutation } from '@/services/inctagram.profile.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'

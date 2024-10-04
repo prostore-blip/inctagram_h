@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 
 import { FormTextArea } from '@/components/controll/FormTextArea'
 import { CreatePostData, createPostSchema } from '@/components/modalCreatePost/schema'
-import { ResponseDataUserProfile } from '@/pages/profile/types'
 import { useGetMyProfileQuery } from '@/services/inctagram.profile.service'
 import { Typography } from '@chrizzo/ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,10 +11,10 @@ import s from '@/components/modalCreatePost/modalCreatePost.module.scss'
 
 import defaultAva from '../../../public/defaultAva.jpg'
 
-type SSProps = {
+type Props = {
   submitForm: (data: CreatePostData) => void
 }
-export const FormCreatePost = ({ submitForm }: SSProps) => {
+export const FormCreatePost = ({ submitForm }: Props) => {
   /**
    * Запрос на своим профилем юзера для отображения вытягивания аватарки и userName
    */
