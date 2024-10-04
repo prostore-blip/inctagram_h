@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ModalkaPost from '@/pages/profile/modalkaPost'
+import ModalkaPost from '@/components/posts/modalkaPost'
 import { useGetPostsByUserIdQuery } from '@/services/inctagram.public-posts.service'
 import { useRouter } from 'next/router'
 

@@ -10,8 +10,8 @@ import {
   ModalkaTitle,
   ModalkaTrigger,
 } from '@/components/modal'
+import { DateTimeFormatOptions } from '@/components/posts/types'
 import { useDotButton } from '@/hooks/useDotCarouselButton'
-import { DateTimeFormatOptions } from '@/pages/profile/types'
 import { Post, useGetCommentsForPostQuery } from '@/services/inctagram.public-posts.service'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'

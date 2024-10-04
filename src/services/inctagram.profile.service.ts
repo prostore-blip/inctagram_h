@@ -3,7 +3,7 @@ import {
   ResponseDataUserProfile,
   ResponseDataUserProfileByUserName,
   ResponseUpdateAvatarProfile,
-} from '@/pages/profile/types'
+} from '@/components/posts/types'
 import { inctagramService } from '@/services/inctagram.service'
 
 export const inctagramUsersProfileService = inctagramService.injectEndpoints({

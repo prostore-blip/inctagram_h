@@ -1,6 +1,6 @@
 import { HeadMeta, PageWrapper } from '@/components'
+import { ItemPost } from '@/components/posts/itemPost'
 import { useTranslation } from '@/hooks/useTranslation'
-import { ItemPost } from '@/pages/profile/itemPost'
 import { Post, ResponseAllPosts } from '@/services/inctagram.public-posts.service'
 import { Typography } from '@chrizzo/ui-kit'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
