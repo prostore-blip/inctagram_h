@@ -1,5 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
+import { authReducer } from '@/services/auth.api'
 import { inctagramService } from '@/services/inctagram.service'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
@@ -9,6 +10,7 @@ const makeStore = () =>
     devTools: true,
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(inctagramService.middleware),
     reducer: {
+      auth: authReducer,
       [inctagramService.reducerPath]: inctagramService.reducer,
     },
   })

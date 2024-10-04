@@ -21,6 +21,8 @@ import st from '@/pages/generalInfo/logoutConfirm.module.scss'
 import s from '@/pages/generalInfo/page.module.scss'
 import tabsStyles from '@/pages/generalInfo/tabs.module.scss'
 
+import { useAppSelector } from '../../../store'
+
 //todo translation: move inside component and wrap with useMemo?
 const tabsList: TabType[] = [
   { title: 'General information', value: 'generalInformation' },
@@ -31,7 +33,7 @@ const tabsList: TabType[] = [
 
 export function GeneralInfo() {
   const { data, isFetching } = useGetMyProfileQuery()
-
+  const myEmail = useAppSelector(state => state.auth.authData.myEmail)
   const [updateAvatarProfile] = useUpdateAvatarProfileMutation()
 
   const [currentTab, setCurrentTab] = useState(tabsList[0].value)
@@ -94,7 +96,7 @@ export function GeneralInfo() {
             <Typography as={'span'} className={st.questionConfirm} variant={'regular16'}>
               Are you really want to log out of your account &quot;
               <Typography as={'span'} className={st.userName} variant={'h3'}>
-                myEmail
+                {myEmail}
               </Typography>
               &quot;?
             </Typography>
