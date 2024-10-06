@@ -1,7 +1,10 @@
 import { Chrome } from '@/assets/icons'
 import { ActiveSessionsList } from '@/components/profile-settings/devices/ActiveSessions'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useGetAllSessionsQuery } from '@/services/inctagram.sessions.service'
+import {
+  useDeleteAllSessionsMutation,
+  useGetAllSessionsQuery,
+} from '@/services/inctagram.sessions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 
@@ -18,6 +21,14 @@ export const DevicesSessionsContent = ({}: Props) => {
    * Запрос за текущей и активными сессиями
    */
   const { data: sessions } = useGetAllSessionsQuery()
+  /**
+   * запрос для удаления активных сессий, кроме текущей
+   */
+  const [deleteAllSessions] = useDeleteAllSessionsMutation()
+
+  const deleteSessionsHandler = () => {
+    deleteAllSessions()
+  }
 
   return (
     <TabsPrimitive.Content value={'devices'}>
@@ -33,14 +44,17 @@ export const DevicesSessionsContent = ({}: Props) => {
           </div>
         </div>
         <div className={s.terminateButton}>
-          <Button type={'button'} variant={'outline'}>
+          <Button onClick={deleteSessionsHandler} type={'button'} variant={'outline'}>
             {t.profile.devices.terminateAllSessions}
           </Button>
         </div>
         <div className={s.activeSessions}>
           <Typography variant={'h3'}>{t.profile.devices.activeSessions}</Typography>
           <ul className={s.activeSessionsWr}>
-            <ActiveSessionsList sessions={sessions?.others} />
+            <ActiveSessionsList
+              mySessionId={sessions?.current.deviceId}
+              sessions={sessions?.others}
+            />
           </ul>
         </div>
       </div>

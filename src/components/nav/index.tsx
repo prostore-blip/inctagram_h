@@ -2,6 +2,7 @@ import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } f
 import { ModalConfirmLogout } from '@/components/modalConfirmLogout'
 import { ModalCreatePost } from '@/components/modalCreatePost'
 import { PropsLink } from '@/components/nav/types'
+import { useLogout } from '@/hooks/useLogout'
 import { useLogoutMutation } from '@/services/inctagram.auth.service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
@@ -70,9 +71,9 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
   const { data } = useGetMySubscriptionsQuery()
 
   /**
-   * вылогинивание
+   * кастомный хук вылогинивания
    */
-  const [logout, { isLoading }] = useLogoutMutation()
+  const { getLogout, isLoading } = useLogout()
 
   /**
    *  Обработчик кнопок меню nav. На данный момент обрабатывется только для "logout"
@@ -81,11 +82,7 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
    */
   const handleClick = (isButton?: boolean, linkName?: string) => {
     if (isButton && linkName === 'Log Out') {
-      logout()
-        .unwrap()
-        .then(() => {
-          void router.push('/login')
-        })
+      getLogout()
     }
   }
 

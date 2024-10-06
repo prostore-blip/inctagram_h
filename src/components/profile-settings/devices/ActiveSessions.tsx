@@ -1,7 +1,9 @@
 import { LogOut, Mobile } from '@/assets/icons'
 import { Decstop } from '@/assets/icons/decstop'
 import { ModalConfirmLogout } from '@/components/modalConfirmLogout'
+import { useLogout } from '@/hooks/useLogout'
 import { useTranslation } from '@/hooks/useTranslation'
+import { useDeleteSessionByIdMutation } from '@/services/inctagram.sessions.service'
 import { CurrentSession } from '@/services/types'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
@@ -12,9 +14,10 @@ import st from '@/components/profile-settings/devices/logoutConfirm.module.scss'
 import { useAppSelector } from '../../../../store'
 
 type Props = {
+  mySessionId: number | undefined
   sessions: CurrentSession[] | undefined
 }
-export const ActiveSessionsList = ({ sessions }: Props) => {
+export const ActiveSessionsList = ({ mySessionId, sessions }: Props) => {
   /**
    * имя почты из стора редакса. Используется в модалке подтверждения logOut'а
    */
@@ -23,8 +26,27 @@ export const ActiveSessionsList = ({ sessions }: Props) => {
    * интернацинализация
    */
   const { t } = useTranslation()
+  /**
+   * запрос за удалением конкретной сессии по её id
+   */
+  const [deleteSessionById] = useDeleteSessionByIdMutation()
+  /**
+   * кастомный хук вылогинивания
+   */
+  const { getLogout } = useLogout()
 
   return sessions?.map(device => {
+    /**
+     * обработчик кнопки удаления сессии
+     */
+    const logOutHandler = () => {
+      if (mySessionId === device.deviceId) {
+        getLogout()
+      } else {
+        deleteSessionById(device.deviceId)
+      }
+    }
+
     return (
       <li className={s.device} key={device.deviceId}>
         {device.osName === 'Windows' ? <Decstop /> : <Mobile />}
@@ -37,7 +59,7 @@ export const ActiveSessionsList = ({ sessions }: Props) => {
         </div>
         <div className={s.logoutButtonWr}>
           <ModalConfirmLogout
-            callback={() => {}}
+            callback={logOutHandler}
             title={'Log Out'}
             variantTriggerButton={
               <Button as={'button'} className={clsx(st.wrapper)} variant={'text'}>

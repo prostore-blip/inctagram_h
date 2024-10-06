@@ -49,8 +49,8 @@ export const inctagramAuthService = inctagramService.injectEndpoints({
       }),
       logout: builder.mutation<void, void>({
         async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-          await dispatch(inctagramSessionsService.endpoints.deleteAllSessions.initiate())
           await queryFulfilled
+          await dispatch(inctagramSessionsService.endpoints.deleteAllSessions.initiate())
           localStorage.removeItem('token')
           document.cookie = `access_token=; expires=${new Date('1970-09-04').toUTCString()}; SameSite=None; Secure`
           dispatch(inctagramAuthService.util.invalidateTags(['login']))
