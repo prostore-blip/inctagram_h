@@ -1,0 +1,12 @@
+.wrapper {
+  padding: 50px;
+  min-width: 960px;
+}
+
+.separator {
+  background-color: var(--color-dark-300);
+  bottom: calc(36px + 48px / 2);
+  height: 2px;
+  position: relative;
+  width: 100%;
+}

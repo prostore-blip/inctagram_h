@@ -1,10 +1,10 @@
 import { Control, FieldErrors } from 'react-hook-form'
 
 import { FormInput } from '@/components/controll/formTextField'
-import { UserGeneralInfoData } from '@/components/profile-settings/general-info-form/schema'
+import { UserGeneralInfoData } from '@/components/profile-settings/general-info-settings/general-info-form/schema'
 import { useTranslation } from '@/hooks/useTranslation'
 
-import pageStyles from '@/pages/generalInfo/page.module.scss'
+import pageStyles from './form.module.scss'
 
 type Props = {
   control: Control<UserGeneralInfoData>

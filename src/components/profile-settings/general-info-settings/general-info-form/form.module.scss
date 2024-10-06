@@ -11,6 +11,14 @@
   min-width: 960px;
 }
 
+.separator {
+  background-color: var(--color-dark-300);
+  bottom: calc(36px + 48px / 2);
+  height: 2px;
+  position: relative;
+  width: 100%;
+}
+
 .form {
   display: inline-flex;
   flex-direction: column;
@@ -43,22 +51,6 @@
 
 .label {
   color: var(--color-light-900);
-}
-
-.flexRow {
-  align-items: flex-start;
-  display: flex;
-  gap: 36px;
-  justify-content: flex-start;
-  margin-top: 24px;
-}
-
-.separator {
-  background-color: var(--color-dark-300);
-  bottom: calc(36px + 48px / 2);
-  height: 2px;
-  position: relative;
-  width: 100%;
 }
 
 .locationSection {
@@ -164,65 +156,4 @@
 
 .datePicker button {
   color: var(--color-light-100);
-}
-.devicesWr {
-  padding-top: 30px;
-}
-.currentDevice {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 24px;
-  padding-bottom: 41px;
-}
-.browser {
-  display: flex;
-  padding: 18px 0 0 24px;
-  gap: 12px;
-
-  & svg {
-    margin-top: 8px;
-  }
-}
-.typeBrouserAndIP {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-}
-.terminateButton {
-  display: flex;
-  justify-content: flex-end;
-}
-.activeSessions {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: 18px;
-}
-.device {
-  display: flex;
-  padding: 18px 24px 0;
-  & > svg {
-    margin-top: 8px;
-    margin-right: 12px;
-  }
-}
-.deviceTypeAndIP {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  & > p:first-child {
-    margin-bottom: 8px;
-  }
-}
-.logoutButtonWr {
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.activeSessionsWr {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }

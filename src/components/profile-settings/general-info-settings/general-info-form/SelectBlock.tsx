@@ -1,12 +1,12 @@
 import { Control } from 'react-hook-form'
 
 import { FormSelect } from '@/components/controll/FormSelect'
-import { UserGeneralInfoData } from '@/components/profile-settings/general-info-form/schema'
+import { UserGeneralInfoData } from '@/components/profile-settings/general-info-settings/general-info-form/schema'
 import { SelectItem } from '@/components/uikit-temp-replacements/select/Select'
 import { useTranslation } from '@/hooks/useTranslation'
 import clsx from 'clsx'
 
-import pageStyles from '@/pages/generalInfo/page.module.scss'
+import pageStyles from './form.module.scss'
 
 export const countries = [
   { title: 'Country1', value: 'country1' },

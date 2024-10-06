@@ -65,6 +65,12 @@ export const en: LocaleType = {
     common: {
       saveChanges: 'Сохранить изменения',
     },
+    devices: {
+      activeSessions: 'Active sessions',
+      currentDevice: 'Current device',
+      lstVisit: 'Last visit',
+      terminateAllSessions: 'Terminate all other sessions',
+    },
     settings: {
       aboutMe: 'About me',
       aboutMePlaceholder: 'Tell about yourself',

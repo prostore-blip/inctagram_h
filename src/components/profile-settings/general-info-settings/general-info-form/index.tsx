@@ -1,26 +1,25 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Close } from '@/assets/icons/close'
 import { FormTextArea } from '@/components/controll/FormTextArea'
 import { ResponseDataUserProfile } from '@/components/posts/types'
-import { Toast } from '@/components/profile-settings'
-import { DatePIckerForProfileSettings } from '@/components/profile-settings/general-info-form/DatePIckerForProfileSettings'
-import { FormInputGroup } from '@/components/profile-settings/general-info-form/FormInputGroup'
-import { SelectBlock } from '@/components/profile-settings/general-info-form/SelectBlock'
+import { DatePIckerForProfileSettings } from '@/components/profile-settings/general-info-settings/general-info-form/DatePIckerForProfileSettings'
+import { FormInputGroup } from '@/components/profile-settings/general-info-settings/general-info-form/FormInputGroup'
+import { SelectBlock } from '@/components/profile-settings/general-info-settings/general-info-form/SelectBlock'
+import { Toast } from '@/components/profile-settings/general-info-settings/general-info-form/Toast'
 import {
   UserGeneralInfoData,
   userGeneralInfoSchema,
-} from '@/components/profile-settings/general-info-form/schema'
+} from '@/components/profile-settings/general-info-settings/general-info-form/schema'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useUpdateProfileMutation } from '@/services/inctagram.profile.service'
-import { Button, Typography } from '@chrizzo/ui-kit'
+import { Button } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs, { Dayjs } from 'dayjs'
 import { toast } from 'sonner'
 
-import pageStyles from '@/pages/generalInfo/page.module.scss'
+import pageStyles from './form.module.scss'
 
 type Props = {
   profile: ResponseDataUserProfile | undefined

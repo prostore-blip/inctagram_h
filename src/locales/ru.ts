@@ -64,6 +64,12 @@ export const ru = {
     common: {
       saveChanges: 'Сохранить изменения',
     },
+    devices: {
+      activeSessions: 'Активные сессии',
+      currentDevice: 'Текущее устройство',
+      lstVisit: 'Последний вход',
+      terminateAllSessions: 'Отключить все остальные сессии',
+    },
     settings: {
       aboutMe: 'Обо мне',
       aboutMePlaceholder: 'Расскажите о себе',

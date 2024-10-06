@@ -42,7 +42,7 @@ type ImagesPostType = {
 export type ResponseCreateImagesPost = {
   images: ImagesPostType[]
 }
-type CurrentSession = {
+export type CurrentSession = {
   browserName: string
   browserVersion: string
   deviceId: number

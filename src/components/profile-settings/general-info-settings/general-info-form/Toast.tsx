@@ -1,8 +1,7 @@
 import { Close } from '@/assets/icons/close'
 import { Button, Typography } from '@chrizzo/ui-kit'
-import { toast } from 'sonner'
 
-import pageStyles from '@/pages/generalInfo/page.module.scss'
+import pageStyles from './form.module.scss'
 
 type Props = {
   onDismiss: () => void

@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import Image from 'next/image'
 
-import s from '@/components/uikit-temp-replacements/avatar/avatarSelector.module.scss'
+import s from '@/components/profile-settings/general-info-settings/avatar-selector/avatarSelector.module.scss'
 
 type Props = {
   src: string
