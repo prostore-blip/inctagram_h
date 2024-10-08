@@ -3,8 +3,7 @@ import { ModalConfirmLogout } from '@/components/modalConfirmLogout'
 import { ModalCreatePost } from '@/components/modalCreatePost'
 import { PropsLink } from '@/components/nav/types'
 import { useLogout } from '@/hooks/useLogout'
-import { useLogoutMutation } from '@/services/inctagram.auth.service'
-import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
+import { useGetMyCurrentSubscriptionQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -68,7 +67,7 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
-  const { data } = useGetMySubscriptionsQuery()
+  const { data } = useGetMyCurrentSubscriptionQuery()
 
   /**
    * кастомный хук вылогинивания
@@ -95,7 +94,7 @@ export const Nav = ({ isSpecialAccount, myEmail, myProfileId }: Props) => {
           const activeLink =
             router.pathname.includes(link.path.slice(1)) && link.path.slice(1).length > 0
 
-          const hiddenStaticticsStyle = link.name === 'Statistics' && !data?.length
+          const hiddenStaticticsStyle = link.name === 'Statistics' && !data?.data.length
 
           return (
             <li

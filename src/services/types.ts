@@ -56,3 +56,28 @@ export type ResponseAllSessionsType = {
   current: CurrentSession
   others: CurrentSession[]
 }
+
+type CurrentSubscriptionType = {
+  autoRenewal: boolean
+  dateOfPayment: string
+  endDateOfSubscription: string
+  subscriptionId: string
+  userId: number
+}
+
+export type ResponseCurrentSubscriptionType = {
+  data: CurrentSubscriptionType[]
+  hasAutoRenewal: boolean
+}
+
+type AllSubscriptionsType = {
+  dateOfPayment: string
+  endDateOfSubscription: string
+  paymentType: string
+  price: number
+  subscriptionId: string
+  subscriptionType: string
+  userId: number
+}
+
+export type ResponseAllSubscriptionsType = AllSubscriptionsType[]

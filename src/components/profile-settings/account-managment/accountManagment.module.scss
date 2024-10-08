@@ -1,0 +1,27 @@
+.wrapper {
+  padding-top: 30px;
+}
+.accountTypeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 6px 12px;
+}
+.account {
+  margin-bottom: 42px;
+}
+.description {
+  margin-bottom: 6px;
+}
+.currentSubWrapper {
+  margin-bottom: 17px;
+}
+.datePayment {
+  color: var(--color-light-900);
+}
+.table {
+  border-spacing: 0 10px;
+}
+.tr .th {
+  margin: 33px !important;
+}

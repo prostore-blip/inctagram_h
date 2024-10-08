@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { AccountManagmentContent } from '@/components/profile-settings/account-managment'
 import { DevicesSessionsContent } from '@/components/profile-settings/devices'
 import { GeneralInfoContent } from '@/components/profile-settings/general-info-settings'
 import { TabsTriggerslist } from '@/components/profile-settings/tabs-trigger-list'
@@ -67,6 +68,7 @@ export const ProfileSettings = () => {
           profileData={data}
         />
         <DevicesSessionsContent />
+        <AccountManagmentContent />
       </TabsPrimitive.Root>
       <div className={s.separator} />
     </div>

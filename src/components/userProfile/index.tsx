@@ -7,7 +7,7 @@ import {
   useFollowToUserMutation,
 } from '@/services/inctagram.followings.service'
 import { useGetUserProfileByUserNameQuery } from '@/services/inctagram.profile.service'
-import { useGetMySubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
+import { useGetMyCurrentSubscriptionQuery } from '@/services/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -32,7 +32,7 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
   const { data: subscriptionData, isFetching: isFetchingGetMySubscriptions } =
-    useGetMySubscriptionsQuery(undefined, { skip: !myProfileId })
+    useGetMyCurrentSubscriptionQuery(undefined, { skip: !myProfileId })
 
   /**
    * открыть настройки
@@ -92,7 +92,9 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
           <div className={s.userNameSettingsButtonBlock}>
             <Typography className={s.userName} variant={'h1'}>
               {data?.userName ?? 'UserName'}
-              {subscriptionData?.length && !isFetchingGetMySubscriptions ? <PaidAccount /> : null}
+              {subscriptionData?.data.length && !isFetchingGetMySubscriptions ? (
+                <PaidAccount />
+              ) : null}
             </Typography>
             {myProfileId === dataProfile.id && (
               <Button onClick={openSettings} variant={'secondary'}>
