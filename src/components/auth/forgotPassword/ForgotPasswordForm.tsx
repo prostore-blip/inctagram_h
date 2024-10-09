@@ -64,6 +64,7 @@ export const ForgotPasswordForm = () => {
       setRecaptchaTokenLoading(true)
       const token = await executeRecaptcha('submit')
 
+      console.log('token', token)
       setValue('recaptcha', token)
       await trigger('recaptcha')
     } catch (err) {
@@ -87,6 +88,7 @@ export const ForgotPasswordForm = () => {
 
         setError('email', { message, type: 'manual' })
       } else {
+        console.log(1)
         setShowErrorDialog(true)
       }
     }
@@ -114,13 +116,16 @@ export const ForgotPasswordForm = () => {
         role={'alertdialog'}
       >
         <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
+        <div className={s.hr_container}>
+          <hr className={s.custom_hr} />
+        </div>
         <Typography variant={'regular16'}>
           {t.forgotPassword.startPage.successDialogText}
           {` ${getValues('email') || 'undefined@undefined'}`}
         </Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
-          <Button onClick={handleCloseSuccessDialog} variant={'primary'}>
+          <Button className={s.button} onClick={handleCloseSuccessDialog} variant={'primary'}>
             OK
           </Button>
         </div>
@@ -136,7 +141,7 @@ export const ForgotPasswordForm = () => {
         <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
-          <Button onClick={handleCloseErrorDialog} variant={'primary'}>
+          <Button className={s.button} onClick={handleCloseErrorDialog} variant={'primary'}>
             OK
           </Button>
         </div>

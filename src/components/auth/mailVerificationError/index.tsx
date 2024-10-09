@@ -8,14 +8,14 @@ import { useRouter } from 'next/router'
 
 import s from './mailVerificationError.module.scss'
 
-type MailVerificationErrorProps = {
-  email: string
-}
+// type MailVerificationErrorProps = {
+//   email: string
+// }
 
-export const MailVerificationError = memo(({ email }: MailVerificationErrorProps) => {
+export const MailVerificationError = memo(() => {
   const { t } = useTranslation()
   // const ['аналогично'] = 'название хука'()
-  const { push } = useRouter()
+  // const { push } = useRouter()
 
   const resendPasswordClick = async () => {
     try {

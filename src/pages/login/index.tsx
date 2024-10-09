@@ -13,7 +13,7 @@ export function SignInPage() {
   return (
     <>
       {emailSuccess && <MailVerificationSuccess />}
-      {emailError && <MailVerificationError email={''} />}
+      {emailError && <MailVerificationError />}
       {!emailSuccess && !emailError && <SignInForm />}
     </>
   )
