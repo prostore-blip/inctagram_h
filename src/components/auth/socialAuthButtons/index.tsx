@@ -13,10 +13,10 @@ export const SocialAuthButtons = ({ googleLoginAndRegister }: Props) => {
   return (
     <div className={s.icons}>
       <Button className={s.icon} onClick={googleLoginAndRegister} type={'button'} variant={'text'}>
-        <GoogleIcon height={36} width={36} />
+        <GoogleIcon />
       </Button>
       <Button className={s.icon} onClick={githubLoginAndRegister} type={'button'} variant={'text'}>
-        <GitHubIcon height={36} width={36} />
+        <GitHubIcon />
       </Button>
     </div>
   )
