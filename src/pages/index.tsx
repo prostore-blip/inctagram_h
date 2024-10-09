@@ -1,31 +1,34 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect } from 'react'
 
-import { GetLayout, GetNavLayout, HeadMeta, Layout, PageWrapper } from '@/components'
+import { HeadMeta } from '@/components'
+import { BaseLayout } from '@/components/layouts/BaseLayout'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useRouter } from 'next/router'
 
 export function PublicPage() {
   const { t } = useTranslation()
 
-  console.log('PubliPage')
   //--------------  временный редирект на страницу пользователя--------------
 
   const router = useRouter()
 
   useEffect(() => {
-    console.log('useEffect from PubliPage')
-
     void router.push('/profile')
+    //todo redirecting with useEffect in nextjs not a good option
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   //-------------------------------------------------------------------------
   return (
-    <PageWrapper>
+    <div>
       <HeadMeta title={'Inctagram'} />
       {t.publicPage.title}
-    </PageWrapper>
+    </div>
   )
 }
 
-PublicPage.getLayout = GetLayout
+PublicPage.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
+}
+
 export default PublicPage

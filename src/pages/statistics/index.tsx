@@ -1,15 +1,13 @@
-import React from 'react'
-import { PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { ReactNode } from 'react'
+
+import { BaseLayout } from '@/components/layouts/BaseLayout'
 import { StatisticsPage } from '@/components/statisticsPage'
 
-const Statistics: React.FC = () => {
-  return (
-    <LoginNavigate>
-      <PageWrapper>
-        <StatisticsPage />
-      </PageWrapper>
-    </LoginNavigate>
-  )
+export function Statistics() {
+  return <StatisticsPage />
+}
+
+Statistics.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
 }
 export default Statistics
