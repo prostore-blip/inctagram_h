@@ -202,7 +202,7 @@ type Props = {
   onClick: () => void
 }
 
-function RecaptchaBox({ checked, hidden, isLoading, isReady, onClick }: Props) {
+export function RecaptchaBox({ checked, hidden, isLoading, isReady, onClick }: Props) {
   const handleRecaptchaClick = () => {
     onClick && onClick()
   }
