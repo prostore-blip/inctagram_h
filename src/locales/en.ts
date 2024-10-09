@@ -1,6 +1,9 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  buzzWords: {
+    ok: 'OK',
+  },
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -65,16 +68,32 @@ export const en: LocaleType = {
     congratulations: 'Congratulations!',
     emailConfirmed: 'Your email has been confirmed',
     emailExpired: 'Email verification link expired',
+    emailSent: 'Email sent',
+    emailSentText: (email: string) => `We have sent a link to confirm your email to ${email}`,
     emailTitle: 'Email',
+    emailType: 'The email must match the format example@example.com',
+    errors: {
+      emailAlreadyConfirmed: 'User with email already confirmed',
+      userNameAlreadyConfirmed: 'User with userName already confirmed',
+    },
     expiredDescription:
       'Looks like the verification link has expired. Not to worry, we can send the link again',
     haveAcc: `Do you have an account?`,
+    maxCharsNumber: (maxChars: number) => `Maximum number of characters ${maxChars}`,
+    minCharsNumber: (minChars: number) => `Minimum number of characters ${minChars}`,
     passTitle: 'Password',
+    passwordMatch: 'The passwords must match',
+    passwordMustContain:
+      'Password must contain a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~"',
+    passwordRecovery: 'Password recovery',
+    passwordRequirements: (minChars: number, maxChars: number) =>
+      `Your password must be between ${minChars} and ${maxChars} characters`,
     resendVerificationLink: 'Resend verification link',
     rules: ['I agree to the', 'Terms of Service', 'and', 'Privacy Policy'],
     signInButton: 'Sign In',
     signUp: 'Sign Up',
     title: 'Sign Up',
     userName: 'Username',
+    userNameContains: 'Username may contain 0-9; A-Z; a-z; _; -',
   },
 }
