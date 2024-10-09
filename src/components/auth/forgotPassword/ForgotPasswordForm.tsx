@@ -136,9 +136,12 @@ export const ForgotPasswordForm = () => {
         role={'alertdialog'}
       >
         <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
+        <div className={s.hr_container}>
+          <hr className={s.custom_hr} />
+        </div>
         <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
         {/*todo remove*/}
-        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
+        <Typography variant={'regular16'} />
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
           <Button className={s.button} onClick={handleCloseErrorDialog} variant={'primary'}>

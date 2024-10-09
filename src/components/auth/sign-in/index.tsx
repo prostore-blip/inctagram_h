@@ -26,7 +26,7 @@ export function SignInForm() {
   //https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#customizing-query-responses-with-transformerrorresponse
 
   //todo implement
-  const googleLoginAndRegister = () => {}
+  // const googleLoginAndRegister = () => {}?? сыпится ошибка из-а этого, пока так
 
   const {
     control,
@@ -90,7 +90,7 @@ export function SignInForm() {
         <Typography className={s.title} variant={'h1'}>
           {t.signIn.title}
         </Typography>
-        <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
+        <SocialAuthButtons />
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <FormInput
             control={control}
