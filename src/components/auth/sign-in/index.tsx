@@ -105,13 +105,7 @@ export function SignInForm() {
             placeholder={'******'}
             type={'password'}
           />
-          <FormInput
-            className={s.hidden}
-            control={control}
-            hidden
-            label={t.signIn.passTitle}
-            name={'captchaToken'}
-          />
+
           <Typography className={s.forgot} variant={'regular14'}>
             <Link href={'/forgotPassword'}>{t.signIn.forgotPass}</Link>
           </Typography>
