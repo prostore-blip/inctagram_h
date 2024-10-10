@@ -87,6 +87,8 @@ export const ForgotPasswordForm = () => {
         const message = t.forgotPassword.startPage.emailNotFound
 
         setError('email', { message, type: 'manual' })
+        setValue('recaptcha', '')
+        setRecaptchaTokenLoading(false)
       } else {
         console.log(1)
         setShowErrorDialog(true)

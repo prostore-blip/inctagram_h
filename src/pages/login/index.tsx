@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
-import { MailVerificationError, MailVerificationSuccess } from '@/components'
-import { SignInForm } from '@/components/auth/sign-in'
+import { MailVerificationError, MailVerificationSuccess, SignInForm } from '@/components'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 import { useRouter } from 'next/router'
 
