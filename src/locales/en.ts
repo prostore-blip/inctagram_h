@@ -6,6 +6,7 @@ export const en: LocaleType = {
   },
   common: {
     incorrectEmail: 'The email must match the format example@example.com',
+    recaptchaCheckFailed: '"I am not a robot" check failed. Try again',
     requiredField: 'Fill in the field',
   },
   forgotPassword: {

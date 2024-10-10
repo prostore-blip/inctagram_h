@@ -8,18 +8,18 @@ import s from './toast.module.scss'
 
 type Props = {
   onDismiss?: () => void
-  title?: string
+  text: string
   variant?: 'error' | 'info' | 'success' | 'warning'
 } & ComponentPropsWithoutRef<'div'>
 
-export const Toast = ({ className, onDismiss, title, variant = 'info' }: Props) => {
+export const Toast = ({ className, onDismiss, text, variant = 'info' }: Props) => {
   const handleDismiss = () => {
     onDismiss && onDismiss()
   }
 
   return (
     <div className={clsx(s.toastWrapper, s[variant], className)}>
-      {title && <Typography variant={'regular16'}>{title}</Typography>}
+      {text && <Typography variant={'regular16'}>{text}</Typography>}
       <Button className={s.close} onClick={handleDismiss} variant={'text'}>
         <Close />
       </Button>

@@ -4,6 +4,8 @@ export const ru = {
   },
   common: {
     incorrectEmail: 'Введите корректный адрес',
+    recaptchaCheckFailed:
+      'Не удалось выполнить проверку, что запрос не является автоматизированным. Попробуйте повторить',
     requiredField: 'Поле не должно быть пустым',
   },
   forgotPassword: {

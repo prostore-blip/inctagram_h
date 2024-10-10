@@ -58,7 +58,11 @@ export function SignInForm() {
       const recaptcha = await executeRecaptcha('submit')
 
       if (!recaptcha) {
-        throw new Error('no recaptcha')
+        toast.custom(toast => <Toast text={t.common.recaptchaCheckFailed} variant={'error'} />, {
+          duration: 5000,
+        })
+
+        return
       }
 
       const token = await login({ ...data, captchaToken: recaptcha }).unwrap()
@@ -70,8 +74,13 @@ export function SignInForm() {
         if (error.data.errorName === 'UnauthorizedException') {
           setError('password', { message: t.signIn.wrongCredentials })
         }
-        if (error.data.errorName !== 'UnauthorizedException') {
-          toast.custom(toast => <Toast title={error.data.errorName} variant={'error'} />, {
+        if (error.data.errorName !== 'UnauthorizedException' && error.status !== 403) {
+          toast.custom(toast => <Toast text={error.data.errorName} variant={'error'} />, {
+            duration: 5000,
+          })
+        }
+        if (error.status === 403) {
+          toast.custom(toast => <Toast text={t.common.recaptchaCheckFailed} variant={'error'} />, {
             duration: 5000,
           })
         }
@@ -95,7 +104,7 @@ export function SignInForm() {
       }
 
       if (!isErrorResponse(error) && !isFormError(error)) {
-        toast.custom(toast => <Toast title={JSON.stringify(error)} variant={'error'} />, {
+        toast.custom(toast => <Toast text={JSON.stringify(error)} variant={'error'} />, {
           duration: 5000,
         })
       }
