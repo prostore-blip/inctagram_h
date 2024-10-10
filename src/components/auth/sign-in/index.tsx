@@ -1,11 +1,13 @@
-import { FieldPath, useForm } from 'react-hook-form'
+import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { SocialAuthButtons } from '@/components'
 import { FormInput } from '@/components/controll/formTextField'
+import { Toast } from '@/components/layouts/Toast'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useSignInMutation } from '@/services'
-import { isFormDataErrorResponse } from '@/services/incta-team-api/common/types'
-import { isFetchBaseQueryError } from '@/types'
+import { isErrorResponse, isFormError } from '@/services/incta-team-api/common/types'
+import { decodeJWT } from '@/utils/decode-jwt'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,6 +15,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useReCaptcha } from 'next-recaptcha-v3'
+import { toast } from 'sonner'
 
 import s from './logIn.module.scss'
 
@@ -28,26 +31,25 @@ export function SignInForm() {
   //todo implement
   const googleLoginAndRegister = () => {}
 
+  const { t } = useTranslation()
+
+  const zodSignUpSchema = useMemo(() => logInSchema(t), [t])
+
   const {
     control,
     formState: { isDirty, isSubmitting, isValid, isValidating },
     handleSubmit,
     setError,
-    setValue,
-    trigger,
   } = useForm<SignInFormData>({
     defaultValues: {
-      captchaToken: 'placeholder-to-not-affect-submit-button',
       email: '',
       password: '',
     },
     mode: 'onTouched',
-    resolver: zodResolver(logInSchema),
+    resolver: zodResolver(zodSignUpSchema),
   })
 
   const { executeRecaptcha, loaded: recaptchaLoaded } = useReCaptcha()
-
-  const { t } = useTranslation()
 
   const router = useRouter()
 
@@ -56,27 +58,55 @@ export function SignInForm() {
       const recaptcha = await executeRecaptcha('submit')
 
       if (!recaptcha) {
-        throw new Error('no recaptcha')
-      }
-      //todo remove form field? or make separate functions as in forgotPassword form
-
-      // setValue('captchaToken', recaptcha)
-      // await trigger('captchaToken')
-      //data already has placeholder token and won't be updated with setValue
-
-      await login({ ...data, captchaToken: recaptcha }).unwrap()
-
-      //todo show toast?
-      //todo middleware for redirecting?
-      void router.push(`/profile`)
-    } catch (error) {
-      if (isFetchBaseQueryError(error) && isFormDataErrorResponse(error.data)) {
-        error.data.errorsMessages.forEach(field => {
-          setError(field.field as FieldPath<SignInFormData>, { message: field.message })
+        toast.custom(toast => <Toast text={t.common.recaptchaCheckFailed} variant={'error'} />, {
+          duration: 5000,
         })
-      } else {
-        //todo show toast?
-        console.warn(error)
+
+        return
+      }
+
+      const token = await login({ ...data, captchaToken: recaptcha }).unwrap()
+      const userId = token?.accessToken ? decodeJWT(token?.accessToken).userId : ''
+
+      userId && (await router.push(`/profile/${userId}`))
+    } catch (error) {
+      if (isErrorResponse(error)) {
+        if (error.data.errorName === 'UnauthorizedException') {
+          setError('password', { message: t.signIn.wrongCredentials })
+        }
+        if (error.data.errorName !== 'UnauthorizedException' && error.status !== 403) {
+          toast.custom(toast => <Toast text={error.data.errorName} variant={'error'} />, {
+            duration: 5000,
+          })
+        }
+        if (error.status === 403) {
+          toast.custom(toast => <Toast text={t.common.recaptchaCheckFailed} variant={'error'} />, {
+            duration: 5000,
+          })
+        }
+      }
+      //the api sends extraneous info about credentials
+      //the sign-in process usually won't show password quality checks to a user
+      if (isFormError(error)) {
+        setError('password', { message: t.signIn.wrongCredentials })
+        // toast.custom(
+        //   toast => (
+        //     <Toast
+        //       // title={error.data.errorsMessages.map(message => message.message).join('|')}
+        //       title={t.signIn.wrongCredentials}
+        //       variant={'error'}
+        //     />
+        //   ),
+        //   {
+        //     duration: 5000,
+        //   }
+        // )
+      }
+
+      if (!isErrorResponse(error) && !isFormError(error)) {
+        toast.custom(toast => <Toast text={JSON.stringify(error)} variant={'error'} />, {
+          duration: 5000,
+        })
       }
     }
   }
@@ -87,7 +117,7 @@ export function SignInForm() {
     <>
       <DevTool control={control} />
       <Card className={s.card} variant={'dark500'}>
-        <Typography className={s.title} variant={'h1'}>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
           {t.signIn.title}
         </Typography>
         <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
@@ -105,13 +135,7 @@ export function SignInForm() {
             placeholder={'******'}
             type={'password'}
           />
-          <FormInput
-            className={s.hidden}
-            control={control}
-            hidden
-            label={t.signIn.passTitle}
-            name={'captchaToken'}
-          />
+
           <Typography className={s.forgot} variant={'regular14'}>
             <Link href={'/forgotPassword'}>{t.signIn.forgotPass}</Link>
           </Typography>

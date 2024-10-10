@@ -1,15 +1,14 @@
 export const ru = {
+  buzzWords: {
+    ok: 'ДА',
+  },
   common: {
-    cancel: 'Отменить',
-    email: 'Почта',
-    firstName: 'Имя',
-    lastName: 'Фамилия',
-    password: 'Пароль',
     save: 'Сохранить',
     selectFromComputer: 'Выбрать с диска',
-    signIn: 'Войти',
-    signOut: 'Выйти',
-    username: 'Логин', //?
+    incorrectEmail: 'Введите корректный адрес',
+    recaptchaCheckFailed:
+      'Не удалось выполнить проверку, что запрос не является автоматизированным. Попробуйте повторить',
+    requiredField: 'Поле не должно быть пустым',
   },
   forgotPassword: {
     common: {
@@ -108,23 +107,41 @@ export const ru = {
     signInButton: 'Войти',
     signUp: 'Создать аккаунт',
     title: 'Страница входа',
+    wrongCredentials: 'Неверные email или пароль. Попробуйте снова.',
   },
   signUp: {
     confirmPass: 'Подтвердите пароль',
     congratulations: 'Поздравляем!',
     emailConfirmed: 'Ваша почта была подтверждена',
     emailExpired: 'Время жизни ссылки подтверждения истекло',
+    emailSent: 'Письмо отправлено',
+    emailSentText: (email: string) =>
+      `Мы отправили ссылку для подтверждения вашего адреса электронной почты на ${email}`,
     emailTitle: 'Почта',
+    emailType: 'Адрес почты должен соответствовать формату example@example.com',
+    errors: {
+      emailAlreadyConfirmed: 'Пользователь с таким email уже подтверждён',
+      userNameAlreadyConfirmed: 'Пользователь с таким именем уже подтверждён',
+    },
     expiredDescription:
       'Похоже что время жизни ссылки истекло. Не переживайте, мы можем выслать ссылку повторно',
     haveAcc: `Уже есть аккаунт?`,
+    maxCharsNumber: (maxChars: number) => `Максимальное количество символов  ${maxChars}`,
+    minCharsNumber: (minChars: number) => `Минимальное количество символов ${minChars}`,
     passTitle: 'Пароль',
+    passwordMatch: 'Пароли должны совпадать',
+    passwordMustContain:
+      'Пароль должен содержать a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~"',
+    passwordRecovery: 'Восстановление пароля',
+    passwordRequirements: (minChars: number, maxChars: number) =>
+      `Ваш пароль должен содержать от ${minChars} до ${maxChars} символов`,
     resendVerificationLink: 'Повторно отправить ссылку для проверки почты',
     rules: ['Я согласен с', 'Условиями обслуживания', 'и', 'Политикой конфиденциальности'],
     signInButton: 'Войти',
     signUp: 'Создать аккаунт',
     title: 'Страница регистрации',
     userName: 'Имя пользователя',
+    userNameContains: 'Имя пользователя должно содержать 0-9; A-Z; a-z; _; -',
   },
 }
 
