@@ -1,9 +1,10 @@
 import { ReactNode } from 'react'
 
 import { BaseLayout } from '@/components/layouts/BaseLayout'
+import { StatisticsPage } from '@/components/statisticsPage'
 
 export function Statistics() {
-  return <div>Statistics</div>
+  return <StatisticsPage />
 }
 
 Statistics.getLayout = function getLayout(page: ReactNode) {

@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Typography } from '@chrizzo/ui-kit'
+import { Tabs, Typography } from '@chrizzo/ui-kit'
 
-import s from './statistics.module.scss'
+import s from '@/pages/statistics/statistics.module.scss'
 
-// import { ChartLines } from './ChartLine'
+import { ChartLines } from './ChartLine'
 
 export const StatisticsPage: React.FC = () => {
   return (
@@ -12,12 +12,9 @@ export const StatisticsPage: React.FC = () => {
       <Typography as={'h1'} className={s.title}>
         Statistics
       </Typography>
-      {/*<ChartLines label={'Like'} statisticsVariant={'like'} />*/}
-      {/*<ChartLines label={'Comments'} statisticsVariant={'comments'} />*/}
-      {/*<ChartLines label={'Publication views'} statisticsVariant={'Publication views'} />*/}
+      <ChartLines label={'Like'} statisticsVariant={'like'} />
+      <ChartLines label={'Comments'} statisticsVariant={'comments'} />
+      <ChartLines label={'Publication views'} statisticsVariant={'Publication views'} />
     </Typography>
   )
 }
-
-//todo ChartLines? statistics.module.scss?
-//why a page is in components?
