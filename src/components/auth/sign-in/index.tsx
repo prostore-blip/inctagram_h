@@ -69,12 +69,11 @@ export function SignInForm() {
       if (isErrorResponse(error)) {
         if (error.data.errorName === 'UnauthorizedException') {
           setError('password', { message: t.signIn.wrongCredentials })
-          toast.custom(toast => <Toast title={t.signIn.wrongCredentials} variant={'error'} />, {
-            duration: 5000,
-          })
         }
         if (error.data.errorName !== 'UnauthorizedException') {
-          toast.error(error.data.errorName)
+          toast.custom(toast => <Toast title={error.data.errorName} variant={'error'} />, {
+            duration: 5000,
+          })
         }
       }
       //the api sends extraneous info about credentials

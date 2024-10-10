@@ -1,12 +1,12 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  buzzWords: {
+    ok: 'OK',
+  },
   common: {
     incorrectEmail: 'The email must match the format example@example.com',
     requiredField: 'Fill in the field',
-  },
-  buzzWords: {
-    ok: 'OK',
   },
   forgotPassword: {
     common: {
