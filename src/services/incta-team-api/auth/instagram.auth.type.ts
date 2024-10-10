@@ -7,6 +7,21 @@ export type SignUpRequest = {
   userName: string
 }
 
+export type RegistrationConfirmationArgs = {
+  confirmationCode: string
+}
+
+export type ErrorResponse = {
+  data: {
+    errorsMessages: [
+      {
+        field: 'string'
+        message: 'string'
+      },
+    ]
+  }
+}
+
 // export type SignInRequestBody = {
 //   captchaToken: string
 //   email: string
