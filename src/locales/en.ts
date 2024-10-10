@@ -4,6 +4,11 @@ export const en: LocaleType = {
   buzzWords: {
     ok: 'OK',
   },
+  common: {
+    incorrectEmail: 'The email must match the format example@example.com',
+    recaptchaCheckFailed: '"I am not a robot" check failed. Try again',
+    requiredField: 'Fill in the field',
+  },
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -62,6 +67,7 @@ export const en: LocaleType = {
     signInButton: 'Sign In',
     signUp: 'Sign Up',
     title: 'Sign In',
+    wrongCredentials: 'The email or password are incorrect. Try again please',
   },
   signUp: {
     confirmPass: 'Confirm Password',

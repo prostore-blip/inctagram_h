@@ -2,6 +2,12 @@ export const ru = {
   buzzWords: {
     ok: 'ДА',
   },
+  common: {
+    incorrectEmail: 'Введите корректный адрес',
+    recaptchaCheckFailed:
+      'Не удалось выполнить проверку, что запрос не является автоматизированным. Попробуйте повторить',
+    requiredField: 'Поле не должно быть пустым',
+  },
   forgotPassword: {
     common: {
       inProgress: 'Отправка запроса...',
@@ -62,6 +68,7 @@ export const ru = {
     signInButton: 'Войти',
     signUp: 'Создать аккаунт',
     title: 'Страница входа',
+    wrongCredentials: 'Неверные email или пароль. Попробуйте снова.',
   },
   signUp: {
     confirmPass: 'Подтвердите пароль',
