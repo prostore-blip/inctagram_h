@@ -8,7 +8,7 @@ import {
 import { FormInput } from '@/components/controll/formTextField'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useResetPasswordMutation } from '@/services/inctagram.auth.service'
+import { useResetPasswordMutation } from '@/services'
 import { isUnsuccessfulRequestResult } from '@/types'
 import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'

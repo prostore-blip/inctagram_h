@@ -1,13 +1,12 @@
-import { GetNavLayout, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { ReactNode } from 'react'
+
+import { BaseLayout } from '@/components/layouts/BaseLayout'
 
 export function Statistics() {
-  return (
-    <LoginNavigate>
-      <PageWrapper>Statistics</PageWrapper>
-    </LoginNavigate>
-  )
+  return <div>Statistics</div>
 }
 
-Statistics.getLayout = GetNavLayout
+Statistics.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
+}
 export default Statistics

@@ -1,5 +1,7 @@
-import { GetLayout, PageWrapper } from '@/components'
-import { useGetUserProfileQuery } from '@/services/inctagram.profile.service'
+import { ReactNode } from 'react'
+
+import { BaseLayout } from '@/components/layouts/BaseLayout'
+import { useGetUserProfileQuery } from '@/services/inctagram-work-api/inctagram.profile.service'
 import { useRouter } from 'next/router'
 
 import s from './userProfilePage.module.scss'
@@ -13,11 +15,7 @@ function UserProfileWrapper() {
   const { data, isFetching } = useGetUserProfileQuery()
 
   if (isFetching) {
-    return (
-      <PageWrapper>
-        <h1 className={s.loader}>!!!!!!!!!!loading!!!!!!!!!</h1>
-      </PageWrapper>
-    )
+    return <h1 className={s.loader}>!!!!!!!!!!loading!!!!!!!!!</h1>
   }
   if (data) {
     void router.push(`/profile/${data?.id}`)
@@ -26,6 +24,8 @@ function UserProfileWrapper() {
   return null
 }
 
-// UserProfileWrapper.getLayout = GetNavLayout
-UserProfileWrapper.getLayout = GetLayout
+UserProfileWrapper.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
+}
+
 export default UserProfileWrapper

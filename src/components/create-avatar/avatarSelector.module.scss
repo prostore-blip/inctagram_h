@@ -1,0 +1,67 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+
+  .addAvaButton {
+    min-width: 196px;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  align-items: center;
+  background-color: var(--color-dark-500);
+
+  display: flex;
+  height: 192px;
+  justify-content: center;
+  width: 192px;
+  overflow: hidden;
+
+  .deleteAva {
+    padding: 0;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+  }
+}
+
+.round {
+  border-radius: 50%;
+}
+
+.imageContainerSquare {
+  position: relative;
+  align-items: center;
+  background-color: var(--color-dark-500);
+
+  display: flex;
+  height: 222px;
+  justify-content: center;
+  width: 222px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.clearButton {
+  width: 16px;
+  height: 16px;
+  z-index: 1;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: var(--color-danger);
+
+  color: var(--color-text);
+  font-weight: 700;
+  padding: 4px;
+  border-radius: 50%;
+  outline: 4px var(--color-dark-900) solid;
+  &:hover {
+    background-color: var(--color-danger-300);
+  }
+}

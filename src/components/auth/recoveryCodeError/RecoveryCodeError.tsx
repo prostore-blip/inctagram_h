@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { RecoveryCodeExpired } from '@/assets/image/recoveryCodeExpired'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
+import { usePasswordRecoveryMutation } from '@/services'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
 import { useReCaptcha } from 'next-recaptcha-v3'
@@ -19,7 +19,7 @@ export function RecoveryCodeError({ text, title }: Props) {
   const [
     forgotPassword,
     { error, isLoading: isForgotPasswordLoading, isSuccess: isForgotPasswordSuccess },
-  ] = useForgotPasswordMutation()
+  ] = usePasswordRecoveryMutation()
 
   const { t } = useTranslation()
 

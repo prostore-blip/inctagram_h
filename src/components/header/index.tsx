@@ -115,8 +115,8 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
   return (
     <header className={s.header}>
       <div className={s.wrapper}>
-        <Typography variant={'large'}>
-          <Link href={'/'}>Inctagram</Link>
+        <Typography as={Link} href={'/'} variant={'large'}>
+          Inctagram
         </Typography>
         <div className={s.buttonsBlock}>
           {windowWidth > 450 ? (
@@ -140,10 +140,15 @@ export const Header = ({ isAuthMe }: { isAuthMe?: boolean }) => {
             <></>
           )}
           <Select
+            className={s.select}
             defaultValue={defaultLocale}
             items={itemsForSelect}
             onValueChange={onChangeLanguageHandler}
-            variant={`${(!isAuthMe && windowWidth < 420) || (isAuthMe && windowWidth < 661) ? 'small' : 'large'}`}
+            variant={`${
+              (!isAuthMe && windowWidth < 420) || (isAuthMe && windowWidth < 661)
+                ? 'small'
+                : 'large'
+            }`}
           />
           {!isAuthMe && windowWidth > 780 && (
             <div className={s.buttonsContainer}>

@@ -21,7 +21,23 @@
       border-radius: 50%;
     }
   }
+  .followersWrapper {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 24px;
+    .li {
+      display: flex;
+      justify-content: space-between;
 
+      .avaAndUserNameBlock {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+    }
+  }
   .close {
     padding: 0;
   }

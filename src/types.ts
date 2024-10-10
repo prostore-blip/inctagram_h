@@ -31,6 +31,26 @@ export function isFormError(obj: unknown): obj is FormError {
   return isErrorWithData(obj) && isFormErrorData(obj.data)
 }
 
+export type FetchBaseQueryErrorData = {
+  error: string
+  errorName: string
+  path: string
+  statusCode: number
+  timestamp: string
+}
+
+export function isFetchBaseQueryErrorData(obj: any): obj is FetchBaseQueryErrorData {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    typeof obj.statusCode === 'number' &&
+    typeof obj.timestamp === 'string' &&
+    typeof obj.error === 'string' &&
+    typeof obj.path === 'string' &&
+    typeof obj.errorName === 'string'
+  )
+}
+
 export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
   return (
     typeof error === 'object' &&
@@ -39,7 +59,9 @@ export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryEr
     (typeof (error as FetchBaseQueryError).status === 'number' ||
       (error as FetchBaseQueryError).status === 'FETCH_ERROR' ||
       (error as FetchBaseQueryError).status === 'PARSING_ERROR' ||
-      (error as FetchBaseQueryError).status === 'CUSTOM_ERROR')
+      (error as FetchBaseQueryError).status === 'CUSTOM_ERROR') &&
+    'data' in error &&
+    isFetchBaseQueryErrorData(error.data)
   )
 }
 

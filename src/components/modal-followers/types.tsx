@@ -32,14 +32,14 @@ export type RequestType<T> = {
 type CommonItemType = {
   avatars: AvatarFollowingUser[]
   createdAt: string
-  id: number
+  id: string
   userName: string
 }
 
 export interface FollowersUsersType extends CommonItemType {
   isFollowedBy: boolean
   isFollowing: boolean
-  userId: number
+  userId: string
 }
 
 export interface UsersType extends CommonItemType {
