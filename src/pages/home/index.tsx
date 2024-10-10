@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { HeadMeta } from '@/components'
 import { BaseLayout } from '@/components/layouts/BaseLayout'
 
-export function Home() {
+function Home() {
   return (
     <>
       <HeadMeta title={'Inctagram'} />

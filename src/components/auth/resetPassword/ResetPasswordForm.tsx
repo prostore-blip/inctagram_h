@@ -90,6 +90,10 @@ export const ResetPasswordForm = () => {
     }
   }
 
+  const redirectToRoute = () => {
+    router.push('/login')
+  }
+
   const handleCloseSuccessDialog = async () => {
     setShowSuccessDialog(false)
     // await router.push('/login')
@@ -166,7 +170,12 @@ export const ResetPasswordForm = () => {
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.newPassword.hint}
             </Typography>
-            <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
+            <Button
+              className={s.submitButton}
+              disabled={submitDisabled}
+              onClick={redirectToRoute}
+              type={'submit'}
+            >
               {t.forgotPassword.newPassword.createNewPassword}
               {isSubmitting && <span className={clsx(s.loader)} />}
             </Button>

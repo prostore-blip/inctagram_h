@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { BaseLayout } from '@/components/layouts/BaseLayout'
 
-export function Messenger() {
+function Messenger() {
   return <>Messenger</>
 }
 

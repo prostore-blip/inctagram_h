@@ -5,7 +5,7 @@ import { SignInForm } from '@/components/auth/sign-in'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 import { useRouter } from 'next/router'
 
-export function SignInPage() {
+function SignInPage() {
   const router = useRouter()
   const { 'email-verification-failed': emailError, 'email-verification-success': emailSuccess } =
     router.query

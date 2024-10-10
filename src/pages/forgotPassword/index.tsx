@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { ForgotPasswordForm } from '@/components/auth'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 
-export function ForgotPasswordPage() {
+function ForgotPasswordPage() {
   return <ForgotPasswordForm />
 }
 
