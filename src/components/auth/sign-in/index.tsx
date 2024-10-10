@@ -1,6 +1,6 @@
 import { FieldPath, useForm } from 'react-hook-form'
 
-import { SocialAuthButtons } from '@/components'
+import { SocialAuthButtons } from '@/components/auth'
 import { FormInput } from '@/components/controll/formTextField'
 import { useTranslation } from '@/hooks/useTranslation'
 import { useSignInMutation } from '@/services'
