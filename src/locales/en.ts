@@ -1,6 +1,10 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  common: {
+    incorrectEmail: 'The email must match the format example@example.com',
+    requiredField: 'Fill in the field',
+  },
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -59,6 +63,7 @@ export const en: LocaleType = {
     signInButton: 'Sign In',
     signUp: 'Sign Up',
     title: 'Sign In',
+    wrongCredentials: 'The email or password are incorrect. Try again please',
   },
   signUp: {
     confirmPass: 'Confirm Password',

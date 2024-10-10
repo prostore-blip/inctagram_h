@@ -13,7 +13,7 @@ export type SignUpRequest = {
 //   password: string
 // }
 //we have a type from loginFormSchema
-export type SignInRequestBody = SignInFormData
+export type SignInRequestBody = { captchaToken: string } & SignInFormData
 
 export type AuthGetResponse = {
   email: string
@@ -25,19 +25,18 @@ export type ResponseWithAccessToken = {
   accessToken: string
 }
 
+export type JwtToken = {
+  deviceId: string
+  exp: number
+  iat: number
+  userId: string
+}
+
 export type MeResponse = {
   email: string
   userId: string
   userName: string
 }
-
-// {
-//   "statusCode": 401,
-//     "timestamp": "2024-09-17T13:54:23.262Z",
-//     "error": "Incorrect password",
-//     "path": "/api/v1/auth/signin",
-//     "errorName": "UnauthorizedException"
-// }
 
 // {
 //   "result": {
@@ -75,14 +74,6 @@ export type MeResponse = {
 //     "response": {}
 //   }
 // }
-// }
-
-// {
-//   "statusCode": 401,
-//     "timestamp": "2024-09-17T11:14:23.945Z",
-//     "error": "User not found",
-//     "path": "/api/v1/auth/signin",
-//     "errorName": "UnauthorizedException"
 // }
 
 //{

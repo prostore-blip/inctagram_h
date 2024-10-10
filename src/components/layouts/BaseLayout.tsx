@@ -5,6 +5,7 @@ import { useAuthMeQuery } from '@/services'
 import { clsx } from 'clsx'
 import { NextPage } from 'next'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
 
 import s from './baseLayout.module.scss'
 
@@ -32,6 +33,7 @@ export const BaseLayout: NextPage<PropsWithChildren> = ({ children }) => {
           <Header isAuthMe={authenticated} />
           {authenticated && <Nav isSpecialAccount />}
           <main className={clsx(s.mainContent, !authenticated && s.marginAuto)}>{children}</main>
+          <Toaster />
         </>
       )}
     </div>
