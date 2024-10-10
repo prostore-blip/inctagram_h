@@ -5,11 +5,11 @@ export const en: LocaleType = {
     ok: 'OK',
   },
   common: {
-    save: 'Save',
-    selectFromComputer: 'Select from computer',
     incorrectEmail: 'The email must match the format example@example.com',
     recaptchaCheckFailed: '"I am not a robot" check failed. Try again',
     requiredField: 'Fill in the field',
+    save: 'Save',
+    selectFromComputer: 'Select from computer',
   },
   forgotPassword: {
     common: {

@@ -3,12 +3,12 @@ export const ru = {
     ok: 'ДА',
   },
   common: {
-    save: 'Сохранить',
-    selectFromComputer: 'Выбрать с диска',
     incorrectEmail: 'Введите корректный адрес',
     recaptchaCheckFailed:
       'Не удалось выполнить проверку, что запрос не является автоматизированным. Попробуйте повторить',
     requiredField: 'Поле не должно быть пустым',
+    save: 'Сохранить',
+    selectFromComputer: 'Выбрать с диска',
   },
   forgotPassword: {
     common: {
