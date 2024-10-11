@@ -19,6 +19,8 @@ import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './resetPasswordForm.module.scss'
 
+import { AuthModalComponent } from '../authModal/AuthModalComponent'
+
 export const ResetPasswordForm = () => {
   const [
     resetPassword,
@@ -89,11 +91,9 @@ export const ResetPasswordForm = () => {
       setShowErrorDialog(true)
     }
   }
-
-  const redirectToRoute = () => {
-    router.push('/login')
+  const handleCloseErrorDialog = () => {
+    setShowErrorDialog(false)
   }
-
   const handleCloseSuccessDialog = async () => {
     setShowSuccessDialog(false)
     // await router.push('/login')
@@ -106,7 +106,7 @@ export const ResetPasswordForm = () => {
   return (
     <div className={s.wrapper}>
       <DevTool control={control} />
-      <dialog
+      {/* <dialog
         className={clsx(showSuccessDialog && s.dialog)}
         open={showSuccessDialog}
         role={'alertdialog'}
@@ -131,7 +131,7 @@ export const ResetPasswordForm = () => {
         <Typography variant={'regular16'}>
           {t.forgotPassword.newPassword.errorDialogText}
         </Typography>
-        {/*todo remove*/}
+        
         <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
@@ -139,7 +139,7 @@ export const ResetPasswordForm = () => {
             OK
           </Button>
         </div>
-      </dialog>
+      </dialog> */}
       <Card className={clsx(s.card, token === 'invalid-token' && s.hidden)} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.newPassword.title}
@@ -170,15 +170,26 @@ export const ResetPasswordForm = () => {
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.newPassword.hint}
             </Typography>
-            <Button
-              className={s.submitButton}
-              disabled={submitDisabled}
-              onClick={redirectToRoute}
-              type={'submit'}
-            >
+            {/* <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
               {t.forgotPassword.newPassword.createNewPassword}
               {isSubmitting && <span className={clsx(s.loader)} />}
-            </Button>
+            </Button> */}
+            <AuthModalComponent
+              buttonText={t.forgotPassword.newPassword.createNewPassword}
+              error={error}
+              errorDialogText={t.forgotPassword.newPassword.errorDialogText}
+              errorDialogTitle={t.forgotPassword.newPassword.errorDialogTitle}
+              handleCloseDialog={handleCloseSuccessDialog}
+              handleCloseErrorDialog={handleCloseErrorDialog}
+              isSubmitting={isSubmitting}
+              modalButtonText={'Ok'}
+              showErrorDialog={showErrorDialog}
+              showSuccessDialog={showSuccessDialog}
+              submitDisabled={submitDisabled}
+              successDialogText={t.forgotPassword.newPassword.successDialogText}
+              successDialogTitle={t.forgotPassword.newPassword.successDialogTitle}
+              useLinkOnSuccess
+            ></AuthModalComponent>
           </div>
         </form>
       </Card>

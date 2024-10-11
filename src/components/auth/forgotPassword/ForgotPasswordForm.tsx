@@ -16,6 +16,7 @@ import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './forgotPasswordForm.module.scss'
 
+import { AuthModalComponent } from '../authModal/AuthModalComponent'
 import { ForgotPasswordRequestData, forgotPasswordFormSchema } from './schema'
 
 export const ForgotPasswordForm = () => {
@@ -104,7 +105,9 @@ export const ForgotPasswordForm = () => {
     }
     await makeRequest()
   }
-
+  const buttonText = emailSent
+    ? t.forgotPassword.startPage.sendLinkAgain
+    : t.forgotPassword.startPage.sendLink
   const submitDisabled = !isDirty || !isValid || isLoading || isValidating || isSubmitting
 
   //todo replace native dialog with component
@@ -112,7 +115,7 @@ export const ForgotPasswordForm = () => {
   return (
     <>
       <DevTool control={control} />
-      <dialog
+      {/* <dialog
         className={clsx(showSuccessDialog && s.dialog)}
         open={showSuccessDialog}
         role={'alertdialog'}
@@ -142,7 +145,6 @@ export const ForgotPasswordForm = () => {
           <hr className={s.custom_hr} />
         </div>
         <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
-        {/*todo remove*/}
         <Typography variant={'regular16'} />
         <div className={s.flexFiller} />
         <div className={s.buttonContainer}>
@@ -150,7 +152,7 @@ export const ForgotPasswordForm = () => {
             OK
           </Button>
         </div>
-      </dialog>
+      </dialog> */}
       <Card className={s.card} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.startPage.title}
@@ -166,13 +168,6 @@ export const ForgotPasswordForm = () => {
               placeholder={'example@example.com'}
               readOnly={emailSent}
             />
-            <FormInput
-              className={s.hidden}
-              control={control}
-              error={errors.recaptcha?.message}
-              label={'Captcha'}
-              name={'recaptcha'}
-            />
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.startPage.hint}
             </Typography>
@@ -181,11 +176,26 @@ export const ForgotPasswordForm = () => {
                 {t.forgotPassword.startPage.linkSent}
               </Typography>
             )}
-            <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
+            {/* <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
               {emailSent && t.forgotPassword.startPage.sendLinkAgain}
               {!emailSent && t.forgotPassword.startPage.sendLink}
               {isSubmitting && <span className={clsx(s.loader)} />}
-            </Button>
+            </Button> */}
+            <AuthModalComponent
+              buttonText={buttonText}
+              emailAddress={` ${getValues('email') || 'undefined@undefined'}`}
+              errorDialogText={t.forgotPassword.startPage.errorDialogText}
+              errorDialogTitle={t.forgotPassword.startPage.errorDialogTitle}
+              handleCloseDialog={handleCloseSuccessDialog}
+              handleCloseErrorDialog={handleCloseErrorDialog}
+              isSubmitting={isSubmitting}
+              modalButtonText={'Ok'}
+              showErrorDialog={showErrorDialog}
+              showSuccessDialog={showSuccessDialog}
+              submitDisabled={submitDisabled}
+              successDialogText={t.forgotPassword.startPage.successDialogText}
+              successDialogTitle={t.forgotPassword.startPage.successDialogTitle}
+            ></AuthModalComponent>
           </div>
         </form>
         <Button as={Link} className={s.linkButton} href={'/login'} variant={'text'}>
