@@ -70,7 +70,6 @@ export const ProfileSettings = () => {
         <DevicesSessionsContent />
         <AccountManagmentContent />
       </TabsPrimitive.Root>
-      <div className={s.separator} />
     </div>
   )
 }
