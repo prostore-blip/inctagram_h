@@ -17,7 +17,7 @@ export const GitHubIcon = ({ height, width, ...props }: SVGProps<SVGSVGElement>)
             fillOpacity={'0'}
             height={'35.000000'}
             id={'google-svgrepo-com 2'}
-            rx={'-0.500000'}
+            rx={'0.500000'}
             transform={'translate(0.500000 0.500000)'}
             width={'35.000000'}
           />
@@ -28,7 +28,7 @@ export const GitHubIcon = ({ height, width, ...props }: SVGProps<SVGSVGElement>)
         fillOpacity={'0'}
         height={'35.000000'}
         id={'google-svgrepo-com 2'}
-        rx={'-0.500000'}
+        rx={'0.500000'}
         transform={'translate(0.500000 0.500000)'}
         width={'35.000000'}
       />

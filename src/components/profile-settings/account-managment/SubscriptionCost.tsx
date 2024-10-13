@@ -1,63 +1,46 @@
 import React, { useState } from 'react'
 
-import { RadioChecked, RadioUnchecked } from '@/assets/icons'
-import { TypesSubscriptionCosts } from '@/components/profile-settings/account-managment/enums'
+import { CostItem } from '@/components/profile-settings/account-managment/CostItem'
 import { RadioGroup } from '@/components/radio-group/RadioGroup'
-import { RadioGroupItem } from '@/components/radio-group/RadioGroupItem'
+import { useTranslation } from '@/hooks/useTranslation'
+import { useGetCostOfPaymentSubscriptionsQuery } from '@/services/inctagram.subscriptions.service'
+import { DescriptionPaymentType } from '@/services/types'
 import { Typography } from '@chrizzo/ui-kit'
 
 import s from '@/components/profile-settings/account-managment/accountManagment.module.scss'
 
 export const SubscriptionCost = () => {
-  const [checked, setChecked] = useState<TypesSubscriptionCosts>(TypesSubscriptionCosts.PerDay)
+  /**
+   * выбор стоимости подписки
+   */
+  const [checked, setChecked] = useState<DescriptionPaymentType>('DAY')
+  /**
+   * запрос за вариантами стоимости подписки
+   */
+  const { data } = useGetCostOfPaymentSubscriptionsQuery()
+  /**
+   * интернационализация
+   */
+  const { t } = useTranslation()
+  /**
+   * массив видов подписок
+   */
+  const costPayment = data?.data?.map(p => {
+    return <CostItem checked={checked} item={p} key={p.typeDescription} />
+  })
 
   return (
     <form name={'accountCostType'}>
       <Typography className={s.description} variant={'h3'}>
-        Your subscription costs:
+        {t.payments.cost.title}:
       </Typography>
       <RadioGroup
         className={s.accountTypeGroup}
         name={'accountCostType'}
-        onValueChange={e => setChecked(e as TypesSubscriptionCosts)}
+        onValueChange={e => setChecked(e as DescriptionPaymentType)}
         value={checked}
       >
-        <RadioGroupItem
-          checked={checked === TypesSubscriptionCosts.PerDay}
-          id={TypesSubscriptionCosts.PerDay}
-          title={`${TypesSubscriptionCosts.CostDay} per 1 Day`}
-          value={TypesSubscriptionCosts.PerDay}
-          variant={'regular14'}
-        >
-          <>
-            {checked === TypesSubscriptionCosts.PerDay && <RadioChecked />}
-            {checked !== TypesSubscriptionCosts.PerDay && <RadioUnchecked />}
-          </>
-        </RadioGroupItem>
-        <RadioGroupItem
-          checked={checked === TypesSubscriptionCosts.PerWeek}
-          id={TypesSubscriptionCosts.PerWeek}
-          title={`${TypesSubscriptionCosts.CostWeek} per 7 Day`}
-          value={TypesSubscriptionCosts.PerWeek}
-          variant={'regular14'}
-        >
-          <>
-            {checked === TypesSubscriptionCosts.PerWeek && <RadioChecked />}
-            {checked !== TypesSubscriptionCosts.PerWeek && <RadioUnchecked />}
-          </>
-        </RadioGroupItem>
-        <RadioGroupItem
-          checked={checked === TypesSubscriptionCosts.PerMonth}
-          id={TypesSubscriptionCosts.PerMonth}
-          title={`${TypesSubscriptionCosts.CostMonth} per month`}
-          value={TypesSubscriptionCosts.PerMonth}
-          variant={'regular14'}
-        >
-          <>
-            {checked === TypesSubscriptionCosts.PerMonth && <RadioChecked />}
-            {checked !== TypesSubscriptionCosts.PerMonth && <RadioUnchecked />}
-          </>
-        </RadioGroupItem>
+        {costPayment}
       </RadioGroup>
     </form>
   )

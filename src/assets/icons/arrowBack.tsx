@@ -16,7 +16,7 @@ export const ArrowBack = (props: SVGProps<SVGSVGElement>) => (
           fillOpacity={'0'}
           height={'23.000000'}
           id={'arrow-back-outline'}
-          rx={'-0.500000'}
+          rx={'0.500000'}
           transform={'translate(0.500000 0.500000)'}
           width={'23.000000'}
         />
@@ -27,7 +27,7 @@ export const ArrowBack = (props: SVGProps<SVGSVGElement>) => (
       fillOpacity={'0'}
       height={'23.000000'}
       id={'arrow-back-outline'}
-      rx={'-0.500000'}
+      rx={'0.500000'}
       transform={'translate(0.500000 0.500000)'}
       width={'23.000000'}
     />

@@ -4,17 +4,25 @@ import { RadioChecked, RadioUnchecked } from '@/assets/icons'
 import { TypesAccount } from '@/components/profile-settings/account-managment/enums'
 import { RadioGroup } from '@/components/radio-group/RadioGroup'
 import { RadioGroupItem } from '@/components/radio-group/RadioGroupItem'
+import { useTranslation } from '@/hooks/useTranslation'
 import { Typography } from '@chrizzo/ui-kit'
 
 import s from '@/components/profile-settings/account-managment/accountManagment.module.scss'
 
 export const AccountType = () => {
+  /**
+   * выбор типа аккаунта
+   */
   const [checked, setChecked] = useState<TypesAccount>(TypesAccount.Business)
+  /**
+   * интернационализация
+   */
+  const { t } = useTranslation()
 
   return (
     <form className={s.account} name={'accountType'}>
       <Typography className={s.description} variant={'h3'}>
-        Account type:
+        {t.payments.account.accountType}:
       </Typography>
       <RadioGroup
         className={s.accountTypeGroup}
@@ -25,7 +33,7 @@ export const AccountType = () => {
         <RadioGroupItem
           checked={checked === TypesAccount.Personal}
           id={TypesAccount.Personal}
-          title={TypesAccount.Personal}
+          title={t.payments.account.personal}
           value={TypesAccount.Personal}
           variant={'regular14'}
         >
@@ -37,7 +45,7 @@ export const AccountType = () => {
         <RadioGroupItem
           checked={checked === TypesAccount.Business}
           id={TypesAccount.Business}
-          title={TypesAccount.Business}
+          title={t.payments.account.business}
           value={TypesAccount.Business}
           variant={'regular14'}
         >

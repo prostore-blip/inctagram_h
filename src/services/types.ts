@@ -81,3 +81,14 @@ type AllSubscriptionsType = {
 }
 
 export type ResponseAllSubscriptionsType = AllSubscriptionsType[]
+
+export type DescriptionPaymentType = 'DAY' | 'MONTHLY' | 'WEEKLY'
+
+export type CostPaymentSubscriptionsType = {
+  amount: number
+  typeDescription: DescriptionPaymentType
+}
+
+export type ResponseCostOfPaymentSubscriptionsType = {
+  data: CostPaymentSubscriptionsType[]
+}

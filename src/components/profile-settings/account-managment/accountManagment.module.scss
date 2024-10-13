@@ -11,7 +11,7 @@
   margin-bottom: 42px;
 }
 .description {
-  margin-bottom: 6px;
+  margin-bottom: 18px;
 }
 .currentSubWrapper {
   margin-bottom: 17px;
@@ -20,8 +20,26 @@
   color: var(--color-light-900);
 }
 .table {
-  border-spacing: 0 10px;
+  border-spacing: 48px 12px;
+  //border: 2px solid red;
+  transform: translateX(-24px);
+  margin-bottom: 13px;
 }
 .tr .th {
-  margin: 33px !important;
+  //margin: 33px !important;
+}
+.tr {
+  //border: 2px solid white;
+}
+.th {
+  //border: 2px solid white;
+}
+.td {
+  //border: 2px solid white;
+}
+.thead {
+  //border: 2px solid lightgreen;
+}
+.tbody {
+  //border: 2px solid #80ffbf;
 }

@@ -5,5 +5,12 @@ export const inctagramService = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: builder => ({}),
   reducerPath: 'inctagramService',
-  tagTypes: ['login', 'getFollowing', 'getMyProfile', 'getPostsByUserId', 'getSessions'],
+  tagTypes: [
+    'currentSubscrioption',
+    'login',
+    'getFollowing',
+    'getMyProfile',
+    'getPostsByUserId',
+    'getSessions',
+  ],
 })

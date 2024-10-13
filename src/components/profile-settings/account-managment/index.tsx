@@ -17,6 +17,9 @@ export const AccountManagmentContent = ({}: Props) => {
    * Запрос за моей текущей платной подпиской
    */
   const { data } = useGetMyCurrentSubscriptionQuery()
+  /**
+   * для кнопки paypal. Объект настроек
+   */
   const initialOptions: ReactPayPalScriptOptions = {
     clientId: process.env.NEXT_PUBLIC_CLIENT_ID_PAYPAL as string,
     components: ['buttons', 'funding-eligibility'],

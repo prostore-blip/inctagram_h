@@ -60,6 +60,21 @@ export const ru = {
     signInButton: 'Войти',
     signUpButton: 'Регистрация',
   },
+  payments: {
+    account: { accountType: 'Тип аккаунта', business: 'Бизнес', personal: 'Личный' },
+    cost: {
+      day: 'за 1 день',
+      month: 'за месяц',
+      title: 'Стоимость подписки',
+      week: 'за 7 дней',
+    },
+    currentSubscription: {
+      autoReneval: 'Авто-подписка',
+      expired: 'Дата подписки',
+      nextPayment: 'Дата окончания подписки',
+      title: 'Текущая подписка',
+    },
+  },
   profile: {
     common: {
       saveChanges: 'Сохранить изменения',

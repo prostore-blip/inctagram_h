@@ -15,7 +15,7 @@ export const Message = () => {
             fillOpacity={'0'}
             height={'23.000000'}
             id={'message-circle-outline'}
-            rx={'-0.500000'}
+            rx={'0.500000'}
             transform={'translate(0.500000 0.500000)'}
             width={'23.000000'}
           />
@@ -26,7 +26,7 @@ export const Message = () => {
         fillOpacity={'0'}
         height={'23.000000'}
         id={'message-circle-outline'}
-        rx={'-0.500000'}
+        rx={'0.500000'}
         transform={'translate(0.500000 0.500000)'}
         width={'23.000000'}
       />

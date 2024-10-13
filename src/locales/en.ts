@@ -61,6 +61,21 @@ export const en: LocaleType = {
     signInButton: 'Log In',
     signUpButton: 'Sign up',
   },
+  payments: {
+    account: { accountType: 'Account type', business: 'Business', personal: 'Personal' },
+    cost: {
+      day: 'per 1 Day',
+      month: 'per month',
+      title: 'Your subscription costs',
+      week: 'per 7 Day',
+    },
+    currentSubscription: {
+      autoReneval: 'Auto-Reneval',
+      expired: 'Expired at',
+      nextPayment: 'Next payment',
+      title: 'Current Subscription',
+    },
+  },
   profile: {
     common: {
       saveChanges: 'Сохранить изменения',
