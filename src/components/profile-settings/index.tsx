@@ -11,6 +11,7 @@ import {
 } from '@/services/inctagram.profile.service'
 import { TabType } from '@chrizzo/ui-kit'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
+import { useRouter } from 'next/router'
 
 import s from '@/components/profile-settings/profileSettings.module.scss'
 
@@ -23,6 +24,7 @@ const tabsList: TabType[] = [
 ]
 
 export const ProfileSettings = () => {
+  const router = useRouter()
   /**
    * запрос за данными моего профайла для отображения их в форме generalInfo
    */
@@ -31,10 +33,6 @@ export const ProfileSettings = () => {
    * запрос за изменением аватарки профиля
    */
   const [updateAvatarProfile] = useUpdateAvatarProfileMutation()
-  /**
-   * стейт переключения табов
-   */
-  const [currentTab, setCurrentTab] = useState(tabsList[0].value)
   /**
    * стейт картинки аватарки. Зачем он нужен, не знаю. Делал Саша.
    */
@@ -52,14 +50,26 @@ export const ProfileSettings = () => {
       updateAvatarProfile({ file: formData })
     }
   }
+  /**
+   * функция изменения динамического сегмента URL. После изменения URL компонент ререндерится
+   * и новый сегмент из router.query идёт в value TabsPrimitive.Root.
+   * Такая логика мне нужна для работы с оплатой через сторонний сервис: мне придёт от сервиса
+   * URL "generalInfo/accountManagement", я вытяну "accountManagement" и сработает Таба для "accountManagement".
+   * Для переключения табов можно было бы использовать useState, а при получении URLот платёжного сервиса
+   * использовать useEffect, но тогда были бы мерцания.
+   * @param value - значение Tab, на которое переключились
+   */
+  const changeUrl = (value: string) => {
+    void router.push(`${value}`)
+  }
 
   return (
     <div className={s.wrapper}>
       <LinearProgress active={isFetching} thickness={3} />
       <TabsPrimitive.Root
         activationMode={'manual'}
-        onValueChange={setCurrentTab}
-        value={currentTab}
+        onValueChange={changeUrl}
+        value={router.query.index as string}
       >
         <TabsTriggerslist tabsList={tabsList} />
         <GeneralInfoContent

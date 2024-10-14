@@ -38,7 +38,7 @@ export function UserProfile({ dataProfile, myProfileId }: Props) {
    * открыть настройки
    */
   const openSettings = () => {
-    void router.push('/generalInfo')
+    void router.push('/generalInfo/generalInformation')
   }
   /**
    * открыть публикации
