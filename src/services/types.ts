@@ -92,3 +92,12 @@ export type CostPaymentSubscriptionsType = {
 export type ResponseCostOfPaymentSubscriptionsType = {
   data: CostPaymentSubscriptionsType[]
 }
+export type ResponseCreateSubscriptionType = {
+  url: string
+}
+export type RequestCreateSubscriptionType = {
+  amount: number
+  baseUrl: string
+  paymentType: string
+  typeSubscription: DescriptionPaymentType
+}

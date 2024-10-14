@@ -1,7 +1,9 @@
 import { inctagramService } from '@/services/inctagram.service'
 import {
+  RequestCreateSubscriptionType,
   ResponseAllSubscriptionsType,
   ResponseCostOfPaymentSubscriptionsType,
+  ResponseCreateSubscriptionType,
   ResponseCurrentSubscriptionType,
 } from '@/services/types'
 
@@ -17,6 +19,15 @@ export const inctagramUserSubscriptionsService = inctagramService.injectEndpoint
       getCostOfPaymentSubscriptions: builder.query<ResponseCostOfPaymentSubscriptionsType, void>({
         query: () => {
           return { url: `/v1/subscriptions/cost-of-payment-subscriptions` }
+        },
+      }),
+      getCreateSubscription: builder.mutation<
+        ResponseCreateSubscriptionType,
+        RequestCreateSubscriptionType
+      >({
+        invalidatesTags: ['currentSubscrioption'],
+        query: body => {
+          return { body, method: 'POST', url: `/v1/subscriptions` }
         },
       }),
       getMyAllSubscriptions: builder.query<ResponseAllSubscriptionsType, void>({
@@ -37,6 +48,7 @@ export const inctagramUserSubscriptionsService = inctagramService.injectEndpoint
 export const {
   useGetCancelAutorenevalSubscriptionMutation,
   useGetCostOfPaymentSubscriptionsQuery,
+  useGetCreateSubscriptionMutation,
   useGetMyAllSubscriptionsQuery,
   useGetMyCurrentSubscriptionQuery,
 } = inctagramUserSubscriptionsService
