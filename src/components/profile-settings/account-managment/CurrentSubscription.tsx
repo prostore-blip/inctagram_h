@@ -12,6 +12,9 @@ type Props = {
   subscription: ResponseCurrentSubscriptionType | undefined
 }
 export const CurrentSubscription = ({ subscription }: Props) => {
+  /**
+   * запрос на снятие автопродления подписки
+   */
   const [getCancelAutorenevalSubscription] = useGetCancelAutorenevalSubscriptionMutation()
   /**
    * дата начала подписки

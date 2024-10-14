@@ -66,9 +66,14 @@ export const SubscriptionCost = () => {
       paymentType: button.name,
       typeSubscription: selectedValue as DescriptionPaymentType,
     }
-
+    /**
+     * делаем запрос на создание новой подписки
+     */
     const res = await getCreateSubscription(body).unwrap()
 
+    /**
+     * если в ответе есть url, то переходим по нему на страницу платёжного сервиса
+     */
     if (res.url) {
       void router.push(res.url)
     }
