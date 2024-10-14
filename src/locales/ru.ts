@@ -2,6 +2,7 @@ export const ru = {
   buzzWords: {
     ok: 'ДА',
   },
+  error: 'Ошибка',
   forgotPassword: {
     common: {
       inProgress: 'Отправка запроса...',
@@ -80,6 +81,9 @@ export const ru = {
     expiredDescription:
       'Похоже что время жизни ссылки истекло. Не переживайте, мы можем выслать ссылку повторно',
     haveAcc: `Уже есть аккаунт?`,
+    linkExpired: 'Срок действия ссылки для проверки электронной почты истек',
+    linkExpiredDescription:
+      'Похоже, срок действия проверочной ссылки истек. Не волнуйтесь, мы можем отправить ссылку снова',
     maxCharsNumber: (maxChars: number) => `Максимальное количество символов  ${maxChars}`,
     minCharsNumber: (minChars: number) => `Минимальное количество символов ${minChars}`,
     passTitle: 'Пароль',

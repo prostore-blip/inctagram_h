@@ -1,32 +1,36 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 
+import { ConfirmRegistration } from '@/components/auth/confirmRegistration/confirmRegistration'
+import { LinkExpired } from '@/components/auth/linkExpired'
 import { BaseLayout } from '@/components/layouts/BaseLayout'
-import { useTranslation } from '@/hooks/useTranslation'
 import { useConfirmEmailRegistrationMutation } from '@/services'
-import { Button } from '@chrizzo/ui-kit'
+import { useRouter } from 'next/router'
 
 const ConfirmEmailPage = () => {
-  const { router, t } = useTranslation()
+  const router = useRouter()
   const confirmationCode = typeof router?.query?.code === 'string' ? router.query.code : ''
-  const [confirm, { isLoading }] = useConfirmEmailRegistrationMutation()
+  const email = (router?.query?.email as string) ?? ''
 
-  const handleConfirm = () => {
-    if (!confirmationCode) {
-      return
+  const [confirmEmailRegistration, { isError, isLoading }] = useConfirmEmailRegistrationMutation()
+
+  useEffect(() => {
+    if (confirmationCode) {
+      confirmEmailRegistration({ confirmationCode })
     }
-    confirm({ confirmationCode })
+  }, [confirmationCode, confirmEmailRegistration])
+
+  if (isLoading) {
+    return <div>Loader...</div>
   }
 
-  return (
-    <div>
-      <div>{confirmationCode}</div>
-      <Button onClick={handleConfirm}>Confirm</Button>
-    </div>
-  )
+  if (isError) {
+    return <LinkExpired email={email} />
+  }
+
+  return <ConfirmRegistration />
 }
 
 ConfirmEmailPage.getLayout = function getLayout(page: ReactNode) {
-  //the redirecting HOC could be here
   return <BaseLayout>{page}</BaseLayout>
 }
 

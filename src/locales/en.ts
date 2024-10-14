@@ -4,6 +4,7 @@ export const en: LocaleType = {
   buzzWords: {
     ok: 'OK',
   },
+  error: 'Error',
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -79,6 +80,9 @@ export const en: LocaleType = {
     expiredDescription:
       'Looks like the verification link has expired. Not to worry, we can send the link again',
     haveAcc: `Do you have an account?`,
+    linkExpired: 'Email verification link expired',
+    linkExpiredDescription:
+      'Looks like the verification link has expired. Not to worry, we can send the link again',
     maxCharsNumber: (maxChars: number) => `Maximum number of characters ${maxChars}`,
     minCharsNumber: (minChars: number) => `Minimum number of characters ${minChars}`,
     passTitle: 'Password',

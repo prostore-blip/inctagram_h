@@ -6,6 +6,7 @@ import { SuccessfulRequestResult } from '@/types'
 import {
   MeResponse,
   RegistrationConfirmationArgs,
+  RegistrationEmailResendingArgs,
   ResponseWithAccessToken,
   SignInRequestBody,
   SignUpRequest,
@@ -57,6 +58,13 @@ export const authService = inctaTeamApiService.injectEndpoints({
         },
       }),
 
+      resendRegistrationLink: builder.mutation<void, RegistrationEmailResendingArgs>({
+        query: body => ({
+          body,
+          method: 'POST',
+          url: '/v1/auth/registration-email-resending',
+        }),
+      }),
       resetPassword: builder.mutation<void, ResetPasswordRequestData>({
         query: body => {
           return {
@@ -105,6 +113,7 @@ export const {
   useConfirmEmailRegistrationMutation,
   useLogoutMutation,
   usePasswordRecoveryMutation,
+  useResendRegistrationLinkMutation,
   useResetPasswordMutation,
   useSignInMutation,
   // useSingInMutation,
