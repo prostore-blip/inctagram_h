@@ -8,7 +8,7 @@ import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from '@/components/auth/forgotPassword/forgotPasswordForm.module.scss'
 
-export function GetRecaptcha() {
+function GetRecaptcha() {
   const { executeRecaptcha, loaded: recaptchaReady } = useReCaptcha()
   const [recaptchaTokenLoading, setRecaptchaTokenLoading] = useState(false)
 

@@ -4,7 +4,7 @@ import { Button } from '@chrizzo/ui-kit'
 import s from './socialAuthButtons.module.scss'
 
 type Props = {
-  googleLoginAndRegister: () => void
+  googleLoginAndRegister?: () => void
 }
 
 export const SocialAuthButtons = ({ googleLoginAndRegister }: Props) => {

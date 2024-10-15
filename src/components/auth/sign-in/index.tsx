@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { SocialAuthButtons } from '@/components'
+import { SocialAuthButtons } from '@/components/auth'
 import { FormInput } from '@/components/controll/formTextField'
 import { Toast } from '@/components/layouts/Toast'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -29,7 +29,7 @@ export function SignInForm() {
   //https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#customizing-query-responses-with-transformerrorresponse
 
   //todo implement
-  const googleLoginAndRegister = () => {}
+  // const googleLoginAndRegister = () => {}?? сыпится ошибка из-а этого, пока так
 
   const { t } = useTranslation()
 
@@ -120,7 +120,7 @@ export function SignInForm() {
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           {t.signIn.title}
         </Typography>
-        <SocialAuthButtons googleLoginAndRegister={googleLoginAndRegister} />
+        <SocialAuthButtons />
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <FormInput
             control={control}

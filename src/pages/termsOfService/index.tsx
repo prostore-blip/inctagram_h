@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { PolicyDocuments } from '@/components/auth/policyDocuments'
 import { BaseLayout } from '@/components/layouts/BaseLayout'
 
-export function TermsOfService() {
+function TermsOfService() {
   return (
     <>
       <PolicyDocuments headline={'Terms of Service'} />

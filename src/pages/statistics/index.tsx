@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { BaseLayout } from '@/components/layouts/BaseLayout'
 
-export function Statistics() {
+function Statistics() {
   return <div>Statistics</div>
 }
 

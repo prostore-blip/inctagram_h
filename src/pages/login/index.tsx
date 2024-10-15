@@ -1,11 +1,10 @@
 import { ReactNode } from 'react'
 
-import { MailVerificationError, MailVerificationSuccess } from '@/components'
-import { SignInForm } from '@/components/auth/sign-in'
+import { MailVerificationError, MailVerificationSuccess, SignInForm } from '@/components'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 import { useRouter } from 'next/router'
 
-export function SignInPage() {
+function SignInPage() {
   const router = useRouter()
   const { 'email-verification-failed': emailError, 'email-verification-success': emailSuccess } =
     router.query
@@ -13,7 +12,7 @@ export function SignInPage() {
   return (
     <>
       {emailSuccess && <MailVerificationSuccess />}
-      {emailError && <MailVerificationError email={''} />}
+      {emailError && <MailVerificationError />}
       {!emailSuccess && !emailError && <SignInForm />}
     </>
   )

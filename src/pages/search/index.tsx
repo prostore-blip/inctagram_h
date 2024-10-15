@@ -1,4 +1,4 @@
-export function Search() {
+function Search() {
   return <>Search</>
 }
 

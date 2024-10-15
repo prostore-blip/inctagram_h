@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { SingUpComponent } from '@/components'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 
-export function SignUpPage() {
+function SignUpPage() {
   return <SingUpComponent />
 }
 

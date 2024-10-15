@@ -51,6 +51,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
 
           return {
             body,
+            headers: { captchaToken: `${recaptcha}` },
             method: 'POST',
             url: '/v1/auth/password-recovery',
           }
