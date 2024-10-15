@@ -5,6 +5,7 @@ import { SuccessfulRequestResult } from '@/types'
 
 import {
   MeResponse,
+  RegistrationConfirmationArgs,
   ResponseWithAccessToken,
   SignInRequestBody,
   SignUpRequest,
@@ -19,7 +20,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
           return { url: '/v1/auth/me' }
         },
       }),
-      confirmEmailRegistration: builder.mutation<any, { code: string }>({
+      confirmEmailRegistration: builder.mutation<void, RegistrationConfirmationArgs>({
         query: body => ({
           body,
           method: 'POST',

@@ -7,19 +7,19 @@ import { Button } from '@chrizzo/ui-kit'
 
 const ConfirmEmailPage = () => {
   const { router, t } = useTranslation()
-  const code = typeof router?.query?.code === 'string' ? router.query.code : ''
+  const confirmationCode = typeof router?.query?.code === 'string' ? router.query.code : ''
   const [confirm, { isLoading }] = useConfirmEmailRegistrationMutation()
 
   const handleConfirm = () => {
-    if (!code) {
+    if (!confirmationCode) {
       return
     }
-    confirm({ code })
+    confirm({ confirmationCode })
   }
 
   return (
     <div>
-      <div>{code}</div>
+      <div>{confirmationCode}</div>
       <Button onClick={handleConfirm}>Confirm</Button>
     </div>
   )

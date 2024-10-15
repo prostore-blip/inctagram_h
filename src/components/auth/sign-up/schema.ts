@@ -1,39 +1,33 @@
+import { LocaleType } from '@/locales/ru'
 import { z } from 'zod'
-export const signUpSchema = z
-  .object({
-    acceptTerms: z.boolean().default(false),
-    confirmPassword: z.string().min(3, 'Password has to be at least 3 characters long'),
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(3, 'Password has to be at least 3 characters long'),
-    userName: z.string().min(3, 'Username has to be at least 3 characters long'),
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
-  .refine(data => data.acceptTerms, {
-    message: 'You must accept the terms',
-    path: ['acceptTerms'],
-  })
 
-export type SignUpFormType = z.infer<typeof signUpSchema>
+export const signUpSchema = (t: LocaleType) =>
+  z
+    .object({
+      acceptTerms: z.literal<boolean>(true),
+      confirmPassword: z.string(),
+      email: z.string().email({ message: t.signUp.emailType }),
+      password: z
+        .string()
+        .min(6, { message: t.signUp.minCharsNumber(6) })
+        .max(30, { message: t.signUp.maxCharsNumber(30) })
+        .regex(
+          /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z0-9!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/,
+          {
+            message: t.signUp.passwordMustContain,
+          }
+        ),
+      userName: z
+        .string()
+        .min(6, { message: t.signUp.minCharsNumber(6) })
+        .max(30, { message: t.signUp.maxCharsNumber(30) })
+        .regex(/^[a-zA-Z0-9_-]*$/, {
+          message: t.signUp.userNameContains,
+        }),
+    })
+    .refine(values => values.password === values.confirmPassword, {
+      message: t.signUp.passwordMatch,
+      path: ['confirmPassword'],
+    })
 
-// export const signUpSchema = z
-//   .object({
-//     acceptPolicies: z.boolean(),
-//     captchaToken: z.string().min(5, 'recaptcha token is mandatory'),
-//     confirmPassword: z.string().min(3, 'Password has to be at least 3 characters long'),
-//     email: z.string().email('Invalid email address'),
-//     password: z.string().min(3, 'Password has to be at least 3 characters long'),
-//     userName: z.string().min(3, 'Username has to be at least 3 characters long'),
-//   })
-//   .refine(data => data.password === data.confirmPassword, {
-//     message: 'Passwords do not match',
-//     path: ['confirmPassword'],
-//   })
-//   .refine(data => data.acceptPolicies, {
-//     message: 'You must accept',
-//     path: ['acceptPolicies'],
-//   })
-
-// export type SignUpFormData = z.infer<typeof signUpSchema>
+export type SignupFormFields = z.infer<ReturnType<typeof signUpSchema>>

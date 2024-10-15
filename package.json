@@ -11,8 +11,10 @@
     "lint": "eslint src --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input"
   },
   "dependencies": {
-    "@chrizzo/ui-kit": "^0.0.21",
+    "@chrizzo/ui-kit": "^0.0.23",
     "@hookform/resolvers": "^3.9.0",
+    "@pqina/pintura": "^8.88.1",
+    "@pqina/react-pintura": "^9.0.3",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
     "@reduxjs/toolkit": "^2.2.6",
@@ -23,6 +25,7 @@
     "next": "14.2.5",
     "next-recaptcha-v3": "^1.4.1",
     "next-redux-wrapper": "^8.1.0",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
