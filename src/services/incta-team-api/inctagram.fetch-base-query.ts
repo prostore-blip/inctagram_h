@@ -7,13 +7,11 @@ import { Mutex } from 'async-mutex'
 const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://gateway.incta.team/api',
+  baseUrl: 'https://gateway.netchill.ru/api',
   credentials: 'include',
   prepareHeaders: headers => {
     const token = localStorage.getItem(ACCESS_TOKEN_STORAGE_NAME)
 
-    //wtf???
-    // headers.set('Authorization', `Bearer 6LcXfikqAAAAAEtJf27WMmB70tR2xlm2A3Jlgz6P`)
     headers.set('Authorization', `Bearer ${token}`)
 
     return headers
