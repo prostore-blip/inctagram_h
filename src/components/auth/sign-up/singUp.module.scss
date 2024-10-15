@@ -1,0 +1,41 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 378px;
+  padding: 23px 24px 24px;
+
+  border: 1px solid var(--color-dark-300);
+}
+
+.title {
+  margin-bottom: 13px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.checkboxwrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 5px;
+}
+
+.Form {
+  padding-bottom: 12px;
+}
+
+.SingUpButton {
+  margin-bottom: 18px;
+}
+
+.SingInButton {
+  width: 100%;
+}
