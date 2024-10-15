@@ -106,40 +106,6 @@ export const ResetPasswordForm = () => {
   return (
     <div className={s.wrapper}>
       <DevTool control={control} />
-      {/* <dialog
-        className={clsx(showSuccessDialog && s.dialog)}
-        open={showSuccessDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.newPassword.successDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.newPassword.successDialogText}
-        </Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button as={Link} href={'/login'} onClick={handleCloseSuccessDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
-      <dialog
-        className={clsx(showErrorDialog && s.dialog)}
-        open={showErrorDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.newPassword.errorDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.newPassword.errorDialogText}
-        </Typography>
-        
-        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={() => setShowErrorDialog(false)} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog> */}
       <Card className={clsx(s.card, token === 'invalid-token' && s.hidden)} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.newPassword.title}
@@ -170,10 +136,6 @@ export const ResetPasswordForm = () => {
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.newPassword.hint}
             </Typography>
-            {/* <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
-              {t.forgotPassword.newPassword.createNewPassword}
-              {isSubmitting && <span className={clsx(s.loader)} />}
-            </Button> */}
             <AuthModalComponent
               buttonText={t.forgotPassword.newPassword.createNewPassword}
               error={error}
@@ -182,7 +144,6 @@ export const ResetPasswordForm = () => {
               handleCloseDialog={handleCloseSuccessDialog}
               handleCloseErrorDialog={handleCloseErrorDialog}
               isSubmitting={isSubmitting}
-              modalButtonText={'Ok'}
               showErrorDialog={showErrorDialog}
               showSuccessDialog={showSuccessDialog}
               submitDisabled={submitDisabled}

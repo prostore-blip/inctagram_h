@@ -42,7 +42,7 @@ export const AuthModalComponent = (props: ModalProps) => {
     handleCloseDialog,
     handleCloseErrorDialog,
     isSubmitting,
-    modalButtonText,
+    modalButtonText = 'OK',
     showErrorDialog,
     showSuccessDialog,
     submitDisabled,

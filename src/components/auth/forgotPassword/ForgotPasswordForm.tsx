@@ -115,44 +115,6 @@ export const ForgotPasswordForm = () => {
   return (
     <>
       <DevTool control={control} />
-      {/* <dialog
-        className={clsx(showSuccessDialog && s.dialog)}
-        open={showSuccessDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
-        <div className={s.hr_container}>
-          <hr className={s.custom_hr} />
-        </div>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.startPage.successDialogText}
-          {` ${getValues('email') || 'undefined@undefined'}`}
-        </Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button className={s.button} onClick={handleCloseSuccessDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
-      <dialog
-        className={clsx(showErrorDialog && s.dialog)}
-        open={showErrorDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
-        <div className={s.hr_container}>
-          <hr className={s.custom_hr} />
-        </div>
-        <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
-        <Typography variant={'regular16'} />
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button className={s.button} onClick={handleCloseErrorDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog> */}
       <Card className={s.card} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.startPage.title}
@@ -176,11 +138,6 @@ export const ForgotPasswordForm = () => {
                 {t.forgotPassword.startPage.linkSent}
               </Typography>
             )}
-            {/* <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
-              {emailSent && t.forgotPassword.startPage.sendLinkAgain}
-              {!emailSent && t.forgotPassword.startPage.sendLink}
-              {isSubmitting && <span className={clsx(s.loader)} />}
-            </Button> */}
             <AuthModalComponent
               buttonText={buttonText}
               emailAddress={` ${getValues('email') || 'undefined@undefined'}`}
@@ -189,7 +146,6 @@ export const ForgotPasswordForm = () => {
               handleCloseDialog={handleCloseSuccessDialog}
               handleCloseErrorDialog={handleCloseErrorDialog}
               isSubmitting={isSubmitting}
-              modalButtonText={'Ok'}
               showErrorDialog={showErrorDialog}
               showSuccessDialog={showSuccessDialog}
               submitDisabled={submitDisabled}
