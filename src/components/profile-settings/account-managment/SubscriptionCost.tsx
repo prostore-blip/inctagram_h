@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 
+import { Paypal, Stripe } from '@/assets/icons'
 import { CostItem } from '@/components/profile-settings/account-managment/CostItem'
 import { RadioGroup } from '@/components/radio-group/RadioGroup'
 import { useTranslation } from '@/hooks/useTranslation'
@@ -8,7 +9,7 @@ import {
   useGetCreateSubscriptionMutation,
 } from '@/services/inctagram.subscriptions.service'
 import { DescriptionPaymentType } from '@/services/types'
-import { Typography } from '@chrizzo/ui-kit'
+import { Button, Typography } from '@chrizzo/ui-kit'
 import { useRouter } from 'next/router'
 
 import s from '@/components/profile-settings/account-managment/accountManagment.module.scss'
@@ -80,7 +81,7 @@ export const SubscriptionCost = () => {
   }
 
   return (
-    <form name={'accountCostType'} onSubmit={submit}>
+    <form className={s.formSubscriptionCosts} name={'accountCostType'} onSubmit={submit}>
       <Typography className={s.description} variant={'h3'}>
         {t.payments.cost.title}:
       </Typography>
@@ -92,12 +93,15 @@ export const SubscriptionCost = () => {
       >
         {costPayment}
       </RadioGroup>
-      <button name={'PAYPAL'} type={'submit'}>
-        paypal
-      </button>
-      <button name={'STRIPE'} type={'submit'}>
-        stripe
-      </button>
+      <div className={s.buttonGroup}>
+        <Button name={'PAYPAL'} type={'submit'}>
+          <Paypal />
+        </Button>
+        <Typography variant={'regular14'}>Or</Typography>
+        <Button name={'STRIPE'} type={'submit'}>
+          <Stripe />
+        </Button>
+      </div>
     </form>
   )
 }

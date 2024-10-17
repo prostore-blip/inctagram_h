@@ -25,21 +25,21 @@
   transform: translateX(-24px);
   margin-bottom: 13px;
 }
-.tr .th {
-  //margin: 33px !important;
+.formSubscriptionCosts {
+  //position: relative;
 }
-.tr {
-  //border: 2px solid white;
-}
-.th {
-  //border: 2px solid white;
-}
-.td {
-  //border: 2px solid white;
-}
-.thead {
-  //border: 2px solid lightgreen;
-}
-.tbody {
-  //border: 2px solid #80ffbf;
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 54px;
+  margin-top: 24px;
+  padding-right: 14px;
+  button {
+    padding: 0;
+    background: none;
+    &:hover {
+      background: none;
+    }
+  }
 }

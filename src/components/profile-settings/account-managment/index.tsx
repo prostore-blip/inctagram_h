@@ -31,11 +31,11 @@ export const AccountManagmentContent = ({}: Props) => {
       <CurrentSubscription subscription={data} />
       <AccountType />
       <SubscriptionCost />
-      <PayPalScriptProvider options={initialOptions}>
-        <div>
-          <PayPalButton amount={'10.00'} />
-        </div>
-      </PayPalScriptProvider>
+      {/*<PayPalScriptProvider options={initialOptions}>*/}
+      {/*  <div>*/}
+      {/*    <PayPalButton amount={'10.00'} />*/}
+      {/*  </div>*/}
+      {/*</PayPalScriptProvider>*/}
     </TabsPrimitive.Content>
   )
 }
