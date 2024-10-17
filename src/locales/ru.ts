@@ -62,6 +62,13 @@ export const ru = {
   },
   payments: {
     account: { accountType: 'Тип аккаунта', business: 'Бизнес', personal: 'Личный' },
+    allPayments: {
+      dateOfPay: 'Дата подписки',
+      endPay: 'Конец подписки',
+      payType: 'Платёжный сервис',
+      price: 'Стоимость',
+      subType: 'Срок подписки',
+    },
     cost: {
       day: 'за 1 день',
       month: 'за месяц',

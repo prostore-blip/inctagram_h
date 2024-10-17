@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { MyPaymentsContent } from '@/components/profile-settings/MyPaymentsTable/MyPaymentsContent'
 import { AccountManagmentContent } from '@/components/profile-settings/account-managment'
 import { DevicesSessionsContent } from '@/components/profile-settings/devices'
 import { GeneralInfoContent } from '@/components/profile-settings/general-info-settings'
@@ -79,6 +80,7 @@ export const ProfileSettings = () => {
         />
         <DevicesSessionsContent />
         <AccountManagmentContent />
+        <MyPaymentsContent />
       </TabsPrimitive.Root>
     </div>
   )
