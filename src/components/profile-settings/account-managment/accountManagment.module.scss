@@ -43,3 +43,20 @@
     }
   }
 }
+.wrapperMyAllPay {
+  padding: 12px 24px;
+  margin-top: 24px;
+}
+.tablePayments {
+  border-spacing: 72px 24px;
+  transform: translateX(-72px);
+  width: 120%;
+}
+.dateAllPayment {
+  color: var(--color-light-100);
+}
+p.price {
+  display: flex;
+  justify-content: flex-end;
+  width: 35px;
+}

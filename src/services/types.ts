@@ -70,13 +70,13 @@ export type ResponseCurrentSubscriptionType = {
   hasAutoRenewal: boolean
 }
 
-type AllSubscriptionsType = {
+export type AllSubscriptionsType = {
   dateOfPayment: string
   endDateOfSubscription: string
-  paymentType: string
+  paymentType: 'PAYPAL' | 'STRIPE'
   price: number
   subscriptionId: string
-  subscriptionType: string
+  subscriptionType: DescriptionPaymentType
   userId: number
 }
 

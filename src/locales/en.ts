@@ -63,6 +63,13 @@ export const en: LocaleType = {
   },
   payments: {
     account: { accountType: 'Account type', business: 'Business', personal: 'Personal' },
+    allPayments: {
+      dateOfPay: 'Date of Payment',
+      endPay: 'End date of subscription',
+      payType: 'Payment Type',
+      price: 'Price',
+      subType: 'Subscription Type',
+    },
     cost: {
       day: 'per 1 Day',
       month: 'per month',
