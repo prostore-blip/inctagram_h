@@ -4,6 +4,7 @@ import { MailVerificationError, MailVerificationSuccess } from '@/components'
 import { SignInForm } from '@/components/auth/sign-in'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 import { useRouter } from 'next/router'
+import { Statistics } from '../statistics'
 
 export function SignInPage() {
   const router = useRouter()
