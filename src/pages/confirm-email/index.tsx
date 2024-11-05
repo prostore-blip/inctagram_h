@@ -8,16 +8,16 @@ import { useRouter } from 'next/router'
 
 const ConfirmEmailPage = () => {
   const router = useRouter()
-  const confirmationCode = typeof router?.query?.code === 'string' ? router.query.code : ''
+  const code = typeof router?.query?.code === 'string' ? router.query.code : ''
   const email = (router?.query?.email as string) ?? ''
 
   const [confirmEmailRegistration, { isError, isLoading }] = useConfirmEmailRegistrationMutation()
 
   useEffect(() => {
-    if (confirmationCode) {
-      confirmEmailRegistration({ confirmationCode })
+    if (code) {
+      confirmEmailRegistration({ code })
     }
-  }, [confirmationCode, confirmEmailRegistration])
+  }, [code, confirmEmailRegistration])
 
   if (isLoading) {
     return <div>Loader...</div>

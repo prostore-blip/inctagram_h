@@ -8,7 +8,7 @@ export type SignUpRequest = {
 }
 
 export type RegistrationConfirmationArgs = {
-  confirmationCode: string
+  code: string
 }
 
 export type RegistrationEmailResendingArgs = {
