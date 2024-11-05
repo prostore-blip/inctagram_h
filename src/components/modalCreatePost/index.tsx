@@ -19,6 +19,7 @@ import { useGetProfileQuery } from '@/services/incta-team-api/profile/profile-se
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DialogProps } from '@radix-ui/react-dialog'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import s from './modalCreatePost.module.scss'
 
@@ -27,6 +28,7 @@ export type AvatarSelectionDialogProps = {
 } & DialogProps
 
 export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialogProps) {
+  const router = useRouter()
   /**
    * стейт контроля открытия/закрытия модалки создания поста
    */
@@ -38,9 +40,11 @@ export function ModalCreatePost({ onOpenChange, ...props }: AvatarSelectionDialo
   /**
    * Запрос на своим профилем юзера для отображения вытягивания userName
    */
-  //TODO т.к. не реализована главная страница с постами и мы не можем перейти к профилю юзера,
-  // потому что в URL должен быть id юзера, то id юзера захардкоден, а возвращаемые данные фейковые
-  const { data: profile } = useGetProfileQuery({ id: 'q1' }, { skip: !openModal })
+  //TODO возвращаемые данные фейковые
+  const { data: profile } = useGetProfileQuery(
+    { id: router.query.id as string },
+    { skip: !openModal }
+  )
   /**
    * ref для инпута с type=file
    */
