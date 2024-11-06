@@ -6,7 +6,13 @@ export const signUpSchema = (t: LocaleType) =>
     .object({
       acceptTerms: z.literal<boolean>(true),
       confirmPassword: z.string(),
-      email: z.string().email({ message: t.signUp.emailType }),
+      email: z
+        .string()
+        .email({ message: t.signUp.emailType })
+        .regex(
+          /^[\w.-]+@[a-zA-Z0-9.-]+\.(com|ru|org|net|edu|gov|info|biz|name|pro|aero|museum|co|uk|de|fr|it|ca|jp|cn|in|au|br|mx|us|xyz|online|shop|tech|blog|app)$/,
+          { message: t.signUp.emailType }
+        ),
       password: z
         .string()
         .min(6, { message: t.signUp.minCharsNumber(6) })
