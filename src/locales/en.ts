@@ -121,8 +121,8 @@ export const en: LocaleType = {
     emailTitle: 'Email',
     emailType: 'The email must match the format example@example.com',
     errors: {
-      emailAlreadyConfirmed: 'User with email already confirmed',
-      userNameAlreadyConfirmed: 'User with userName already confirmed',
+      emailAlreadyConfirmed: 'User with this email is already registered',
+      userNameAlreadyConfirmed: 'User with this username already registered',
     },
     expiredDescription:
       'Looks like the verification link has expired. Not to worry, we can send the link again',

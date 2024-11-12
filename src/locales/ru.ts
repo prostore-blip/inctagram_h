@@ -122,8 +122,8 @@ export const ru = {
     emailTitle: 'Почта',
     emailType: 'Адрес почты должен соответствовать формату example@example.com',
     errors: {
-      emailAlreadyConfirmed: 'Пользователь с таким email уже подтверждён',
-      userNameAlreadyConfirmed: 'Пользователь с таким именем уже подтверждён',
+      emailAlreadyConfirmed: 'Пользователь с таким email уже зарегистрирован',
+      userNameAlreadyConfirmed: 'Пользователь с таким именем уже зарегистрирован',
     },
     expiredDescription:
       'Похоже что время жизни ссылки истекло. Не переживайте, мы можем выслать ссылку повторно',

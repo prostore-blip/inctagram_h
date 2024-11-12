@@ -12,7 +12,6 @@ import { Button, Card, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './singUp.module.scss'
@@ -60,7 +59,7 @@ export const SingUpComponent = () => {
   const handleError = (err: ErrorResponse) => {
     const errorMessage = err?.data?.errorsMessages?.[0]?.message
 
-    if (errorMessage?.includes('userName')) {
+    if (errorMessage?.includes('name')) {
       setError(
         'userName',
         { message: t.signUp.errors.userNameAlreadyConfirmed },
@@ -116,12 +115,13 @@ export const SingUpComponent = () => {
             <FormInput
               className={s.Form}
               control={control}
-              error={errors.email?.message}
+              error={errors.userName?.message}
               label={t.signUp.userName}
               name={'userName'}
               placeholder={'username'}
             />
             <FormInput
+              autoComplete={'off'}
               className={s.Form}
               control={control}
               error={errors.email?.message}
