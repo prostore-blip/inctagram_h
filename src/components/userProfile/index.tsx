@@ -58,10 +58,12 @@ export function UserProfile({}) {
           </article>
         </section>
       </div>
-      <PostsUser
-        userId={isFetching ? 'data.id' : data.id}
-        userName={isFetching ? 'data.userName' : data.userName}
-      />
+      {data && (
+        <PostsUser
+          userId={isFetching ? 'data.id' : data.id}
+          userName={isFetching ? 'data.userName' : data.userName}
+        />
+      )}
     </>
   )
 }

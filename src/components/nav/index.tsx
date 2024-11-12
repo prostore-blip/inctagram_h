@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } from '@/assets/icons'
+import { ModalCreatePost } from '@/components/modalCreatePost'
 import { MainNavigationItem } from '@/components/nav/types'
 import { useLogoutMutation } from '@/services'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram-work-api/inctagram.subscriptions.service'
@@ -94,7 +95,23 @@ export const Nav = ({ isSpecialAccount = false }: Props) => {
               )}
               key={index}
             >
-              {link.action && (
+              {link.name === 'Create' && (
+                <ModalCreatePost
+                  trigger={
+                    <Button
+                      className={clsx(s.wrapper, activeLink && s.activeLink)}
+                      // disabled={isLoading}
+                      variant={'text'}
+                    >
+                      {link.icon}
+                      <Typography as={'span'} variant={'regularMedium14'}>
+                        {link.name}
+                      </Typography>
+                    </Button>
+                  }
+                />
+              )}
+              {link.action && link.name !== 'Create' && (
                 <Button
                   className={clsx(s.wrapper, activeLink && s.activeLink)}
                   onClick={link.action}
@@ -106,7 +123,7 @@ export const Nav = ({ isSpecialAccount = false }: Props) => {
                   </Typography>
                 </Button>
               )}
-              {link.path && (
+              {link.path && link.name !== 'Create' && (
                 <Button
                   as={Link}
                   className={clsx(s.wrapper, activeLink && s.activeLink)}

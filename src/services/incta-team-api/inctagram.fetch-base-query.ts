@@ -1,3 +1,4 @@
+import { db } from '@/services/db'
 import { isRefreshTokenResponse } from '@/services/incta-team-api/auth/instagram.auth.type'
 import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/common/const'
 import { isFetchBaseQueryError, isFetchBaseQueryErrorData } from '@/types'
@@ -56,6 +57,14 @@ export const baseQueryWithReauth: BaseQueryFn<
         }
         if (!res.data) {
           // void Router.push('/login')
+          //TODO
+          /**
+           * код снизу нужен для удаления базы данных IndexedDB, если протух рефрештокен.
+           * но этот код работает криво, поэтому временно закоментил. Кривость заключается в том, что
+           * база данных не создаётся вообще. Возмоджно это из-за того, что я не залогинен
+           * и у меня всегда не проходит рефрештокен
+           */
+          // await db.delete()
         }
       } finally {
         release()

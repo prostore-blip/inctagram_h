@@ -78,6 +78,9 @@ const commentsMock: CommentsMockType = {
 export const postsService = inctaTeamApiService.injectEndpoints({
   endpoints: builder => {
     return {
+      createPost: builder.mutation<void, FormData>({
+        query: body => ({ body, method: 'POST', url: `/v1/posts` }),
+      }),
       getComments: builder.query<any, void>({
         // query: ({ id }) => `/v1/posts/${id}/posts`,
         async queryFn() {
@@ -94,4 +97,4 @@ export const postsService = inctaTeamApiService.injectEndpoints({
   },
 })
 
-export const { useGetCommentsQuery, useGetPostsByUserIdQuery } = postsService
+export const { useCreatePostMutation, useGetCommentsQuery, useGetPostsByUserIdQuery } = postsService

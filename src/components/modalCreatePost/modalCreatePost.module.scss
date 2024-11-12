@@ -1,0 +1,200 @@
+.content {
+  max-width: 492px;
+  height: 594px;
+  width: 100%;
+  &.widthBig {
+    max-width: 972px;
+  }
+}
+.open {
+  color: var(--color-accent-500);
+}
+.imageContainer {
+  position: relative;
+  align-items: center;
+  background-color: var(--color-dark-500);
+
+  display: flex;
+  height: 222px;
+  justify-content: center;
+  width: 222px;
+  overflow: hidden;
+}
+
+.errorBox {
+  background-color: var(--color-danger-900);
+  padding: 6px 24px;
+  border-radius: 2px;
+  border: 1px var(--color-danger-500) solid;
+  margin-bottom: 24px;
+  justify-content: center;
+  display: inline-flex;
+  width: 100%;
+  gap: 0.35rem;
+}
+
+.flexColumn {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 24px;
+  margin-top: 48px;
+}
+
+button.closeButton {
+  color: var(--color-light-100);
+  padding: 0;
+}
+.selectButton {
+  min-width: 219px;
+}
+.buttonsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 60px;
+  margin-bottom: 48px;
+}
+
+.embla {
+  height: 100%;
+  overflow: hidden;
+  .emblaContainer {
+    height: 100%;
+    display: flex;
+
+    .emblaSlide {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+  }
+}
+
+div.cardPost {
+  padding: 0;
+  height: 594px;
+  display: flex;
+  flex-direction: row;
+  border-color: var(--color-dark-100);
+  justify-content: space-between;
+  max-width: 972px;
+  width: 100%;
+}
+
+.postImageContent {
+  flex-basis: 50%;
+  height: 100%;
+  position: relative;
+  &.fullWidth {
+    flex-basis: 100%;
+  }
+  .button {
+    display: inline-block;
+    cursor: default;
+    position: absolute;
+
+    bottom: 15px;
+    padding: 5px;
+    background-color: var(--color-dark-500-opacity);
+    &.edit {
+      right: 35px;
+    }
+    &.origin {
+      left: 35px;
+    }
+  }
+
+  .postImage {
+    position: relative;
+    height: 100%;
+    img {
+      object-fit: contain;
+    }
+  }
+
+  .prevModalButton {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12px;
+    display: none;
+  }
+
+  .nextModalButton {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+    display: none;
+  }
+
+  &:hover .prevModalButton,
+  &:hover .nextModalButton {
+    display: block;
+  }
+
+  &:hover .dotes {
+    display: flex;
+  }
+
+  .dotes {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    gap: 12px;
+
+    .dote {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-light-100);
+
+      &.activeDot {
+        background: var(--color-accent-500);
+      }
+    }
+  }
+}
+.form {
+  flex-basis: 50%;
+  padding-left: 24px;
+  padding-right: 24px;
+  .avaUserNameBlock {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 12px 0;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+  .textAreaWrapper {
+    p[class*='transparent'] {
+      display: none;
+    }
+    .textArea {
+      height: 120px;
+      resize: none;
+      width: 100%;
+      color: var(--color-light-100);
+      background-color: var(--color-dark-500);
+      border-radius: 2px;
+      border: 1px solid var(--color-dark-100);
+      outline: none;
+      &::placeholder {
+        color: var(--color-light-900);
+      }
+    }
+    .countDescriptionPost {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

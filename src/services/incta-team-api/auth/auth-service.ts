@@ -1,4 +1,5 @@
 import { ForgotPasswordRequestData, ResetPasswordRequestData } from '@/components'
+import { db } from '@/services/db'
 import { ACCESS_TOKEN_STORAGE_NAME } from '@/services/incta-team-api/common/const'
 import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
 import { SuccessfulRequestResult } from '@/types'
@@ -35,8 +36,9 @@ export const authService = inctaTeamApiService.injectEndpoints({
           //maybe custom queryFn will suit here more
           //throwing error 401 but seems to work (removes refresh token from cookies)
           // await queryFulfilled //the below code won't get executed with this
-
+          console.log(123)
           localStorage.removeItem(ACCESS_TOKEN_STORAGE_NAME)
+          await db.delete()
           dispatch(authService.util.resetApiState())
         },
         query: () => ({
