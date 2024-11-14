@@ -9,8 +9,9 @@ export const signUpSchema = (t: LocaleType) =>
       email: z
         .string()
         .email({ message: t.signUp.emailType })
+        //и что все суффиксы перечислять? .st не было например. нужен просто паттерн: точка и хотя бы одна буква после нее
         .regex(
-          /^[\w.-]+@[a-zA-Z0-9.-]+\.(com|ru|org|net|edu|gov|info|biz|name|pro|aero|museum|co|uk|de|fr|it|ca|jp|cn|in|au|br|mx|us|xyz|online|shop|tech|blog|app)$/,
+          /^[\w.-]+@[a-zA-Z0-9.-]+\.(com|ru|org|net|edu|gov|info|biz|name|pro|aero|museum|co|uk|de|fr|it|ca|jp|cn|in|au|br|mx|us|xyz|online|shop|tech|blog|app|st)$/,
           { message: t.signUp.emailType }
         ),
       password: z
