@@ -147,14 +147,15 @@ export const SingUpComponent = () => {
               type={'password'}
             />
             <FormCheckbox
+              className={s.checkboxWrapper}
               control={control}
               label={
-                <Typography className={s.checkboxwrapper} variant={'small'}>
+                <Typography as={'span'} variant={'small'}>
                   I agree to the{' '}
                   <Typography as={Link} href={'/termsOfService'} variant={'smallLink'}>
                     Terms of Service
-                  </Typography>{' '}
-                  and{' '}
+                  </Typography>
+                  {' and '}
                   <Typography as={Link} href={'/privacyPolicy'} variant={'smallLink'}>
                     Privacy Policy
                   </Typography>
