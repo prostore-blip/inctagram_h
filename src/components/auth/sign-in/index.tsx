@@ -57,7 +57,7 @@ export function SignInForm() {
     try {
       const recaptcha = await executeRecaptcha('submit')
 
-      if (!recaptcha) {
+      if (!recaptcha || recaptcha?.length < 1000) {
         toast.custom(toast => <Toast text={t.common.recaptchaCheckFailed} variant={'error'} />, {
           duration: 5000,
         })
@@ -66,9 +66,10 @@ export function SignInForm() {
       }
 
       const token = await login({ ...data, captchaToken: recaptcha }).unwrap()
-      const userId = token?.accessToken ? decodeJWT(token?.accessToken).userId : ''
+      // const userId = token?.accessToken ? decodeJWT(token?.accessToken).userId : ''
 
-      userId && (await router.push(`/profile/${userId}`))
+      // userId && (await router.push(`/profile`))
+      await router.push(`/profile`)
     } catch (error) {
       if (isErrorResponse(error)) {
         if (error.data.errorName === 'UnauthorizedException') {

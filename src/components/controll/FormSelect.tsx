@@ -1,14 +1,14 @@
 import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { TextArea, TextAreaProps } from '@chrizzo/ui-kit'
+import { Select, SelectProps } from '@chrizzo/ui-kit'
 
 type Props<T extends FieldValues> = Omit<
-  TextAreaProps,
+  SelectProps,
   'disabled' | 'name' | 'onBlur' | 'onChange' | 'ref' | 'value'
 > &
   UseControllerProps<T>
 
-export const FormTextArea = <T extends FieldValues>({
+export const FormSelect = <T extends FieldValues>({
   control,
   defaultValue,
   disabled,
@@ -23,12 +23,10 @@ export const FormTextArea = <T extends FieldValues>({
   } = useController({ control, defaultValue, disabled, name, rules, shouldUnregister })
 
   return (
-    <TextArea
+    <Select
       {...restProps}
       disabled={disabled}
-      errorMessage={error?.message}
       name={fieldName}
-      onBlur={onBlur}
       onValueChange={onChange}
       ref={ref}
       {...field}

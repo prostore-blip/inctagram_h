@@ -4,6 +4,7 @@ import { Bookmark, Create, Home, LogOut, Message, Person, Search, TrendingUp } f
 import { ModalCreatePost } from '@/components/modalCreatePost'
 import { MainNavigationItem } from '@/components/nav/types'
 import { useLogoutMutation } from '@/services'
+import { useGetMyProfileQuery } from '@/services/incta-team-api/profile/profile-service'
 import { useGetMySubscriptionsQuery } from '@/services/inctagram-work-api/inctagram.subscriptions.service'
 import { Button, Typography } from '@chrizzo/ui-kit'
 import clsx from 'clsx'
@@ -19,6 +20,8 @@ type Props = {
 export const Nav = ({ isSpecialAccount = false }: Props) => {
   const router = useRouter()
   const [logout] = useLogoutMutation()
+
+  const { data: currentUSerProfile, error, isFetching } = useGetMyProfileQuery()
   /**
    * запрос за проверкой подписки (для отображения вкладки статистики)
    */
@@ -39,7 +42,7 @@ export const Nav = ({ isSpecialAccount = false }: Props) => {
       {
         icon: <Person />,
         name: 'My Profile',
-        path: '/profile',
+        path: `/profile/${currentUSerProfile?.id}`,
       },
       {
         icon: <Message />,

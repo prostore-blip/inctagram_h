@@ -1,4 +1,9 @@
 import { inctaTeamApiService } from '@/services/incta-team-api/inctagram.service'
+import {
+  CreateProfileRequestBody,
+  ProfileDataType,
+  UpdateProfileRequestBody,
+} from '@/services/incta-team-api/profile/types'
 
 const mockDataGetProfile: ProfileDataType = {
   about:
@@ -18,30 +23,53 @@ const mockDataGetProfile: ProfileDataType = {
   userName: 'johnDoe',
 }
 
-export type ProfileDataType = {
-  about: string
-  birthDate: string
-  createdAt: string
-  firstName: string
-  id: string
-  lastName: string
-  location: {
-    city: string
-    country: string
-  }
-  userName: string
-}
 export const profileService = inctaTeamApiService.injectEndpoints({
   endpoints: builder => {
     return {
+      createProfile: builder.mutation<ProfileDataType, CreateProfileRequestBody>({
+        invalidatesTags: (result, _error, _args) =>
+          result ? [{ id: result.id, type: 'profile' }] : [],
+        query: body => ({
+          body,
+          method: 'POST',
+          url: '/v1/users/profiles/create',
+        }),
+      }),
+      getMyProfile: builder.query<ProfileDataType, void>({
+        query: () => `/v1/users/profiles/me`,
+      }),
       getProfile: builder.query<ProfileDataType, { id: string }>({
         // query: ({ id }) => `/v1/users/profiles/${id}`,
         async queryFn() {
           return { data: mockDataGetProfile }
         },
       }),
+      getProfileById: builder.query<ProfileDataType, { id: string }>({
+        providesTags: (_result, _error, args) => [{ id: args.id, type: 'profile' }],
+        query: ({ id }) => `/v1/users/profiles/${id}`,
+      }),
+      getProfilesList: builder.query<ProfileDataType, void>({
+        providesTags: [{ id: 'list', type: 'profile' }],
+        query: () => `/v1/users/profiles/all`,
+      }),
+      updateProfile: builder.mutation<ProfileDataType, UpdateProfileRequestBody>({
+        invalidatesTags: (result, _error, _args) =>
+          result ? [{ id: result.id, type: 'profile' }] : [],
+        query: body => ({
+          body,
+          method: 'POST',
+          url: '/v1/users/profiles/edit',
+        }),
+      }),
     }
   },
 })
 
-export const { useGetProfileQuery } = profileService
+export const {
+  useCreateProfileMutation,
+  useGetMyProfileQuery,
+  useGetProfileByIdQuery,
+  useGetProfileQuery,
+  useGetProfilesListQuery,
+  useUpdateProfileMutation,
+} = profileService

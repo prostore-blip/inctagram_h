@@ -1,0 +1,20 @@
+.flexRow {
+  align-items: flex-start;
+  display: flex;
+  gap: 36px;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+.separator {
+  background-color: var(--color-dark-300);
+  bottom: calc(36px + 48px / 2);
+  height: 2px;
+  position: relative;
+  width: 100%;
+}
+
+.wrapper {
+  padding: 50px;
+  min-width: 960px;
+}
