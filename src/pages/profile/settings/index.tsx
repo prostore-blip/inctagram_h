@@ -13,7 +13,7 @@ import { Tabs } from '@chrizzo/ui-kit'
 
 import pageStyles from './page.module.scss'
 
-import { TabsValue, tabsList } from '../settingsPageTabsList'
+import { TabsValue, tabsList } from '../../../components/profile-settings/settingsPageTabsList'
 
 export function EditProfile() {
   const { router, t } = useTranslation()

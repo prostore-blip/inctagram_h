@@ -10,7 +10,7 @@ import { Tabs } from '@chrizzo/ui-kit'
 
 import pageStyles from './page.module.scss'
 
-import { tabsList } from '../settingsPageTabsList'
+import { tabsList } from '../../../components/profile-settings/settingsPageTabsList'
 
 export function CreateProfile() {
   const { router, t } = useTranslation()
