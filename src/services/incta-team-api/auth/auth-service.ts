@@ -36,7 +36,6 @@ export const authService = inctaTeamApiService.injectEndpoints({
           //maybe custom queryFn will suit here more
           //throwing error 401 but seems to work (removes refresh token from cookies)
           // await queryFulfilled //the below code won't get executed with this
-          console.log(123)
           localStorage.removeItem(ACCESS_TOKEN_STORAGE_NAME)
           await db.delete()
           dispatch(authService.util.resetApiState())
@@ -97,6 +96,11 @@ export const authService = inctaTeamApiService.injectEndpoints({
           }
         },
       }),
+      signInWithGithub: builder.query<void, void>({
+        query: () => ({
+          url: 'v1/auth/github/login',
+        }),
+      }),
       signUp: builder.mutation<void, SignUpRequest>({
         query: ({ captchaToken, ...body }) => ({
           body,
@@ -114,6 +118,7 @@ export const authService = inctaTeamApiService.injectEndpoints({
 export const {
   useAuthMeQuery,
   useConfirmEmailRegistrationMutation,
+  useLazySignInWithGithubQuery,
   useLogoutMutation,
   usePasswordRecoveryMutation,
   useResendRegistrationLinkMutation,
