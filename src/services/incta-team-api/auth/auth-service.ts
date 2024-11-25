@@ -101,6 +101,11 @@ export const authService = inctaTeamApiService.injectEndpoints({
           url: 'v1/auth/github/login',
         }),
       }),
+      signInWithGoogle: builder.query<void, void>({
+        query: () => ({
+          url: 'v1/auth/google/login',
+        }),
+      }),
       signUp: builder.mutation<void, SignUpRequest>({
         query: ({ captchaToken, ...body }) => ({
           body,
@@ -119,11 +124,11 @@ export const {
   useAuthMeQuery,
   useConfirmEmailRegistrationMutation,
   useLazySignInWithGithubQuery,
+  useLazySignInWithGoogleQuery,
   useLogoutMutation,
   usePasswordRecoveryMutation,
   useResendRegistrationLinkMutation,
   useResetPasswordMutation,
-  useSignInMutation,
-  // useSingInMutation,
+  useSignInMutation, // useSingInMutation,
   useSignUpMutation,
 } = authService
