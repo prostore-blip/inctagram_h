@@ -13,7 +13,7 @@ type Props = {
   googleLoginAndRegister?: () => void
 }
 
-export const SocialAuthButtons = () => {
+export const SocialAuthButtons = ({}: Props) => {
   const [signInWithGithub] = useLazySignInWithGithubQuery()
   const [signInWithGoogle] = useLazySignInWithGoogleQuery()
 
