@@ -1,0 +1,38 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+}
+.mainContent {
+  min-height: calc(100dvh - var(--header-height) - 2px);
+  &.marginAuto {
+    padding-left: 130px;
+    padding-right: 90px;
+  }
+}
+
+.headerSkeleton {
+  grid-column: 1 / 3;
+
+  height: calc(var(--header-height) + 1px);
+  background: var(--color-light-900);
+}
+
+.navSkeleton {
+  width: 220px;
+  background: #c5c8cb;
+}
+
+.mainSkeleton {
+  font-size: 100px;
+  text-align: center;
+  background: #474849;
+}
+
+.oneColumn {
+  grid-template-columns: 1fr;
+}
+
+.twoColumns {
+  grid-template-columns: 220px 1fr;
+}

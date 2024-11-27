@@ -1,6 +1,20 @@
 import { LocaleType } from '@/locales/ru'
 
 export const en: LocaleType = {
+  buzzWords: {
+    ok: 'OK',
+  },
+  common: {
+    accountName: 'Login',
+    firstName: 'First Name',
+    incorrectEmail: 'The email must match the format example@example.com',
+    lastName: 'Last Name',
+    recaptchaCheckFailed: '"I am not a robot" check failed. Try again',
+    requiredField: 'Fill in the field',
+    save: 'Save',
+    selectFromComputer: 'Select from computer',
+  },
+  error: 'Error',
   forgotPassword: {
     common: {
       inProgress: 'Sending the request...',
@@ -27,6 +41,7 @@ export const en: LocaleType = {
       title: 'Create new password',
       tooSmallError: 'Password has to be at least 6 characters long',
     },
+
     startPage: {
       backToSignIn: 'Back to Sign-in page',
       emailNotFound: "User with this email doesn't exist",
@@ -48,6 +63,50 @@ export const en: LocaleType = {
     signInButton: 'Log In',
     signUpButton: 'Sign up',
   },
+  modal: {
+    modalConfirmButtons: {
+      no: 'No',
+      yes: 'Yes',
+    },
+  },
+  profile: {
+    avatar: {
+      deletePhotoModalDescription: 'Are you sure you want to delete the photo?',
+      deletePhotoModalTitle: 'Delete Photo',
+    },
+    common: {
+      saveChanges: 'Save changes',
+    },
+    settings: {
+      aboutMe: 'About me',
+      aboutMePlaceholder: 'Tell about yourself',
+      accountManagement: 'Account management',
+      addProfilePhoto: 'Add profile photo',
+      birthDate: 'Date of birth',
+      birthDatePlaceholder: 'mm.dd.YYYY',
+      devices: 'Devices',
+      generalInformation: 'General information',
+      imageSizeExceeded: 'Photo size must be less than 10 MB!',
+      myPayments: 'My payments',
+      saveChangeButton: 'Save change',
+      schema: {
+        firstName: 'only letters allowed',
+        lastName: 'only letters allowed',
+        onlyLetters: 'only letters allowed',
+        userName: 'only letters and  "_" or "-" are allowed',
+        wrongDateFormat: 'the date must be in MM.dd.yyyy format',
+      },
+      selectYourCity: 'Choose your city',
+      selectYourCityPlaceholder: 'City',
+      selectYourCountry: 'Choose your country',
+      selectYourCountryPlaceholder: 'Country',
+      toast: {
+        error: 'Error! Server is not available',
+        success: 'Your settings are saved',
+      },
+      wrongFileFormat: 'Error! The format of the uploaded photo must be \nPNG and JPEG',
+    },
+  },
   publicPage: {
     title: 'Public Page',
   },
@@ -55,26 +114,47 @@ export const en: LocaleType = {
     dontHaveAcc: `Don't have an account?`,
     emailTitle: 'Email',
     forgotPass: 'Forgot Password',
+    noSpacesAllowed: 'No spaces allowed',
     passTitle: 'Password',
     signInButton: 'Sign In',
     signUp: 'Sign Up',
     title: 'Sign In',
+    wrongCredentials: 'The email or password are incorrect. Try again please',
   },
   signUp: {
     confirmPass: 'Confirm Password',
     congratulations: 'Congratulations!',
     emailConfirmed: 'Your email has been confirmed',
     emailExpired: 'Email verification link expired',
+    emailSent: 'Email sent',
+    emailSentText: (email: string) => `We have sent a link to confirm your email to ${email}`,
     emailTitle: 'Email',
+    emailType: 'The email must match the format example@example.com',
+    errors: {
+      emailAlreadyConfirmed: 'User with this email is already registered',
+      userNameAlreadyConfirmed: 'User with this username already registered',
+    },
     expiredDescription:
       'Looks like the verification link has expired. Not to worry, we can send the link again',
     haveAcc: `Do you have an account?`,
+    linkExpired: 'Email verification link expired',
+    linkExpiredDescription:
+      'Looks like the verification link has expired. Not to worry, we can send the link again',
+    maxCharsNumber: (maxChars: number) => `Maximum number of characters ${maxChars}`,
+    minCharsNumber: (minChars: number) => `Minimum number of characters ${minChars}`,
     passTitle: 'Password',
+    passwordMatch: 'The passwords must match',
+    passwordMustContain:
+      'Password must contain a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~"',
+    passwordRecovery: 'Password recovery',
+    passwordRequirements: (minChars: number, maxChars: number) =>
+      `Your password must be between ${minChars} and ${maxChars} characters`,
     resendVerificationLink: 'Resend verification link',
     rules: ['I agree to the', 'Terms of Service', 'and', 'Privacy Policy'],
     signInButton: 'Sign In',
     signUp: 'Sign Up',
     title: 'Sign Up',
     userName: 'Username',
+    userNameContains: 'Username may contain 0-9; A-Z; a-z; _; -',
   },
 }

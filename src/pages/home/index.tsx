@@ -1,16 +1,20 @@
-import { GetNavLayout, HeadMeta, PageWrapper } from '@/components'
-import { LoginNavigate } from '@/hoc/LoginNavigate'
+import { ReactNode } from 'react'
 
-export function Home() {
+import { HeadMeta } from '@/components'
+import { BaseLayout } from '@/components/layouts/BaseLayout'
+
+function Home() {
   return (
-    <LoginNavigate>
-      <PageWrapper>
-        <HeadMeta title={'Inctagram'} />
-        Home
-      </PageWrapper>
-    </LoginNavigate>
+    <>
+      <HeadMeta title={'Inctagram'} />
+      Home
+    </>
   )
 }
 
-Home.getLayout = GetNavLayout
+Home.getLayout = function getLayout(page: ReactNode) {
+  //the redirecting HOC could be here
+  return <BaseLayout>{page}</BaseLayout>
+}
+
 export default Home

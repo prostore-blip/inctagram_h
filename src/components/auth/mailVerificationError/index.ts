@@ -1,1 +1,0 @@
-export { MailVerificationError } from './mailVerificationError'

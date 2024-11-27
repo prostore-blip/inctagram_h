@@ -1,0 +1,65 @@
+.card {
+  width: 100%;
+  min-width: 360px;
+  max-width: 378px;
+  border: 1px solid var(--color-dark-300);
+  padding-right: 23px;
+  padding-left: 23px;
+}
+
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--color-light-900);
+
+  a {
+    color: inherit;
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 13px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 18px;
+
+  & > :nth-last-child(3) {
+    margin-bottom: 12px;
+  }
+}
+
+.dontHaveAccout {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.loader {
+  display: inline-block;
+
+  box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+
+  border: 3px solid var(--color-accent-500);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

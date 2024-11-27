@@ -1,13 +1,18 @@
-import { GetLayout, PageWrapper } from '@/components'
-import { PolicyDocuments } from '@/components/auth/policyDocuments'
+import { ReactNode } from 'react'
 
-export function TermsOfService() {
+import { PolicyDocuments } from '@/components/auth/policyDocuments'
+import { BaseLayout } from '@/components/layouts/BaseLayout'
+
+function TermsOfService() {
   return (
-    <PageWrapper>
+    <>
       <PolicyDocuments headline={'Terms of Service'} />
-    </PageWrapper>
+    </>
   )
 }
 
-TermsOfService.getLayout = GetLayout
+TermsOfService.getLayout = function getLayout(page: ReactNode) {
+  return <BaseLayout>{page}</BaseLayout>
+}
+
 export default TermsOfService

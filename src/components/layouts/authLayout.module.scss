@@ -1,0 +1,17 @@
+.flex {
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.consent {
+  width: 25em;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-s);
+  text-align: center;
+  .link {
+    margin-right: 0.4rem;
+    margin-left: 0.4rem;
+  }
+}

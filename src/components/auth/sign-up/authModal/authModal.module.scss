@@ -1,0 +1,16 @@
+.modal {
+  max-width: 378px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 30px 24px 36px;
+}
+
+.modalButton {
+  align-self: end;
+  padding: 6px 36px;
+  text-transform: uppercase;
+}

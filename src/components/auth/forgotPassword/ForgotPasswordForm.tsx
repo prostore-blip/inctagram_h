@@ -5,7 +5,7 @@ import { RecaptchaLogo } from '@/assets/image/recaptchaLogo'
 import { FormInput } from '@/components/controll/formTextField'
 import { EMAIL_KEY_FOR_PASSWORD_RESET } from '@/const'
 import { useTranslation } from '@/hooks/useTranslation'
-import { useForgotPasswordMutation } from '@/services/inctagram.auth.service'
+import { usePasswordRecoveryMutation } from '@/services'
 import { isUnsuccessfulRequestResult } from '@/types'
 import { Button, Card, Checkbox, Typography } from '@chrizzo/ui-kit'
 import { DevTool } from '@hookform/devtools'
@@ -16,10 +16,11 @@ import { useReCaptcha } from 'next-recaptcha-v3'
 
 import s from './forgotPasswordForm.module.scss'
 
+import { AuthModalComponent } from '../authModal/AuthModalComponent'
 import { ForgotPasswordRequestData, forgotPasswordFormSchema } from './schema'
 
 export const ForgotPasswordForm = () => {
-  const [forgotPassword, { error, isLoading, isSuccess }] = useForgotPasswordMutation()
+  const [forgotPassword, { error, isLoading, isSuccess }] = usePasswordRecoveryMutation()
   //there is no field in RTKQ or useForm hooks which is not changing after a new request
   const [emailSent, setEmailSent] = useState(false)
 
@@ -64,6 +65,7 @@ export const ForgotPasswordForm = () => {
       setRecaptchaTokenLoading(true)
       const token = await executeRecaptcha('submit')
 
+      console.log('token', token)
       setValue('recaptcha', token)
       await trigger('recaptcha')
     } catch (err) {
@@ -86,7 +88,10 @@ export const ForgotPasswordForm = () => {
         const message = t.forgotPassword.startPage.emailNotFound
 
         setError('email', { message, type: 'manual' })
+        setValue('recaptcha', '')
+        setRecaptchaTokenLoading(false)
       } else {
+        console.log(1)
         setShowErrorDialog(true)
       }
     }
@@ -100,47 +105,16 @@ export const ForgotPasswordForm = () => {
     }
     await makeRequest()
   }
-
+  const buttonText = emailSent
+    ? t.forgotPassword.startPage.sendLinkAgain
+    : t.forgotPassword.startPage.sendLink
   const submitDisabled = !isDirty || !isValid || isLoading || isValidating || isSubmitting
 
   //todo replace native dialog with component
   //todo translation with dynamic values
   return (
-    <div className={s.wrapper}>
+    <>
       <DevTool control={control} />
-      <dialog
-        className={clsx(showSuccessDialog && s.dialog)}
-        open={showSuccessDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.successDialogTitle}</Typography>
-        <Typography variant={'regular16'}>
-          {t.forgotPassword.startPage.successDialogText}
-          {` ${getValues('email') || 'undefined@undefined'}`}
-        </Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={handleCloseSuccessDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
-      <dialog
-        className={clsx(showErrorDialog && s.dialog)}
-        open={showErrorDialog}
-        role={'alertdialog'}
-      >
-        <Typography variant={'h1'}>{t.forgotPassword.startPage.errorDialogTitle}</Typography>
-        <Typography variant={'regular16'}>{t.forgotPassword.startPage.errorDialogText}</Typography>
-        {/*todo remove*/}
-        <Typography variant={'regular16'}>{error && JSON.stringify(error)}</Typography>
-        <div className={s.flexFiller} />
-        <div className={s.buttonContainer}>
-          <Button onClick={handleCloseErrorDialog} variant={'primary'}>
-            OK
-          </Button>
-        </div>
-      </dialog>
       <Card className={s.card} variant={'dark500'}>
         <Typography className={s.title} textAlign={'center'} variant={'h1'}>
           {t.forgotPassword.startPage.title}
@@ -156,13 +130,6 @@ export const ForgotPasswordForm = () => {
               placeholder={'example@example.com'}
               readOnly={emailSent}
             />
-            <FormInput
-              className={s.hidden}
-              control={control}
-              error={errors.recaptcha?.message}
-              label={'Captcha'}
-              name={'recaptcha'}
-            />
             <Typography className={s.hint} textAlign={'start'} variant={'regular14'}>
               {t.forgotPassword.startPage.hint}
             </Typography>
@@ -171,11 +138,20 @@ export const ForgotPasswordForm = () => {
                 {t.forgotPassword.startPage.linkSent}
               </Typography>
             )}
-            <Button className={s.submitButton} disabled={submitDisabled} type={'submit'}>
-              {emailSent && t.forgotPassword.startPage.sendLinkAgain}
-              {!emailSent && t.forgotPassword.startPage.sendLink}
-              {isSubmitting && <span className={clsx(s.loader)} />}
-            </Button>
+            <AuthModalComponent
+              buttonText={buttonText}
+              emailAddress={` ${getValues('email') || 'undefined@undefined'}`}
+              errorDialogText={t.forgotPassword.startPage.errorDialogText}
+              errorDialogTitle={t.forgotPassword.startPage.errorDialogTitle}
+              handleCloseDialog={handleCloseSuccessDialog}
+              handleCloseErrorDialog={handleCloseErrorDialog}
+              isSubmitting={isSubmitting}
+              showErrorDialog={showErrorDialog}
+              showSuccessDialog={showSuccessDialog}
+              submitDisabled={submitDisabled}
+              successDialogText={t.forgotPassword.startPage.successDialogText}
+              successDialogTitle={t.forgotPassword.startPage.successDialogTitle}
+            ></AuthModalComponent>
           </div>
         </form>
         <Button as={Link} className={s.linkButton} href={'/login'} variant={'text'}>
@@ -190,7 +166,7 @@ export const ForgotPasswordForm = () => {
           onClick={getRecaptchaToken}
         />
       </Card>
-    </div>
+    </>
   )
 }
 
@@ -202,7 +178,7 @@ type Props = {
   onClick: () => void
 }
 
-function RecaptchaBox({ checked, hidden, isLoading, isReady, onClick }: Props) {
+export function RecaptchaBox({ checked, hidden, isLoading, isReady, onClick }: Props) {
   const handleRecaptchaClick = () => {
     onClick && onClick()
   }

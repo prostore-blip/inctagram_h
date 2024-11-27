@@ -4,12 +4,12 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3509
-        NAMESPACE = "incta-team"
+        PORT = 3557
+        NAMESPACE = "netchill-ru"
         REGISTRY_HOSTNAME = "backinstateam"
         REGISTRY = "registry.hub.docker.com"
-        PROJECT = "humming-birds-front"
-        DEPLOYMENT_NAME = "humming-birds-front-deployment"
+        PROJECT = "hummingbirds-front"
+        DEPLOYMENT_NAME = "hummingbirds-front-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
     }
@@ -33,7 +33,7 @@ pipeline {
              steps {
                  echo "Push image started..."
                      script {
-                          docker.withRegistry("https://${env.REGISTRY}", 'incta-team') {
+                          docker.withRegistry("https://${env.REGISTRY}", 'netchill-ru') {
                             app.push("${env.IMAGE_NAME}")
                         }
                      }

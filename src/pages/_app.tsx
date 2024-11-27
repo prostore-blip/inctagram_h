@@ -3,14 +3,19 @@ import type { AppProps } from 'next/app'
 import React, { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
 
-import { LayoutNew } from '@/components/Layout/layoutNew'
+import { wrapper } from '@/services/store'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 import { NextPage } from 'next'
+
+TimeAgo.addDefaultLocale(en)
+import { Inter } from 'next/font/google'
+import Head from 'next/head'
 
 import '../styles/index.scss'
 // eslint-disable-next-line import/extensions
 import '@chrizzo/ui-kit/dist/style.css'
-
-import { wrapper } from '../../store'
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
@@ -26,7 +31,14 @@ export default function App({ Component, ...rest }: AppPropsWithLayout) {
 
   return (
     <Provider store={store}>
-      <LayoutNew>{getLayout(<Component {...props} />)}</LayoutNew>
+      <Head>
+        <style>{`
+          body {
+            font-family: ${inter.style.fontFamily};
+          }
+        `}</style>
+      </Head>
+      {getLayout(<Component {...props} />)}
     </Provider>
   )
 }

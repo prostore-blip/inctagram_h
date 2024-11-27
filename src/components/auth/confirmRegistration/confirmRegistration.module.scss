@@ -1,0 +1,28 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 35px;
+}
+
+.confirmContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  align-items: center;
+  max-width: 294px;
+  margin-bottom: 54px;
+}
+
+.textTitle {
+  margin-bottom: 19px;
+}
+
+.textInfo {
+  text-align: center;
+}
+
+.signInButton {
+  width: 182px;
+  margin-bottom: 72px;
+}
